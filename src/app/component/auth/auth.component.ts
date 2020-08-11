@@ -14,7 +14,7 @@ export class AuthComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    // this.registerFormInit();
+    this.registerFormInit();
     this.loginFormInit();
   }
 
@@ -36,11 +36,19 @@ export class AuthComponent implements OnInit {
   }
   onSubmitLogin(){
     this.submittedLogin = true;
-
-    // stop here if form is invalid
     if (this.loginForm.invalid) {
         return;
     }
     console.log(this.loginForm)
   }
+
+  onSubmitRegister(){
+    this.submittedRegister = true;
+    if (this.registerForm.invalid) {
+        return;
+    }
+    console.log(this.registerForm)
+  }
+  get f() { return this.registerForm.controls; }
+  get l() { return this.loginForm.controls; }
 }
