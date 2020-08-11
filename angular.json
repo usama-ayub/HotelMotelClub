@@ -28,9 +28,22 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/vendor/bootstrap-4.2.1/css/bootstrap.min.css",
+              "src/vendor/owl-carousel-2.3.4/assets/owl.carousel.min.css",
+              "src/css/style.css",
+              "src/styles.scss",
+              "src/vendor/fontawesome-5.6.1/css/all.min.css",
+              "src/fonts/stroyka/stroyka.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/vendor/jquery-3.3.1/jquery.min.js",
+              "src/vendor/bootstrap-4.2.1/js/bootstrap.bundle.min.js",
+              "src/vendor/owl-carousel-2.3.4/owl.carousel.min.js",
+              "src/vendor/nouislider-12.1.0/nouislider.min.js",
+              "src/js/number.js",
+              "src/js/main.js",
+              "src/vendor/svg4everybody-2.1.9/svg4everybody.min.js"
+            ]
           },
           "configurations": {
             "production": {
