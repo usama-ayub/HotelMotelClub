@@ -73,7 +73,7 @@
                     <!-- <div class="topbar__item topbar__item--link"><a class="topbar-link"
                             href="about-us.html">About Us</a></div> -->
                     <div class="topbar__item topbar__item--link">
-                        <a class="topbar-link" [routerLink]="'/contact'">Contacts</a></div>
+                        <a class="topbar-link" (click)="routeTo('/contact')">Contacts</a></div>
                     <!-- <div class="topbar__item topbar__item--link"><a class="topbar-link" href="#">Store
                             Location</a></div>
                     <div class="topbar__item topbar__item--link"><a class="topbar-link"
@@ -89,8 +89,8 @@
                             <div class="topbar-dropdown__body">
                                 <!-- .menu -->
                                 <ul class="menu menu--layout--topbar">
-                                    <li><a (click)="routeTo()">Login</a></li>
-                                    <li><a (click)="routeTo()">Register</a></li>
+                                    <li><a (click)="routeTo('/account')">Login</a></li>
+                                    <li><a (click)="routeTo('/account')">Register</a></li>
                                     <!-- <li><a href="#">Orders</a></li>
                                     <li><a href="#">Addresses</a></li> -->
                                 </ul><!-- .menu / end -->

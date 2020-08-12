@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MustMatch } from 'src/app/helper/must-match';
+import { MustMatch } from 'src/app/shared/component/helper/must-match';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -13,7 +13,7 @@ export class AuthComponent implements OnInit {
   submittedRegister = false;
   constructor(private formBuilder: FormBuilder) { }
 
-  ngOnInit() {
+  ngOnInit() : void {
     this.registerFormInit();
     this.loginFormInit();
   }
@@ -34,7 +34,7 @@ export class AuthComponent implements OnInit {
       validator: MustMatch('password', 'confirmPassword')
     });
   }
-  onSubmitLogin(){
+  onSubmitLogin() : void {
     this.submittedLogin = true;
     if (this.loginForm.invalid) {
         return;
@@ -42,7 +42,7 @@ export class AuthComponent implements OnInit {
     console.log(this.loginForm)
   }
 
-  onSubmitRegister(){
+  onSubmitRegister() : void {
     this.submittedRegister = true;
     if (this.registerForm.invalid) {
         return;

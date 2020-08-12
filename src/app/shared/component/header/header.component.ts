@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
-  routeTo(){
-    this.router.navigate([`/account`]);
+  routeTo(path:string){
+    this.router.navigate([path]);
   }
 }
