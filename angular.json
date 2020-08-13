@@ -41,8 +41,7 @@
               "src/vendor/owl-carousel-2.3.4/owl.carousel.min.js",
               "src/vendor/nouislider-12.1.0/nouislider.min.js",
               "src/js/number.js",
-              "src/js/main.js",
-              "src/vendor/svg4everybody-2.1.9/svg4everybody.min.js"
+              "src/js/main.js"
             ]
           },
           "configurations": {
