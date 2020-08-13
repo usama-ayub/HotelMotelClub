@@ -8,6 +8,9 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
+  isAccountDropdown:boolean = false;
+  isLanguageDropdown:boolean = false;
+
   constructor(
     private router: Router
   ) { }
@@ -15,6 +18,14 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
+  showAccountDropdown(){
+    this.isLanguageDropdown = false;
+    this.isAccountDropdown = !this.isAccountDropdown
+  }
+  showLanguageDropdown(){
+    this.isAccountDropdown = false
+    this.isLanguageDropdown = !this.isLanguageDropdown
+  }
   routeTo(path:string){
     this.router.navigate([path]);
   }

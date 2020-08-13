@@ -25,17 +25,17 @@
     /*
     // topbar dropdown
     */
-    $(function() {
-        $('.topbar-dropdown__btn').on('click', function() {
-            $(this).closest('.topbar-dropdown').toggleClass('topbar-dropdown--opened');
-        });
+    // $(function() {
+    //     $('.topbar-dropdown__btn').on('click', function() {
+    //         $(this).closest('.topbar-dropdown').toggleClass('topbar-dropdown--opened');
+    //     });
 
-        $(document).on('click', function (event) {
-            $('.topbar-dropdown')
-                .not($(event.target).closest('.topbar-dropdown'))
-                .removeClass('topbar-dropdown--opened');
-        });
-    });
+    //     $(document).on('click', function (event) {
+    //         $('.topbar-dropdown')
+    //             .not($(event.target).closest('.topbar-dropdown'))
+    //             .removeClass('topbar-dropdown--opened');
+    //     });
+    // });
 
 
     /*
