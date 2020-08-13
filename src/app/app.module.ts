@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
+import { SharedModule } from './shared/shared.module';
+import { CoreModule } from './core/core.module';
+
 import { AppComponent } from './app.component';
 import { ProductDetailComponent } from './component/product-detail/product-detail.component';
 import { AboutUsComponent } from './component/about-us/about-us.component';
@@ -16,7 +19,7 @@ import { CreateProductComponent } from './component/create-product/create-produc
 import { SettingComponent } from './component/setting/setting.component';
 import { ProductListComponent } from './component/product-list/product-list.component';
 import { WelcomeComponent } from './component/welcome/welcome.component';
-import { SharedModule } from './shared/shared.module';
+
 
 @NgModule({
   declarations: [
@@ -39,6 +42,7 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    CoreModule,
     SharedModule
   ],
   providers: [],

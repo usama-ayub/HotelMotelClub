@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MustMatch } from 'src/app/shared/component/helper/must-match';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -11,7 +12,7 @@ export class AuthComponent implements OnInit {
   loginForm: FormGroup;
   submittedLogin = false;
   submittedRegister = false;
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private auth: AuthService) { }
 
   ngOnInit() : void {
     this.registerFormInit();
@@ -39,6 +40,9 @@ export class AuthComponent implements OnInit {
     if (this.loginForm.invalid) {
         return;
     }
+    this.auth.login(this.loginForm.value).subscribe((res:any)=>{
+
+    })
     console.log(this.loginForm)
   }
 
@@ -48,6 +52,9 @@ export class AuthComponent implements OnInit {
         return;
     }
     console.log(this.registerForm)
+    this.auth.register(this.registerForm.value).subscribe((res:any)=>{
+      
+    })
   }
   get f() { return this.registerForm.controls; }
   get l() { return this.loginForm.controls; }

@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+//Component
 import { FooterComponent } from './component/footer/footer.component';
 import { HeaderComponent } from './component/header/header.component';
 import { BreadcrumbComponent } from './component/breadcrumb/breadcrumb.component';
 import { ProductComponent } from './component/product/product.component';
+
 // Filter
 import { FilterPipe } from './pipes/filterBy.pipe';
+
 // Directive
 import { DigitOnlyDirective } from './directive/digit-only.directive';
 
