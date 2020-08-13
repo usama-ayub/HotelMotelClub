@@ -12,6 +12,7 @@ import { FilterPipe } from './pipes/filterBy.pipe';
 
 // Directive
 import { DigitOnlyDirective } from './directive/digit-only.directive';
+import { ClickOutSideDirective } from './directive/click-outside.directive';
 
 
 
@@ -22,7 +23,8 @@ import { DigitOnlyDirective } from './directive/digit-only.directive';
     BreadcrumbComponent,
     ProductComponent,
     FilterPipe,
-    DigitOnlyDirective
+    DigitOnlyDirective,
+    ClickOutSideDirective
   ],
   exports:[
     FooterComponent,
@@ -30,7 +32,8 @@ import { DigitOnlyDirective } from './directive/digit-only.directive';
     BreadcrumbComponent,
     ProductComponent,
     FilterPipe,
-    DigitOnlyDirective
+    DigitOnlyDirective,
+    ClickOutSideDirective
   ],
   imports: [
     CommonModule

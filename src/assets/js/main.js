@@ -41,32 +41,32 @@
     /*
     // dropcart, drop search
     */
-    $(function() {
-        $('.indicator--trigger--click .indicator__button').on('click', function(event) {
-            event.preventDefault();
+    // $(function() {
+    //     $('.indicator--trigger--click .indicator__button').on('click', function(event) {
+    //         event.preventDefault();
 
-            const dropdown = $(this).closest('.indicator');
+    //         const dropdown = $(this).closest('.indicator');
 
-            if (dropdown.is('.indicator--opened')) {
-                dropdown.removeClass('indicator--opened');
-            } else {
-                dropdown.addClass('indicator--opened');
-                dropdown.find('.drop-search__input').focus();
-            }
-        });
+    //         if (dropdown.is('.indicator--opened')) {
+    //             dropdown.removeClass('indicator--opened');
+    //         } else {
+    //             dropdown.addClass('indicator--opened');
+    //             dropdown.find('.drop-search__input').focus();
+    //         }
+    //     });
 
-        $('.indicator--trigger--click .drop-search__input').on('keydown', function(event) {
-            if (event.which === 27) {
-                $(this).closest('.indicator').removeClass('indicator--opened');
-            }
-        });
+    //     $('.indicator--trigger--click .drop-search__input').on('keydown', function(event) {
+    //         if (event.which === 27) {
+    //             $(this).closest('.indicator').removeClass('indicator--opened');
+    //         }
+    //     });
 
-        $(document).on('click', function (event) {
-            $('.indicator')
-                .not($(event.target).closest('.indicator'))
-                .removeClass('indicator--opened');
-        });
-    });
+    //     $(document).on('click', function (event) {
+    //         $('.indicator')
+    //             .not($(event.target).closest('.indicator'))
+    //             .removeClass('indicator--opened');
+    //     });
+    // });
 
 
     /*
