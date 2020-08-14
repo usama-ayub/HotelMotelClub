@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -8,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
+  isAuth:boolean = false;
   isAccountDropdown:boolean = false;
   isLanguageDropdown:boolean = false;
   isWishListDropdown:boolean = false;
@@ -15,11 +17,16 @@ export class HeaderComponent implements OnInit {
   navMenu :Array<{name:string, path:string}> =[];
 
   constructor(
-    private router: Router
+    private router: Router,
+    public authService: AuthService
   ) { }
 
   ngOnInit() {
     this.initNav();
+    this.authService.isAuth$.subscribe((res:boolean)=>{
+      console.log(res);
+      this.isAuth = res;
+    })
   }
 
   initNav():void {
@@ -52,7 +59,11 @@ export class HeaderComponent implements OnInit {
     this.isAccountDropdown = false;
   }
   
-  
+  logout(){
+    this.authService.logout().subscribe((res:any)=>{
+      console.log(res);
+    })
+  }
   routeTo(path:string){
     this.router.navigate([path]);
   }

@@ -1,27 +1,41 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from "rxjs/index";
-import { ApiService } from '../api/api.service';
-import { IAuth } from "src/app/interface/user";
+import { Observable, of, throwError, BehaviorSubject } from "rxjs/index";
+import { HttpClient } from "@angular/common/http";
+import { ILogin, ILoginResponse, IRegister, IRegisterResponse, ILoginData } from 'src/app/interface/auth';
+import { map, switchMap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  
+  isAuth$ = new BehaviorSubject<boolean>(false); 
 
-  constructor(private api: ApiService) { }
+  constructor(private http: HttpClient) {
+    let token = localStorage.getItem('token');
+    if(token) {
+      this.isAuth$.next(true);
+    }
+   }
 
-  login(paylaod:IAuth): Observable<any>{
-    let url: string = '';
-    return this.api.post(url,paylaod)
+  login(paylaod: ILogin): Observable<ILoginData> {
+    let url: string = 'Auth/login';
+    return this.http.post<ILoginResponse>(url, paylaod).pipe(switchMap(res => {
+      if(!res.success){
+        return throwError(res.message)
+      }
+      return of(res.data)
+    }))
   }
 
-  register(paylaod:IAuth): Observable<any>{
+  register(paylaod: IRegister): Observable<IRegisterResponse> {
     let url: string = '';
-    return this.api.post(url,paylaod)
+    return this.http.post<IRegisterResponse>(url, paylaod)
   }
 
   logout(): Observable<any> {
     localStorage.removeItem('userId');
     localStorage.removeItem('token');
+    this.isAuth$.next(false);
     return of(true)
   }
 }

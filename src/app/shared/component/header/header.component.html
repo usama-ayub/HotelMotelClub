@@ -84,10 +84,15 @@
                                     <use xlink:href="assets/images/sprite.svg#arrow-rounded-down-7x5"></use>
                                 </svg></button>
                             <div class="topbar-dropdown__body">
-                                <ul class="menu menu--layout--topbar">
-                                    <li><a (click)="routeTo('/account')">Login</a></li>
-                                    <li><a (click)="routeTo('/account')">Register</a></li>
-                                    <li><a>Logout</a></li>
+                                <!-- <ul class="menu menu--layout--topbar">
+                                    <li *ngIf="!authService.isAuth$ | async"><a (click)="routeTo('/account')">Login</a></li>
+                                    <li *ngIf="!authService.isAuth$ | async"><a (click)="routeTo('/account')">Register</a></li>
+                                    <li *ngIf="authService.isAuth$ | async"><a>Logout</a></li>
+                                </ul> -->
+                                <ul class="menu menu--layout--topbar pointer">
+                                    <li *ngIf="!isAuth" (click)="routeTo('/account')"><a>Login</a></li>
+                                    <li *ngIf="!isAuth" (click)="routeTo('/account')"><a>Register</a></li>
+                                    <li *ngIf="isAuth" (click)="logout()"><a>Logout</a></li>
                                 </ul>
                             </div>
                         </div>

@@ -1,2 +1,14 @@
 .pointer {cursor: pointer;}
 .yellow {color: #ffd333}
+
+.toaster {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+.show-toaster {
+    display: initial;
+}
+.hide-toaster {
+    display: none;
+}

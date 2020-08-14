@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonService } from './shared/services/common/common.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'hotel-motel-club';
+  constructor(public commonService: CommonService){ }
 }

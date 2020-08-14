@@ -5,9 +5,4 @@ export interface IUser {
     repassword?: string;
 }
 
-export interface IAuth {
-    email: string;
-    password: string;
-    repassword?: string;
-}
 

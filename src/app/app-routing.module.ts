@@ -9,16 +9,18 @@ import { AuthComponent } from './component/auth/auth.component';
 import { NotFoundComponent } from './component/not-found/not-found.component';
 import { WelcomeComponent } from './component/welcome/welcome.component';
 import { CreateProductComponent } from './component/create-product/create-product.component';
+import { NoAuthGuard } from './core/guard/no-auth/no-auth.guard';
+import { AuthGuard } from './core/guard/auth/auth.guard';
 
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'product-list', component: ProductListComponent},
   {path: 'product/:id', component: ProductDetailComponent},
-  {path: 'create-product', component: CreateProductComponent},
+  {path: 'create-product', component: CreateProductComponent, canActivate: [AuthGuard]},
   {path: 'about', component: AboutUsComponent},
   {path: 'contact', component: ContactUsComponent},
-  {path: 'account', component: AuthComponent},
+  {path: 'account', component: AuthComponent, canActivate: [NoAuthGuard]},
   {path: 'error', component: NotFoundComponent},
   {path: 'welcome', component: WelcomeComponent},
   { path: '**', redirectTo: 'welcome', pathMatch: 'full'},

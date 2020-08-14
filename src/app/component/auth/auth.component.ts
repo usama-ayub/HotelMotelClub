@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MustMatch } from 'src/app/shared/component/helper/must-match';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { CommonService } from 'src/app/shared/services/common/common.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -10,9 +12,16 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 export class AuthComponent implements OnInit {
   registerForm: FormGroup;
   loginForm: FormGroup;
-  submittedLogin = false;
-  submittedRegister = false;
-  constructor(private formBuilder: FormBuilder, private auth: AuthService) { }
+  submittedLogin: boolean = false;
+  submittedRegister: boolean = false;
+  isRequestLogin: boolean = false;
+  isRequestRegister: boolean = false;
+  constructor(
+    private formBuilder: FormBuilder, 
+    private authService: AuthService,
+    private commonService: CommonService,
+    private router: Router
+    ) { }
 
   ngOnInit() : void {
     this.registerFormInit();
@@ -37,13 +46,20 @@ export class AuthComponent implements OnInit {
   }
   onSubmitLogin() : void {
     this.submittedLogin = true;
+    this.isRequestLogin = true;
     if (this.loginForm.invalid) {
         return;
     }
-    this.auth.login(this.loginForm.value).subscribe((res:any)=>{
-
+    this.authService.login(this.loginForm.value).subscribe((data)=>{
+      this.isRequestLogin = false;
+      localStorage.setItem('token', data.token);
+      this.commonService.success('Logged In successfully');
+      this.router.navigate(['/home']);
+      this.authService.isAuth$.next(true);
+    }, (error) => {
+      this.isRequestLogin = false;
+      this.commonService.error(error);
     })
-    console.log(this.loginForm)
   }
 
   onSubmitRegister() : void {
@@ -52,9 +68,9 @@ export class AuthComponent implements OnInit {
         return;
     }
     console.log(this.registerForm)
-    this.auth.register(this.registerForm.value).subscribe((res:any)=>{
+    // this.authService.register(this.registerForm.value).subscribe((data)=>{
       
-    })
+    // })
   }
   get f() { return this.registerForm.controls; }
   get l() { return this.loginForm.controls; }

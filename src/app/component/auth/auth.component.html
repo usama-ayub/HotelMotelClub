@@ -36,7 +36,8 @@
                                                     <use xlink:href="images/sprite.svg#check-9x7"></use>
                                                 </svg> </span></span><label class="form-check-label"
                                             for="login-remember">Remember Me</label></div>
-                                </div><button type="submit" class="btn btn-primary mt-4">Login</button>
+                                </div>
+                                <button type="submit" class="btn btn-primary mt-4" [ngClass]="{'btn-loading': isRequestLogin}" [disabled]="isRequestLogin == true ? true : null" [disabled]="isRequestRegister == true ? true : null">Login</button>
                             </form>
                         </div>
                     </div>
@@ -64,12 +65,14 @@
                                     <div class="form-group"><label>Repeat Password</label> 
                                         <input type="password" formControlName="confirmPassword" class="form-control" placeholder="Password" [ngClass]="{ 'is-invalid': submittedRegister && f.confirmPassword.errors }">
                                             <div *ngIf="submittedRegister && f.confirmPassword.errors" class="invalid-feedback">
-                                                <div *ngIf="f.confirmPassword.errors.required">Password is required</div>
-                                                <div *ngIf="f.confirmPassword.errors.minlength">Password must be at least 6 characters</div>
+                                                {{f.confirmPassword.errors | json}}
+                                                <div *ngIf="f.confirmPassword.errors.required">Repeat Password is required</div>
+                                                <div *ngIf="f.confirmPassword.errors.minlength">Repeat Password must be at least 6 characters</div>
+                                                <div *ngIf="f.confirmPassword.errors.mustMatch">Repeat Passwords must match</div>
                                             </div>
                                     </div>
                                         <button type="submit"
-                                    class="btn btn-primary mt-4">Register</button>
+                                    class="btn btn-primary mt-4" [ngClass]="{'btn-loading': isRequestRegister}" [disabled]="isRequestLogin == true ? true : null" [disabled]="isRequestRegister == true ? true : null">Register</button>
                             </form>
                         </div>
                     </div>

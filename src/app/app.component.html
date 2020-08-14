@@ -358,5 +358,10 @@
 
      <app-footer></app-footer> -->
   </div>
-
+  <div class="alert alert-danger error-alert toaster" role="alert" [ngClass]="{'show-toaster': commonService.errorObj.error, 'hide-toaster': !commonService.errorObj.error}">
+    {{commonService.errorObj.message}}
+  </div>
+  <div class="alert alert-success error-alert toaster" role="alert" [ngClass]="{'show-toaster': commonService.successObj.success, 'hide-toaster': !commonService.successObj.success}">
+    {{commonService.successObj.message}}
+  </div>
 
