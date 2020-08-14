@@ -11,11 +11,24 @@ export class HeaderComponent implements OnInit {
   isAccountDropdown:boolean = false;
   isLanguageDropdown:boolean = false;
   isWishListDropdown:boolean = false;
+
+  navMenu :Array<{name:string, path:string}> =[];
+
   constructor(
     private router: Router
   ) { }
 
   ngOnInit() {
+    this.initNav();
+  }
+
+  initNav():void {
+    this.navMenu.push(
+      {name:'Home', path:'/home'},
+      {name:'Product', path:'/product-list'},
+      {name:'Contact Us', path:'/contact'},
+      {name:'About Us', path:'/about'},
+      )
   }
 
   showAccountDropdown() : void{
