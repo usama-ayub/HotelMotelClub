@@ -28,7 +28,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/assets/vendor/bootstrap-4.2.1/css/bootstrap.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/vendor/owl-carousel-2.3.4/assets/owl.carousel.min.css",
               "src/assets/css/style.css",
               "src/styles.scss",
@@ -36,10 +36,10 @@
               "src/assets/fonts/stroyka/stroyka.css"
             ],
             "scripts": [
-              "src/assets/vendor/jquery-3.3.1/jquery.min.js",
-              "src/assets/vendor/bootstrap-4.2.1/js/bootstrap.bundle.min.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
               "src/assets/vendor/owl-carousel-2.3.4/owl.carousel.min.js",
-              "src/assets/vendor/nouislider-12.1.0/nouislider.min.js",
+              "node_modules/nouislider/distribute/nouislider.min.js",
               "src/assets/js/number.js",
               "src/assets/js/main.js"
             ]

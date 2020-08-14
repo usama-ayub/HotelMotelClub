@@ -7,21 +7,25 @@ declare const noUiSlider: any
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent implements OnInit {
-  
+
   constructor() { }
 
   ngOnInit() {
+    this.silderInit();
+  }
+
+  silderInit(): void {
     console.log(noUiSlider)
     var slider = document.getElementById('slider');
 
-noUiSlider.create(slider, {
-    start: [300, 700],
-    connect: true,
-    range: {
+    noUiSlider.create(slider, {
+      start: [300, 700],
+      connect: true,
+      range: {
         'min': 100,
         'max': 1000
-    }
-});
+      }
+    });
   }
 
 }
