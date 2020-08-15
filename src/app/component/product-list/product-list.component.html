@@ -73,8 +73,10 @@
                                                         class="filter-price__slider noUi-target noUi-ltr noUi-horizontal">
                                                     </div>
                                                     <div class="filter-price__title">Price: $<span
-                                                            class="filter-price__min-value">590.00</span> – $<span
-                                                            class="filter-price__max-value">1130.00</span></div>
+                                                            class="filter-price__min-value">{{this.filterPayload.min}}</span>
+                                                        – $<span
+                                                            class="filter-price__max-value">{{this.filterPayload.max}}</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -93,13 +95,14 @@
                                             <div class="filter__container">
                                                 <div class="filter-list">
                                                     <div class="filter-list__list">
-                                                        <ng-container *ngFor="let seller of sellerArray">
-                                                            <label class="filter-list__item"
+                                                        <ng-container *ngFor="let seller of sellerArray; let i = index">
+                                                            <label class="filter-list__item" [for]="i"
                                                                 [ngClass]="{'filter-list__item--disabled': !seller.availabe}">
                                                                 <span class="filter-list__input input-check">
                                                                     <span class="input-check__body">
-                                                                        <input class="input-check__input"
-                                                                            type="checkbox"
+                                                                        <input class="input-check__input" [id]="i"
+                                                                            type="checkbox" [value]="seller.name"
+                                                                            (change)="onCheckboxChange($event)"
                                                                             [disabled]="seller.availabe == false ? true : null">
                                                                         <span class="input-check__box"></span>
                                                                         <svg class="input-check__icon" width="9px"
@@ -133,13 +136,15 @@
                                             <div class="filter__container">
                                                 <div class="filter-list">
                                                     <div class="filter-list__list">
-                                                        <ng-container *ngFor="let brand of brandArray">
-                                                            <label class="filter-list__item"
+                                                        <ng-container *ngFor="let brand of brandArray; let i = index">
+                                                            <label class="filter-list__item" [for]="i"
                                                                 [ngClass]="{'filter-list__item--disabled': !brand.availabe}">
                                                                 <span class="filter-list__input input-radio">
                                                                     <span class="input-radio__body">
-                                                                        <input class="input-radio__input"
-                                                                            name="filter_radio" type="radio"
+                                                                        <input class="input-radio__input" [id]="i"
+                                                                            [value]='brand.name' type="radio"
+                                                                            [(ngModel)]="filterPayload.brand"
+                                                                            name="brand" type="radio"
                                                                             [disabled]="brand.availabe == false ? true : null">
                                                                         <span class="input-radio__circle"></span>
                                                                     </span>
@@ -156,9 +161,9 @@
                                 </div>
                             </div>
                             <div class="widget-filters__actions d-flex">
-                                <button class="btn btn-primary btn-sm" (click)="applyFiler()">Filter</button>
-                                 <button class="btn btn-secondary btn-sm ml-2">Reset</button>
-                            </div>
+                                <button class="btn btn-primary btn-sm" (click)="applyFiler()" [ngClass]="{'btn-loading': isRequestFilter}" [disabled]="isRequestFilter == true ? true : null" [disabled]="isRequestReset == true ? true : null">Filter</button>
+                                <button class="btn btn-secondary btn-sm ml-2" [ngClass]="{'btn-loading': isRequestReset}" [disabled]="isRequestFilter == true ? true : null" [disabled]="isRequestReset == true ? true : null">Reset</button>
+                            </div> 
                         </div>
                     </div>
                 </div>
@@ -193,22 +198,9 @@
                             </div>
                         </div>
                         <div class="products-view__pagination">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item disabled"><a class="page-link page-link--with-arrow" href="#"
-                                        aria-label="Previous"><svg class="page-link__arrow page-link__arrow--left"
-                                            aria-hidden="true" width="8px" height="13px">
-                                            <use xlink:href="assets/images/sprite.svg#arrow-rounded-left-8x13"></use>
-                                        </svg></a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item active"><a class="page-link" href="#">2 <span
-                                            class="sr-only">(current)</span></a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link page-link--with-arrow" href="#"
-                                        aria-label="Next"><svg class="page-link__arrow page-link__arrow--right"
-                                            aria-hidden="true" width="8px" height="13px">
-                                            <use xlink:href="assets/images/sprite.svg#arrow-rounded-right-8x13"></use>
-                                        </svg></a></li>
-                            </ul>
+                            <app-pagination [page]="filterPayload.page" [totalPages]="filterPayload.totalPages"
+                                (onPageChange)="onPageChange($event)">
+                            </app-pagination>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,13 @@
+<ul class="pagination justify-content-center">
+    <li class="page-item" (click)="Previous()" [ngClass]="{'disabled': page == 1}">
+        <a class="page-link page-link--with-arrow" aria-label="Previous"><svg
+                class="page-link__arrow page-link__arrow--left" aria-hidden="true" width="8px" height="13px">
+                <use xlink:href="assets/images/sprite.svg#arrow-rounded-left-8x13"></use>
+            </svg></a></li>
+    <li class="page-item" *ngFor="let pag of diminuiPaginacao(arrayPages)" [ngClass]="{'active': pag == page}" (click)="currentPage(pag)"><a class="page-link">{{ pag }}</a></li>
+
+    <li class="page-item" [ngClass]="{'disabled': page == totalPages}" (click)="next()"><a class="page-link page-link--with-arrow" aria-label="Next"><svg
+                class="page-link__arrow page-link__arrow--right" aria-hidden="true" width="8px" height="13px">
+                <use xlink:href="assets/images/sprite.svg#arrow-rounded-right-8x13"></use>
+            </svg></a></li>
+</ul>

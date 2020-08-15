@@ -8,6 +8,8 @@ declare const noUiSlider: any
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent implements OnInit {
+  isRequestFilter = false;
+  isRequestReset = false;
   isFilterCollapse  = {
     isCategory: true,
     isBrand: true,
@@ -19,7 +21,18 @@ export class ProductListComponent implements OnInit {
   categoryArray: Array<ICategory> = [];
   filterPayload = {
     brand: '',
-    seller: ''
+    seller: [], 
+    max:0,
+    min:0,
+    page:1,
+    totalPages:20
+  }
+  paginationOption = {
+    current:2,
+    perPag:3,
+    total : 10,
+    next: true,
+    prev: true
   }
   constructor() { }
 
@@ -74,6 +87,7 @@ export class ProductListComponent implements OnInit {
   categoryCollapse(index:number): void {
       this.categoryArray[index].isCollapse = !this.categoryArray[index].isCollapse;
   }
+  
   filterCollapse(type: string): void {
      if(type == 'category'){
        this.isFilterCollapse.isCategory = !this.isFilterCollapse.isCategory;
@@ -88,9 +102,10 @@ export class ProductListComponent implements OnInit {
       this.isFilterCollapse.isPrice = !this.isFilterCollapse.isPrice;
     }
   }
+
   silderInit(): void {
     console.log(noUiSlider)
-    var slider = document.getElementById('slider');
+    var slider:any = document.getElementById('slider');
 
     noUiSlider.create(slider, {
       start: [300, 700],
@@ -98,12 +113,36 @@ export class ProductListComponent implements OnInit {
       range: {
         'min': 100,
         'max': 1000
-      }
+      },
     });
+      let value = slider.noUiSlider.get();
+      this.filterPayload.min = value[0];
+      this.filterPayload.max = value[1];
+    slider.noUiSlider.on('change',()=>{
+      value = slider.noUiSlider.get();
+      this.filterPayload.min = value[0];
+      this.filterPayload.max = value[1];
+    })
+  }
+  
+  onCheckboxChange(event:any): void{
+    if(event.target.checked) { 
+       this.filterPayload.seller.push(event.target.value);
+    } else {
+      this.filterPayload.seller.splice(event.target.value,1);
+    }
   }
 
   applyFiler(): void {
+    this.isRequestFilter = true;
     console.log(this.filterPayload);
+    setTimeout(()=>{
+      this.isRequestFilter = false;
+    },1000)
+  }
+
+  onPageChange(event: any) {
+    this.filterPayload.page = event.value;
   }
 
 }

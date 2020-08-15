@@ -47,6 +47,10 @@ export class HeaderComponent implements OnInit {
     this.isLanguageDropdown = !this.isLanguageDropdown
   }
   showWishList(): void{
+    if(!this.isAuth){
+      this.router.navigate(['/account']);
+      return;
+    }
     this.isWishListDropdown = !this.isWishListDropdown
   }
   wishListOutSideClick(event:any): void{
