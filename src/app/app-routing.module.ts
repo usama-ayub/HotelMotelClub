@@ -14,7 +14,7 @@ import { AuthGuard } from './core/guard/auth/auth.guard';
 
 
 const routes: Routes = [
-  {path: 'home', component: HomeComponent},
+  {path: 'home', component: ProductListComponent},
   {path: 'product-list', component: ProductListComponent},
   {path: 'product/:id', component: ProductDetailComponent},
   {path: 'create-product', component: CreateProductComponent, canActivate: [AuthGuard]},
@@ -23,7 +23,7 @@ const routes: Routes = [
   {path: 'account', component: AuthComponent, canActivate: [NoAuthGuard]},
   {path: 'error', component: NotFoundComponent},
   {path: 'welcome', component: WelcomeComponent},
-  { path: '**', redirectTo: 'welcome', pathMatch: 'full'},
+  { path: '**', redirectTo: 'home', pathMatch: 'full'},
 ];
 
 @NgModule({

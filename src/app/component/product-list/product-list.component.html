@@ -192,8 +192,8 @@
                         <div class="products-view__list products-list" data-layout="grid-3-sidebar"
                             data-with-features="false">
                             <div class="products-list__body">
-                                <div class="products-list__item" *ngFor="let item of [].constructor(15); let i = index">
-                                    <app-product></app-product>
+                                <div class="products-list__item" *ngFor="let item of [].constructor(10); let i = index">
+                                    <app-product [index]="i+1"></app-product>
                                 </div>
                             </div>
                         </div>

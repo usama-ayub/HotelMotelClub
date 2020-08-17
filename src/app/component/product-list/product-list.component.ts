@@ -7,6 +7,7 @@ declare const noUiSlider: any
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss']
 })
+// https://stackblitz.com/edit/angular-pagination-bkfqss?file=app%2Fpagination%2Fpagination.component.html
 export class ProductListComponent implements OnInit {
   isRequestFilter = false;
   isRequestReset = false;
@@ -50,32 +51,54 @@ export class ProductListComponent implements OnInit {
     );
     this.categoryArray.push(
       {
-        id: '1', name: 'Wakita', description: 'Wakita',
+        id: '1', name: 'Hotel Jobs', description: 'Hotel Jobs',
         isCollapse:false,
         child: [
-          { id: '1.1', name: 'Engravers', description: 'Engravers', child: [] },
-          { id: '1.2', name: 'Drills', description: 'Drills', child: [] },
-          { id: '1.2', name: 'Wrenches', description: 'Wrenches', child: [] },
-          { id: '1.2', name: 'Plumbing', description: 'Plumbing', child: [] },
+          { id: '1.1', name: 'Management', description: 'Management', child: [] },
+          { id: '1.2', name: 'Front Desk', description: 'Front Desk', child: [] },
+          { id: '1.2', name: 'House Keeper', description: 'House Keeper', child: [] },
+          { id: '1.2', name: 'Maintenance', description: 'Maintenance', child: [] },
         ]
       },
       {
-        id: '2', name: 'Hand', description: 'Hand',
+        id: '2', name: 'Housekeeping Supplies', description: 'Housekeeping Supplies',
         isCollapse:false,
         child: [
-          { id: '1.1', name: 'Engravers', description: 'Engravers', child: [] },
-          { id: '1.2', name: 'Drills', description: 'Drills', child: [] },
-          { id: '1.2', name: 'Wrenches', description: 'Wrenches', child: [] },
-          { id: '1.2', name: 'Plumbing', description: 'Plumbing', child: [] },
+          { id: '1.1', name: 'Chemicals', description: 'Chemicals', child: [] },
+          { id: '1.2', name: 'Linnen', description: 'Linnen', child: [] },
+          { id: '1.2', name: 'Misc', description: 'Misc', child: [] }
         ]
       },
       {
-        id: '2', name: 'Presse', description: 'Presse',
+        id: '3', name: 'Real Estate', description: 'Real Estate',
+        isCollapse:false,
+        child: [
+          { id: '1.1', name: 'For Sale', description: 'For Sale', child: [] },
+          { id: '1.2', name: 'For Rent', description: 'For Rent', child: [] },
+          { id: '1.2', name: 'Others', description: 'Others', child: [] }
+        ]
+      },
+      {
+        id: '4', name: 'Misc', description: 'Misc',
         isCollapse:false,
         child: []
       },
+      {
+        id: '5', name: 'Events & Announcements', description: 'Events & Announcements',
+        isCollapse:false,
+        child: []
+      },
+      {
+        id: '6', name: 'Guest Supplies', description: 'Guest Supplies',
+        isCollapse:false,
+        child: []
+      },
+      {
+        id: '7', name: 'Hotel Furniture', description: 'Guest Supplies',
+        isCollapse:false,
+        child: []
+      }
     );
-    console.log(this.categoryArray)
     this.sellerArray.push(
       { name: 'Wakita', availabe: true },
       { name: 'Zosch', availabe: true },
