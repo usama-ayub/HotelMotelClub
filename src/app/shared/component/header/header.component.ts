@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
 
   initNav():void {
     this.navMenu.push(
-      // {name:'Home', path:'/home'},
+      {name:'Home', path:'/home'},
       {name:'Product', path:'/product-list'},
       {name:'Contact Us', path:'/contact'},
       {name:'About Us', path:'/about'},
