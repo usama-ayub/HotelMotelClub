@@ -15,9 +15,11 @@
                             <use xlink:href="assets/images/sprite.svg#arrow-rounded-right-6x9"></use>
                         </svg>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                        {{pageTitle}}
-                    </li>
+                    <ng-container *ngIf="numberOfPath">
+                        <li class="breadcrumb-item active" aria-current="page">
+                            {{pageTitle}}
+                        </li>
+                    </ng-container>
                 </ol>
             </nav>
         </div>

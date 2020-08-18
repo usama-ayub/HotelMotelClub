@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 })
 export class BreadcrumbComponent implements OnInit {
   @Input() pageTitle: string;
+  @Input() numberOfPath: number = 0;
   constructor(
     private router: Router
   ) { }
