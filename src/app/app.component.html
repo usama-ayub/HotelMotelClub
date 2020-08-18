@@ -352,11 +352,8 @@
   <div class="site">
        <app-header></app-header>
        <router-outlet></router-outlet>
-      
-      
-    <!-- <router-outlet></router-outlet>
 
-     <app-footer></app-footer> -->
+     <app-footer></app-footer>
   </div>
   <div class="alert alert-danger error-alert toaster" role="alert" [ngClass]="{'show-toaster': commonService.errorObj.error, 'hide-toaster': !commonService.errorObj.error}">
     {{commonService.errorObj.message}}
