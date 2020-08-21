@@ -52,8 +52,8 @@
                                         <label>Category</label>
                                         <select class="form-control" formControlName="category"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.category.errors }">
-                                            <option [ngValue]="null">Select a category...</option>
-                                            <option *ngFor="let category of categoryArray">{{category.categoryName}}</option>
+                                            <option [value]="null" disabled>Select a category</option>
+                                            <option *ngFor="let category of categoryArray" [value]="category.categoryId">{{category.categoryName}}</option>
                                         </select>
                                         <div *ngIf="submittedProduct && f.category.errors" class="invalid-feedback">
                                             <div *ngIf="f.category.errors.required">Category is required</div>
@@ -63,7 +63,7 @@
                                         <label>Sub Category</label>
                                         <select class="form-control" formControlName="subcategory"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.subcategory.errors }">
-                                            <option [ngValue]="null">Select a sub category</option>
+                                            <option [value]="null" disabled>Select a sub category</option>
                                             <option>United States</option>
                                             <option>Russia</option>
                                             <option>Italy</option>

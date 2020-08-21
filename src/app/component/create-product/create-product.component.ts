@@ -67,9 +67,21 @@ export class CreateProductComponent implements OnInit {
       category: [null, [Validators.required]],
       country: [null, [Validators.required]],
       state: [null, [Validators.required]],
-      subcategory: [null, [Validators.required]],
+      subcategory: [''],
       price: ['', [Validators.required, Validators.min(2)]],
       imageurl: [[], [Validators.required]],
+    });
+    this.productForm.get('category').valueChanges.subscribe(value => {
+      let index = this.categoryArray.findIndex((res)=> {
+        return res.categoryId.toString() === value
+      });
+      if (this.categoryArray[index].subcategory.length !==0) {
+        this.productForm.get('subcategory').setValidators([Validators.required])
+      }
+      else {
+        this.productForm.get('subcategory').setValidators(null);
+      }
+      this.productForm.get('subcategory').updateValueAndValidity();
     });
   }
   onSubmitProduct(): void {
@@ -79,7 +91,16 @@ export class CreateProductComponent implements OnInit {
     }
     console.log(this.productForm.value)
   }
-
+  onCategoryChnage(e){
+    console.log(e.target.value);
+    let index = this.categoryArray.findIndex((res)=> {
+      return res.categoryId.toString() === e.target.value
+    });
+    // if(this.categoryArray[index].subcategory.length !==0){
+    //   this.productForm.get('subcategory').setValidators([Validators.required]);
+    // } else
+    // this.productForm.get('subcategory').clearValidators();
+  }
   getCategory(){
     this.productService.getCategory().subscribe((data)=>{
       this.categoryArray = data;
