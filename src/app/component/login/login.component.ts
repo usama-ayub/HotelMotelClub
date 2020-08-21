@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submittedRegister: boolean = false;
-  isRequestRegister: boolean = false;
+  isRequestLogin: boolean = false;
   constructor(
     private formBuilder: FormBuilder, 
     private authService: AuthService,
@@ -36,12 +36,15 @@ export class LoginComponent implements OnInit {
       if (this.loginForm.invalid) {
           return;
       }
+      this.isRequestLogin = true;
       this.authService.login(this.loginForm.value).subscribe((data)=>{
         localStorage.setItem('token', data.token);
         this.commonService.success('Logged In successfully');
+        this.isRequestLogin = false;
         this.router.navigate(['/home']);
         this.authService.isAuth$.next(true);
       }, (error) => {
+        this.isRequestLogin = false;
         this.commonService.error(error);
       })
     }

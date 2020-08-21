@@ -9,12 +9,18 @@
                             <h3 class="card-title">Prodcut Details</h3>
                             <form [formGroup]="productForm" (ngSubmit)="onSubmitProduct()">
                             <div class="form-group">
-                                <label for="checkout-company-name">Title</label> 
-                                <input type="text" class="form-control" id="checkout-company-name" placeholder="Company Name">
+                                <label for="checkout-company-name">Title</label>       
+                                <input type="text" formControlName="title" class="form-control" placeholder="Title" 
+                                [ngClass]="{ 'is-invalid': submittedProduct && f.title.errors }">
+                                <div *ngIf="submittedProduct && f.title.errors" class="invalid-feedback">
+                                    <div *ngIf="f.title.errors.required">First Name is required</div>
+                                </div>
                             </div>
-                            <div class="form-group"><label for="checkout-country">Country</label> <select
-                                    id="checkout-country" class="form-control">
-                                    <option>Select a country...</option>
+                            <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Country</label> 
+                                <select class="form-control" formControlName="country" [ngClass]="{ 'is-invalid': submittedProduct && f.country.errors }">
+                                    <option [ngValue]="null" disabled>Select Country</option>
                                     <option>United States</option>
                                     <option>Russia</option>
                                     <option>Italy</option>
@@ -23,34 +29,77 @@
                                     <option>Germany</option>
                                     <option>Australia</option>
                                 </select>
+                                <div *ngIf="submittedProduct && f.country.errors" class="invalid-feedback">
+                                    <div *ngIf="f.country.errors.required">Country is required</div>
+                                </div>
                             </div>
-                            <div class="form-group"><label for="checkout-country">Statte</label> <select
-                                id="checkout-country" class="form-control">
-                                <option>Select a country...</option>
+                            <div class="form-group col-md-6">
+                                <label>State</label>
+                                 <select class="form-control" formControlName="state" [ngClass]="{ 'is-invalid': submittedProduct && f.state.errors }">
+                                <option [ngValue]="null" disabled>Select a state...</option>
                                 <option>United States</option>
                                 <option>Russia</option>
-                                <option>Italy</option>
-                                <option>France</option>
-                                <option>Ukraine</option>
-                                <option>Germany</option>
-                                <option>Australia</option>
                             </select>
-                        </div>
-                            <div class="form-group">
-                                <label for="checkout-street-address">Set A Price</label> 
-                                <input type="text" class="form-control"
-                                    placeholder="Price">
+                            <div *ngIf="submittedProduct && f.state.errors" class="invalid-feedback">
+                                <div *ngIf="f.state.errors.required">State is required</div>
                             </div>
+                        </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                <label>Category</label> 
+                                <select class="form-control" formControlName="category" [ngClass]="{ 'is-invalid': submittedProduct && f.category.errors }">
+                                        <option [ngValue]="null">Select a category...</option>
+                                        <option>United States</option>
+                                        <option>Russia</option>
+                                        <option>Italy</option>
+                                        <option>France</option>
+                                        <option>Ukraine</option>
+                                        <option>Germany</option>
+                                        <option>Australia</option>
+                                    </select>
+                                    <div *ngIf="submittedProduct && f.category.errors" class="invalid-feedback">
+                                        <div *ngIf="f.category.errors.required">Category is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label >Sub Category</label> 
+                                    <select class="form-control" formControlName="subcategory" [ngClass]="{ 'is-invalid': submittedProduct && f.subcategory.errors }">
+                                    <option [ngValue]="null">Select a sub category</option>
+                                    <option>United States</option>
+                                    <option>Russia</option>
+                                    <option>Italy</option>
+                                    <option>France</option>
+                                    <option>Ukraine</option>
+                                    <option>Germany</option>
+                                    <option>Australia</option>
+                                </select>
+                                <div *ngIf="submittedProduct && f.subcategory.errors" class="invalid-feedback">
+                                    <div *ngIf="f.subcategory.errors.required">Sub Category is required</div>
+                                </div>
+                            </div>
+                                </div>
 
                             <div class="form-group">
-                                <label for="checkout-street-address">Contact Number</label> 
-                                <input type="text" class="form-control"
-                                    placeholder="Price">
+                                <label>Set A Price</label> 
+                                <input type="number" formControlName="price" class="form-control"
+                                    placeholder="Price" [ngClass]="{ 'is-invalid': submittedProduct && f.price.errors }">
+                                    <div *ngIf="submittedProduct && f.price.errors" class="invalid-feedback">
+                                        <div *ngIf="f.price.errors.required">Price is required</div>
+                                    </div>
+                                    <div *ngIf="submittedProduct && f.price.min" class="invalid-feedback">
+                                        <div *ngIf="f.price.errors.min">Min 2 price is required</div>
+                                    </div>
                             </div>
                             <div class="form-group">
-                                <label for="checkout-comment">Description </label>
-                                <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
+                                <label>Description </label>
+                                <angular-editor formControlName="description" id="description" [config]="editorConfig" (input)="onChange($event)"></angular-editor>
+                                <div *ngIf="submittedProduct && f.description.errors" class="invaild-editor">
+                                    <div *ngIf="f.description.errors.required">Description is required</div>
+                                </div>
+                               
                         </div>
+                    
                             <button type="submit" class="btn btn-primary mt-4">Create Product</button>
                         </form>
                         </div>

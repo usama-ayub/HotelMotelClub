@@ -10,11 +10,9 @@ import { AuthService } from '../../services/auth/auth.service';
 export class HeaderComponent implements OnInit {
 
   isAuth:boolean = false;
-  isAccountDropdown:boolean = false;
-  isLanguageDropdown:boolean = false;
   isWishListDropdown:boolean = false;
-
-  navMenu :Array<{name:string, path:string}> =[];
+  navMenu :Array<{name:string, path:string, child:Array<any>}> =[];
+  authGarudPath = ['/create-product'];
 
   constructor(
     private router: Router,
@@ -26,28 +24,29 @@ export class HeaderComponent implements OnInit {
     this.authService.isAuth$.subscribe((res:boolean)=>{
       console.log(res);
       this.isAuth = res;
+      if(!this.isAuth){
+        this.navMenu[1].child = [];
+        this.navMenu[1].child.push({name:'Login', path:'/login'});
+        this.navMenu[1].child.push({name:'Register', path:'/register'});
+      } else {
+        this.navMenu[1].child = [];
+        this.navMenu[1].child.push({name:'Create Product', path:'/create-product'});
+        this.navMenu[1].child.push({name:'logout', path:'/logout'});
+      }
     })
   }
 
   initNav():void {
     this.navMenu.push(
-      {name:'Home', path:'/home'},
-      // {name:'Product', path:'/product-list'},
-      {name:'About Us', path:'/about'},
-      {name:'Contact Us', path:'/contact'},
-      {name:'FAQ', path:'/faq'},
-      {name:'Policies', path:'/policy'},
+      {name:'Home', path:'/home', child:[]},
+      {name:'My Account', path:'',child:[]},
+      {name:'About Us', path:'/about',child:[]},
+      {name:'Contact Us', path:'/contact',child:[]},
+      {name:'FAQ', path:'/faq',child:[]},
+      {name:'Policies', path:'/policy', child:[]},
       )
   }
 
-  showAccountDropdown() : void{
-    this.isLanguageDropdown = false;
-    this.isAccountDropdown = !this.isAccountDropdown
-  }
-  showLanguageDropdown(): void{
-    this.isAccountDropdown = false
-    this.isLanguageDropdown = !this.isLanguageDropdown
-  }
   showWishList(): void{
     if(!this.isAuth){
       this.router.navigate(['/login']);
@@ -58,19 +57,21 @@ export class HeaderComponent implements OnInit {
   wishListOutSideClick(event:any): void{
     this.isWishListDropdown = false;
   }
-  languageOutSideClick(event:any): void{
-    this.isLanguageDropdown = false;
-  }
-  accountOutSideClick(event:any): void{
-    this.isAccountDropdown = false;
-  }
   
-  logout(){
+  logout() :void{
     this.authService.logout().subscribe((res:any)=>{
-      console.log(res);
+      if(this.authGarudPath.includes(this.router.url)){
+         this.routeTo('/login')
+      }
     })
   }
-  routeTo(path:string){
-    this.router.navigate([path]);
+  routeTo(path:string) :void{
+    if(path){
+      if(path == '/logout'){
+        this.logout();
+      } else {
+        this.router.navigate([path]);
+      }
+    }
   }
 }

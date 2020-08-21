@@ -60,6 +60,7 @@ export class RegisterComponent implements OnInit {
       if (this.registerForm.invalid) {
           return;
       }
+      this.isRequestRegister = true;
       if(this.registerForm.value.preferredContact == '1'){
         this.registerForm.value.preferredContact = this.registerForm.value.primaryContact;
       } else {
@@ -70,13 +71,16 @@ export class RegisterComponent implements OnInit {
       .subscribe((res)=>{
         this.authService.login(this.registerForm.value).subscribe((data)=>{
           localStorage.setItem('token', data.token);
+          this.isRequestRegister = false;
           this.commonService.success('Logged In successfully');
           this.router.navigate(['/home']);
           this.authService.isAuth$.next(true);
         }, (error) => {
+          this.isRequestRegister = false;
           this.commonService.error(error);
         })
       }, (error) => {
+        this.isRequestRegister = false;
         this.commonService.error(error);
       })
     }
