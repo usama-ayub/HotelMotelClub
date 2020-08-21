@@ -90,8 +90,9 @@
                                     <li *ngIf="authService.isAuth$ | async"><a>Logout</a></li>
                                 </ul> -->
                                 <ul class="menu menu--layout--topbar pointer">
-                                    <li *ngIf="!isAuth" (click)="routeTo('/account')"><a>Login</a></li>
-                                    <li *ngIf="!isAuth" (click)="routeTo('/account')"><a>Register</a></li>
+                                    <li *ngIf="!isAuth" (click)="routeTo('/login')"><a>Login</a></li>
+                                    <li *ngIf="!isAuth" (click)="routeTo('/register')"><a>Register</a></li>
+                                    <li *ngIf="isAuth" (click)="routeTo('/create-product')"><a>Create Product</a></li>
                                     <li *ngIf="isAuth" (click)="logout()"><a>Logout</a></li>
                                 </ul>
                             </div>

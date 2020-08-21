@@ -7,6 +7,15 @@ export interface ILogin {
 
 export interface IRegister {
     email: string;
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    primaryContact: number;
+    secondaryContact: number;
+    addressLine1: string;
+    addressLine2: string;
+    addressLine3: string;
+    preferredContact: number;
     password: string;
     repassword?: string;
 }
@@ -23,8 +32,7 @@ export interface ILoginData {
 
 export interface IRegisterData {
     email: string;
-    password: string;
-    repassword?: string;
+    token: string;
 }
 
 export type ILoginResponse  = IResponse<ILoginData>

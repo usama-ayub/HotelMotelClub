@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
@@ -19,6 +20,8 @@ import { CreateProductComponent } from './component/create-product/create-produc
 import { SettingComponent } from './component/setting/setting.component';
 import { ProductListComponent } from './component/product-list/product-list.component';
 import { WelcomeComponent } from './component/welcome/welcome.component';
+import { LoginComponent } from './component/login/login.component';
+import { RegisterComponent } from './component/register/register.component';
 
 
 @NgModule({
@@ -36,11 +39,14 @@ import { WelcomeComponent } from './component/welcome/welcome.component';
     SettingComponent,
     ProductListComponent,
     WelcomeComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    AngularEditorModule,
     FormsModule,
     CoreModule,
     SharedModule

@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit {
   }
   showWishList(): void{
     if(!this.isAuth){
-      this.router.navigate(['/account']);
+      this.router.navigate(['/login']);
       return;
     }
     this.isWishListDropdown = !this.isWishListDropdown

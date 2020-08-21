@@ -13,6 +13,8 @@ import { NoAuthGuard } from './core/guard/no-auth/no-auth.guard';
 import { AuthGuard } from './core/guard/auth/auth.guard';
 import { FaqComponent } from './component/faq/faq.component';
 import { TermConditionComponent } from './component/term-condition/term-condition.component';
+import { LoginComponent } from './component/login/login.component';
+import { RegisterComponent } from './component/register/register.component';
 
 
 const routes: Routes = [
@@ -25,6 +27,8 @@ const routes: Routes = [
   {path: 'faq', component: FaqComponent},
   {path: 'policy', component: TermConditionComponent},
   {path: 'account', component: AuthComponent, canActivate: [NoAuthGuard]},
+  {path: 'login', component: LoginComponent, canActivate: [NoAuthGuard]},
+  {path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard]},
   {path: 'error', component: NotFoundComponent},
   {path: 'welcome', component: WelcomeComponent},
   { path: '**', redirectTo: 'home', pathMatch: 'full'},

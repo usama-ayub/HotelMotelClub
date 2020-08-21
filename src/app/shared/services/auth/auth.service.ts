@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError, BehaviorSubject } from "rxjs/index";
 import { HttpClient } from "@angular/common/http";
-import { ILogin, ILoginResponse, IRegister, IRegisterResponse, ILoginData } from 'src/app/interface/auth';
+import { ILogin, ILoginResponse, IRegister, IRegisterResponse, ILoginData, IRegisterData } from 'src/app/interface/auth';
 import { map, switchMap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
@@ -27,9 +27,14 @@ export class AuthService {
     }))
   }
 
-  register(paylaod: IRegister): Observable<IRegisterResponse> {
-    let url: string = '';
-    return this.http.post<IRegisterResponse>(url, paylaod)
+  register(paylaod: IRegister): Observable<IRegisterData> {
+    let url: string = 'Auth/register';
+    return this.http.post<IRegisterResponse>(url, paylaod).pipe(switchMap(res => {
+      if(!res.success){
+        return throwError(res.message)
+      }
+      return of(res.data)
+    }))
   }
 
   logout(): Observable<any> {
