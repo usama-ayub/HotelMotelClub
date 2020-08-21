@@ -5,51 +5,54 @@
             <div class="product product--layout--columnar" data-layout="columnar">
                 <div class="product__content">
                     <!-- .product__gallery -->
+
                     <div class="product__gallery">
                         <div class="product-gallery">
                             <div class="product-gallery__featured">
-                                <div class="owl-carousel" id="product-image">
-                                    <a><img src="assets/images/product/product-1.jpg" alt=""></a>
-                                    <a><img src="assets/images/product/product-2.jpg" alt=""></a>
-                                    <a><img src="assets/images/product/product-3.jpg" alt=""></a>
-                                    <a><img src="assets/images/product/product-4.jpg" alt=""></a>
-                                    <a><img src="assets/images/product/product-5.jpg" alt=""></a>
+                                <div class="owl-carousel owl-loaded owl-drag" id="product-image">
+                                    <div class="owl-stage-outer">
+                                        <div class="owl-stage"
+                                            style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1880px;">
+                                            <div class="owl-item" style="width: 376px;">
+                                                <a><img [src]="selectedImage" alt="" style="height: 250px;"> </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="product-gallery__carousel">
-                                <div class="owl-carousel" id="product-carousel"><a 
-                                        class="product-gallery__carousel-item"><img
-                                            class="product-gallery__carousel-image"
-                                            src="assets/images/product/product-1.jpg" alt=""> </a><a 
-                                        class="product-gallery__carousel-item"><img
-                                            class="product-gallery__carousel-image"
-                                            src="assets/images/product/product-2.jpg" alt=""> </a><a 
-                                        class="product-gallery__carousel-item"><img
-                                            class="product-gallery__carousel-image"
-                                            src="assets/images/product/product-3.jpg" alt=""> </a><a 
-                                        class="product-gallery__carousel-item"><img
-                                            class="product-gallery__carousel-image"
-                                            src="assets/images/product/product-4.jpg" alt=""> </a><a 
-                                        class="product-gallery__carousel-item"><img
-                                            class="product-gallery__carousel-image"
-                                            src="assets/images/product/product-5.jpg" alt=""></a></div>
+                                <div class="owl-carousel owl-loaded owl-drag">
+                                    <div class="owl-stage-outer">
+                                        <div class="owl-stage"
+                                            style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 488px;">
+                                            <ng-container *ngFor="let img of productDetailImage; let i = index">
+                                                <div class="owl-item active pointer" style="width: 87.5px; margin-right: 10px;" (click)="onImageSelect(img.path,i)">
+                                                    <a class="product-gallery__carousel-item" [ngClass]="{'product-gallery__carousel-item--active': img.active}">
+                                                        <img class="product-gallery__carousel-image" [src]="img.path" alt="" style="height: 48px;"> </a>
+                                                    </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div><!-- .product__gallery / end -->
+                    </div>
+
+
+                    <!-- .product__gallery / end -->
                     <!-- .product__info -->
                     <div class="product__info">
                         <div class="product__wishlist-compare">
-                            <button type="button"
-                                class="btn btn-sm btn-light btn-svg-icon" data-toggle="tooltip" data-placement="right"
-                                title="Wishlist"><svg width="16px" height="16px">
+                            <button type="button" class="btn btn-sm btn-light btn-svg-icon" data-toggle="tooltip"
+                                data-placement="right" title="Wishlist"><svg width="16px" height="16px">
                                     <use xlink:href="assets/images/sprite.svg#wishlist-16"></use>
-                                </svg></button> 
-                                <!-- <button type="button" class="btn btn-sm btn-light btn-svg-icon"
+                                </svg></button>
+                            <!-- <button type="button" class="btn btn-sm btn-light btn-svg-icon"
                                 data-toggle="tooltip" data-placement="right" title="Compare"><svg width="16px"
                                     height="16px">
                                     <use xlink:href="assets/images/sprite.svg#compare-16"></use>
                                 </svg></button> -->
-                            </div>
+                        </div>
                         <h1 class="product__name">Brandix Screwdriver SCREW1500ACC</h1>
                         <!-- <div class="product__rating">
                             <div class="product__rating-stars">
@@ -150,7 +153,7 @@
                         <ul class="product__meta">
                             <li class="product__meta-availability">Availability: <span class="text-success">In
                                     Stock</span></li>
-                            <li>Brand: <a >Wakita</a></li>
+                            <li>Brand: <a>Wakita</a></li>
                             <li>SKU: 83690/32</li>
                         </ul>
                     </div><!-- .product__info / end -->
@@ -176,10 +179,12 @@
             </div>
             <div class="product-tabs">
                 <div class="product-tabs__list pointer">
-                    <a class="product-tabs__item" [ngClass]="{'product-tabs__item--active': productTab.description}" (click)="onTabChange('desc')">Description</a> 
-                    <a class="product-tabs__item" [ngClass]="{'product-tabs__item--active': productTab.specification}"  (click)="onTabChange('speci')">Specification</a>
+                    <a class="product-tabs__item" [ngClass]="{'product-tabs__item--active': productTab.description}"
+                        (click)="onTabChange('desc')">Description</a>
+                    <a class="product-tabs__item" [ngClass]="{'product-tabs__item--active': productTab.specification}"
+                        (click)="onTabChange('speci')">Specification</a>
                 </div>
-                    <div class="product-tabs__content">
+                <div class="product-tabs__content">
                     <div class="product-tabs__pane" [ngClass]="{'product-tabs__pane--active': productTab.description}">
                         <div class="typography">
                             <h3>Product Full Description</h3>
@@ -208,7 +213,8 @@
                                 turpis, sit amet fringilla odio scelerisque non.</p>
                         </div>
                     </div>
-                    <div class="product-tabs__pane" [ngClass]="{'product-tabs__pane--active': productTab.specification}">
+                    <div class="product-tabs__pane"
+                        [ngClass]="{'product-tabs__pane--active': productTab.specification}">
                         <div class="spec">
                             <h3 class="spec__header">Specification</h3>
                             <div class="spec__section">
@@ -264,66 +270,67 @@
                         </div>
                     </div>
                 </div>
-           
-        </div>
-    </div><!-- .block-products-carousel -->
-</div>
-<div class="block block-products-carousel" data-layout="grid-5">
-    <div class="container">
-        <div class="block-header">
-            <h3 class="block-header__title">Related Products</h3>
-            <div class="block-header__divider"></div>
-            <div class="block-header__arrows-list">
-                <!-- <button class="block-header__arrow block-header__arrow--left"
+
+            </div>
+        </div><!-- .block-products-carousel -->
+    </div>
+    <div class="block block-products-carousel" data-layout="grid-5">
+        <div class="container">
+            <div class="block-header">
+                <h3 class="block-header__title">Related Products</h3>
+                <div class="block-header__divider"></div>
+                <div class="block-header__arrows-list">
+                    <!-- <button class="block-header__arrow block-header__arrow--left"
                     type="button"><svg width="7px" height="11px">
                         <use xlink:href="images/sprite.svg#arrow-rounded-left-7x11"></use>
                     </svg></button> <button class="block-header__arrow block-header__arrow--right"
                     type="button"><svg width="7px" height="11px">
                         <use xlink:href="images/sprite.svg#arrow-rounded-right-7x11"></use>
                     </svg></button> -->
+                </div>
             </div>
-        </div>
-        <div class="block-products-carousel__slider">
-            <div class="block-products-carousel__preloader"></div>
-            <div class="owl-carousel owl-loaded">
-                <div class="owl-stage-outer">
-                    <div class="owl-stage"
-                        style="transform: translate3d(-1792px, 0px, 0px);transition: all 0s ease 0s;width: 7170px;padding-left: 1px;padding-right: 1px;">
+            <div class="block-products-carousel__slider">
+                <div class="block-products-carousel__preloader"></div>
+                <div class="owl-carousel owl-loaded">
+                    <div class="owl-stage-outer">
+                        <div class="owl-stage"
+                            style="transform: translate3d(-1792px, 0px, 0px);transition: all 0s ease 0s;width: 7170px;padding-left: 1px;padding-right: 1px;">
 
-                        <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
-                        <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
-                        <div class="owl-item" style="width: 212px;margin-right: 12px;"></div>
-                        <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
-                        <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
-                        <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
-                        <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
-                        <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
+                            <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
+                            <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
+                            <div class="owl-item" style="width: 212px;margin-right: 12px;"></div>
+                            <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
+                            <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
+                            <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
+                            <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
+                            <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
 
-                        <div class="owl-item active"  *ngFor="let item of [].constructor(5); let i = index" style="width: 212px; margin-right: 12px;">
-                            <div class="block-products-carousel__column">
-                                <div class="block-products-carousel__cell">
-                                    <app-product [index]="i+1"></app-product>
+                            <div class="owl-item active" *ngFor="let item of [].constructor(5); let i = index"
+                                style="width: 212px; margin-right: 12px;">
+                                <div class="block-products-carousel__column">
+                                    <div class="block-products-carousel__cell">
+                                        <app-product [index]="i+1"></app-product>
+                                    </div>
                                 </div>
                             </div>
+
+
+
+
+                            <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
+                            <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
+                            <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
+                            <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
+                            <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
+                            <div class="owl-item" style="width: 212px; margin-right: 12px;"> </div>
+                            <div class="owl-item" style="width: 212px; margin-right: 12px;"> </div>
                         </div>
-                       
-
-
-
-                        <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
-                        <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
-                        <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
-                        <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
-                        <div class="owl-item" style="width: 212px; margin-right: 12px;"></div>
-                        <div class="owl-item" style="width: 212px; margin-right: 12px;"> </div>
-                        <div class="owl-item" style="width: 212px; margin-right: 12px;"> </div>
                     </div>
+                    <div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span
+                                aria-label="Previous">‹</span></button><button type="button" role="presentation"
+                            class="owl-next"><span aria-label="Next">›</span></button></div>
+                    <div class="owl-dots disabled"></div>
                 </div>
-                <div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span
-                            aria-label="Previous">‹</span></button><button type="button" role="presentation"
-                        class="owl-next"><span aria-label="Next">›</span></button></div>
-                <div class="owl-dots disabled"></div>
             </div>
         </div>
     </div>
-</div>

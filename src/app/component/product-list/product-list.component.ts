@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ICategory } from 'src/app/interface/category';
+import { ICategoryData } from 'src/app/interface/category';
 
 declare const noUiSlider: any
 @Component({
@@ -19,7 +19,7 @@ export class ProductListComponent implements OnInit {
   }
   brandArray: Array<{ name: string, availabe: boolean }> = [];
   sellerArray: Array<{ name: string, availabe: boolean }> = [];
-  categoryArray: Array<ICategory> = [];
+  categoryArray: Array<ICategoryData> = [];
   filterPayload = {
     brand: '',
     seller: [], 

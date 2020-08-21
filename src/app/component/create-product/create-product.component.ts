@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { ProductService } from 'src/app/shared/services/product/product.service';
+import { ICategory } from 'src/app/interface/category';
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
@@ -47,11 +49,15 @@ export class CreateProductComponent implements OnInit {
   productForm: FormGroup;
   submittedProduct: boolean = false;
   isRequestProduct: boolean = false;
+  categoryArray: Array<ICategory> = []
   constructor(
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private productService: ProductService,
+    ) { }
 
   ngOnInit(): void {
     this.productFormInit();
+    this.getCategory();
   }
 
   productFormInit(): void {
@@ -73,9 +79,22 @@ export class CreateProductComponent implements OnInit {
     }
     console.log(this.productForm.value)
   }
+
+  getCategory(){
+    this.productService.getCategory().subscribe((data)=>{
+      this.categoryArray = data;
+      console.log(data);
+    })
+  }
   onChange(e){
     // console.log(e,'blur')
   }
-  
+  openFileDialog(file: any) {
+    file.value = '';
+    file.click();
+  }
+  loadImage(e){
+    console.log(e)
+  }
   get f() { return this.productForm.controls; }
 }
