@@ -11,6 +11,7 @@ export class HeaderComponent implements OnInit {
 
   isAuth:boolean = false;
   isWishListDropdown:boolean = false;
+  isSearchDropdown:boolean = false;
   navMenu :Array<{name:string, path:string, child:Array<any>}> =[];
   authGarudPath = ['/create-product'];
 
@@ -52,10 +53,15 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['/login']);
       return;
     }
+    this.isSearchDropdown = false;
     this.isWishListDropdown = !this.isWishListDropdown
   }
+
   wishListOutSideClick(event:any): void{
     this.isWishListDropdown = false;
+  }
+  searchOutSideClick(event:any): void{
+    this.isSearchDropdown = false;
   }
   
   logout() :void{
@@ -64,6 +70,11 @@ export class HeaderComponent implements OnInit {
          this.routeTo('/login')
       }
     })
+  }
+
+  onClickSearch() :void{
+    this.isWishListDropdown = false;
+    this.isSearchDropdown = !this.isSearchDropdown;
   }
   routeTo(path:string) :void{
     if(path){
