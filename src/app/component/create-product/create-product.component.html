@@ -3,7 +3,7 @@
     <div class="checkout block">
         <div class="container">
             <div class="row">
-                <div class="col-12 col-lg-6 col-xl-7">
+                <div class="col-12 col-lg-6 col-xl-12">
                     <div class="card mb-lg-0">
                         <div class="card-body">
                             <h3 class="card-title">Prodcut Details</h3>
@@ -53,7 +53,8 @@
                                         <select class="form-control" formControlName="category"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.category.errors }">
                                             <option [value]="null" disabled>Select a category</option>
-                                            <option *ngFor="let category of categoryArray" [value]="category.categoryId">{{category.categoryName}}</option>
+                                            <option *ngFor="let category of categoryArray"
+                                                [value]="category.categoryId">{{category.categoryName}}</option>
                                         </select>
                                         <div *ngIf="submittedProduct && f.category.errors" class="invalid-feedback">
                                             <div *ngIf="f.category.errors.required">Category is required</div>
@@ -64,13 +65,7 @@
                                         <select class="form-control" formControlName="subcategory"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.subcategory.errors }">
                                             <option [value]="null" disabled>Select a sub category</option>
-                                            <option>United States</option>
-                                            <option>Russia</option>
-                                            <option>Italy</option>
-                                            <option>France</option>
-                                            <option>Ukraine</option>
-                                            <option>Germany</option>
-                                            <option>Australia</option>
+                                            <option *ngFor="let sub of subCategoryArray" [value]="sub.subCategoryId">{{sub.subCategoryName}}</option>
                                         </select>
                                         <div *ngIf="submittedProduct && f.subcategory.errors" class="invalid-feedback">
                                             <div *ngIf="f.subcategory.errors.required">Sub Category is required</div>
@@ -99,12 +94,36 @@
                                     </div>
 
                                 </div>
-                                <div class="form-group">
-                                    <!-- <div class="ant-upload-select-picture-card">
-                                        <span class="ant-upload" for="file-input"  (click)="openFileDialog(imageFile)">
-                                        <input type="file" style="display: none;" #imageFile (change)="loadImage($event)">+ Upload</span>
-                                        </div> -->
+
+                                <div class="form-row">
+                                    <!-- <label>Upload Images</label> -->
+                                    <div class="form-group col-md-3" *ngFor="let img of uploadImageArray; let i = index">
+                                        <!-- <label *ngIf="i == 0">Upload Images</label>
+                                        <label *ngIf="i !== 0"></label> -->
+                                        <fieldset class="form-group">
+                                            <div class="custom-file fileInputProfileWrap">
+                                                <div class="img-space">
+                                                    <ng-container *ngIf="img.isImageSaved; else elseTemplate">
+                                                        <img [src]="img.imageUrl" />
+                                                    </ng-container>
+                                                    <ng-template #elseTemplate>
+                                                        <i class="fa fa-upload upload-icon" aria-hidden="true"></i>
+                                                    </ng-template>
+                                                    <i class="fa fa-times del" (click)="removeImage(i)"
+                                                    *ngIf="img.isImageSaved"></i>
+                                                </div>
+
+                                            </div>
+                                            <label class="btn btn-primary"> Upload  
+                                                <input type="file" class="uploadFile img" 
+                                                (change)="fileChangeEvent($event, i)" value="Upload Photo" 
+                                                style="width: 0px;height: 0px;overflow: hidden;">
+                                            </label>
+                                        </fieldset>
+                                    </div>
+                                    
                                 </div>
+
                                 <button type="submit" class="btn btn-primary mt-4">Create Product</button>
                             </form>
                         </div>
