@@ -12,9 +12,11 @@ export class HeaderComponent implements OnInit {
   isAuth:boolean = false;
   isWishListDropdown:boolean = false;
   isSearchDropdown:boolean = false;
-  navMenu :Array<{name:string, path:string, child:Array<any>}> =[];
+  isSearchMobileDropdown:boolean = false;
+  isMenuShow:boolean = false;
+  navMenu :Array<{name:string, path:string, child:Array<any>, isCollapse:boolean}> =[];
   authGarudPath = ['/create-product'];
-
+  
   constructor(
     private router: Router,
     public authService: AuthService
@@ -39,22 +41,26 @@ export class HeaderComponent implements OnInit {
 
   initNav():void {
     this.navMenu.push(
-      {name:'Home', path:'/home', child:[]},
-      {name:'My Account', path:'',child:[]},
-      {name:'About Us', path:'/about',child:[]},
-      {name:'Contact Us', path:'/contact',child:[]},
-      {name:'FAQ', path:'/faq',child:[]},
-      {name:'Policies', path:'/policy', child:[]},
+      {name:'Home', path:'/home', child:[],isCollapse:false},
+      {name:'My Account', path:'',child:[],isCollapse:false},
+      {name:'About Us', path:'/about',child:[],isCollapse:false},
+      {name:'Contact Us', path:'/contact',child:[],isCollapse:false},
+      {name:'FAQ', path:'/faq',child:[],isCollapse:false},
+      {name:'Policies', path:'/policy', child:[],isCollapse:false},
       )
   }
 
-  showWishList(): void{
+  showWishList(device:string='desktop'): void{
     if(!this.isAuth){
       this.router.navigate(['/login']);
       return;
     }
-    this.isSearchDropdown = false;
-    this.isWishListDropdown = !this.isWishListDropdown
+    if(device == 'mobile'){
+      this.router.navigate(['/home']);
+    } else {
+      this.isSearchDropdown = false;
+      this.isWishListDropdown = !this.isWishListDropdown;
+    }
   }
 
   wishListOutSideClick(event:any): void{
@@ -76,13 +82,28 @@ export class HeaderComponent implements OnInit {
     this.isWishListDropdown = false;
     this.isSearchDropdown = !this.isSearchDropdown;
   }
+
   routeTo(path:string) :void{
     if(path){
       if(path == '/logout'){
         this.logout();
       } else {
         this.router.navigate([path]);
+        this.isMenuShow = false;
       }
     }
+  }
+
+  // For Mobile
+
+  onClickMenu(){
+    this.isMenuShow = !this.isMenuShow
+  }
+
+  childMenuCollapse(index:number):void {
+   this.navMenu[index].isCollapse = !this.navMenu[index].isCollapse;
+  }
+  showMobileSearchBar(){
+     this.isSearchMobileDropdown = !this.isSearchMobileDropdown
   }
 }

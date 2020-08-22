@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class CommonService {
+
+  public isMenuShow:boolean = false;
   errorObj = {
     message: '',
     error: false
@@ -16,6 +18,7 @@ export class CommonService {
     message: '',
     warning: false
   }
+
   constructor() { }
 
   error(message:string) :void {
