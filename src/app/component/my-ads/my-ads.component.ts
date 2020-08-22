@@ -15,4 +15,8 @@ export class MyAdsComponent implements OnInit {
   ngOnInit() {
   }
 
+  onPageChange(e){
+
+  }
+  
 }
