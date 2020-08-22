@@ -6,6 +6,8 @@ import { FooterComponent } from './component/footer/footer.component';
 import { HeaderComponent } from './component/header/header.component';
 import { BreadcrumbComponent } from './component/breadcrumb/breadcrumb.component';
 import { ProductComponent } from './component/product/product.component';
+import { PaginationComponent } from './component/pagination/pagination.component';
+import { ProductAltComponent } from './component/product-alt/product-alt.component';
 
 // Filter
 import { FilterPipe } from './pipes/filterBy.pipe';
@@ -13,7 +15,7 @@ import { FilterPipe } from './pipes/filterBy.pipe';
 // Directive
 import { DigitOnlyDirective } from './directive/digit-only.directive';
 import { ClickOutSideDirective } from './directive/click-outside.directive';
-import { PaginationComponent } from './component/pagination/pagination.component';
+
 
 
 
@@ -27,7 +29,8 @@ import { PaginationComponent } from './component/pagination/pagination.component
     FilterPipe,
     DigitOnlyDirective,
     ClickOutSideDirective,
-    PaginationComponent
+    PaginationComponent,
+    ProductAltComponent
   ],
   exports:[
     FooterComponent,
@@ -35,6 +38,7 @@ import { PaginationComponent } from './component/pagination/pagination.component
     BreadcrumbComponent,
     ProductComponent,
     PaginationComponent,
+    ProductAltComponent,
     FilterPipe,
     DigitOnlyDirective,
     ClickOutSideDirective

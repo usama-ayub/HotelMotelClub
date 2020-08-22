@@ -1,0 +1,30 @@
+<table class="wishlist">
+    <thead class="wishlist__head">
+        <tr class="wishlist__row">
+            <th class="wishlist__column wishlist__column--image">Image</th>
+            <th class="wishlist__column wishlist__column--product">Product</th>
+            <th class="wishlist__column wishlist__column--price">Category</th>
+            <th class="wishlist__column wishlist__column--price">Price</th>
+            <th class="wishlist__column wishlist__column--tocart" *ngIf="listType == 'ads'"></th>
+            <th class="wishlist__column wishlist__column--remove"></th>
+        </tr>
+    </thead>
+    <tbody class="wishlist__body">
+        <tr class="wishlist__row" *ngFor="let item of [].constructor(5); let i = index">
+            <td class="wishlist__column wishlist__column--image pointer" (click)="routeTo('product',i)">
+                <a><img src="assets/images/product/product-1.jpg" alt=""></a>
+            </td>
+            <td class="wishlist__column wishlist__column--product pointer" (click)="routeTo('product',i)">
+                <a class="wishlist__product-name">Electric Planer Brandix KL370090G 300 Watts</a>
+            </td>
+            <td class="wishlist__column wishlist__column--price">Job</td>
+            <td class="wishlist__column wishlist__column--price">$699.00</td>
+            <td class="wishlist__column wishlist__column--tocart" *ngIf="listType == 'ads'"><button type="button" class="btn btn-primary btn-sm">Edit</button></td>
+            <td class="wishlist__column wishlist__column--remove"><button type="button" class="btn btn-light btn-sm btn-svg-icon"><svg width="12px" height="12px">
+                        <use xlink:href="assets/images/sprite.svg#cross-12"></use>
+                    </svg></button></td>
+        </tr>
+
+
+    </tbody>
+</table>

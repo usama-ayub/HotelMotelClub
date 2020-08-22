@@ -1,0 +1,13 @@
+<div class="site__body">
+    <app-breadcrumb [pageTitle]="'My Ads'" [numberOfPath]="1"></app-breadcrumb>
+    <div class="block">
+        <div class="container">
+            <app-product-alt [listType]="'ads'"></app-product-alt>
+        </div>
+        <div class="products-view__pagination">
+            <app-pagination [page]="pagination.page" [totalPages]="pagination.totalPages"
+                (onPageChange)="onPageChange($event)">
+            </app-pagination>
+        </div>
+    </div>
+</div>

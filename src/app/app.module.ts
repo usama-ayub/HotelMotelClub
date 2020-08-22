@@ -22,6 +22,8 @@ import { ProductListComponent } from './component/product-list/product-list.comp
 import { WelcomeComponent } from './component/welcome/welcome.component';
 import { LoginComponent } from './component/login/login.component';
 import { RegisterComponent } from './component/register/register.component';
+import { MyAdsComponent } from './component/my-ads/my-ads.component';
+import { FavouriteComponent } from './component/favourite/favourite.component';
 
 
 @NgModule({
@@ -41,6 +43,8 @@ import { RegisterComponent } from './component/register/register.component';
     WelcomeComponent,
     LoginComponent,
     RegisterComponent,
+    MyAdsComponent,
+    FavouriteComponent,
   ],
   imports: [
     BrowserModule,

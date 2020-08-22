@@ -15,6 +15,9 @@ import { FaqComponent } from './component/faq/faq.component';
 import { TermConditionComponent } from './component/term-condition/term-condition.component';
 import { LoginComponent } from './component/login/login.component';
 import { RegisterComponent } from './component/register/register.component';
+import { SettingComponent } from './component/setting/setting.component';
+import { FavouriteComponent } from './component/favourite/favourite.component';
+import { MyAdsComponent } from './component/my-ads/my-ads.component';
 
 
 const routes: Routes = [
@@ -22,6 +25,9 @@ const routes: Routes = [
   // {path: 'product-list', component: ProductListComponent},
   {path: 'product/:id', component: ProductDetailComponent},
   {path: 'create-product', component: CreateProductComponent, canActivate: [AuthGuard]},
+  {path: 'setting', component: SettingComponent, canActivate: [AuthGuard]},
+  {path: 'favourite', component: FavouriteComponent, canActivate: [AuthGuard]},
+  {path: 'ads', component: MyAdsComponent, canActivate: [AuthGuard]},
   {path: 'about', component: AboutUsComponent},
   {path: 'contact', component: ContactUsComponent},
   {path: 'faq', component: FaqComponent},

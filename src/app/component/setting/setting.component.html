@@ -1,1 +1,94 @@
-<p>setting works!</p>
+<div class="site__body">
+    <app-breadcrumb [pageTitle]="'Settings'" [numberOfPath]="1"></app-breadcrumb>
+    <div class="block">
+        <div class="container">
+            <div class="product-tabs">
+                <div class="product-tabs__list pointer">
+                    <a class="product-tabs__item" [ngClass]="{'product-tabs__item--active': settingTab.description}"
+                        (click)="onTabChange('desc')">Privacy</a>
+                    <a class="product-tabs__item" [ngClass]="{'product-tabs__item--active': settingTab.specification}"
+                        (click)="onTabChange('speci')">Notification</a>
+                </div>
+                <div class="product-tabs__content">
+                    <div class="product-tabs__pane" [ngClass]="{'product-tabs__pane--active': settingTab.description}">
+                        <div class="typography">
+                                <h3 class="card-title">Change password</h3>
+                                <form>
+                                    <div class="form-group">
+                                        <label>Old Password</label> 
+                                        <input type="email" class="form-control" placeholder="Enter email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>New Password</label> 
+                                        <input type="password" class="form-control" placeholder="Password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Confirm Password</label> 
+                                        <input type="password" class="form-control" placeholder="Password">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mt-4">Change Password</button>
+                                </form>
+                        </div>
+                    </div>
+                    <div class="product-tabs__pane"
+                        [ngClass]="{'product-tabs__pane--active': settingTab.specification}">
+                        <div class="spec">
+                            <h3 class="spec__header">Notifications</h3>
+                            <div class="spec__section">
+                                <h4 class="spec__section-title">General</h4>
+                                <div class="spec__row">
+                                    <div class="spec__name">Material</div>
+                                    <div class="spec__value">Aluminium, Plastic</div>
+                                </div>
+                                <div class="spec__row">
+                                    <div class="spec__name">Engine Type</div>
+                                    <div class="spec__value">Brushless</div>
+                                </div>
+                                <div class="spec__row">
+                                    <div class="spec__name">Battery Voltage</div>
+                                    <div class="spec__value">18 V</div>
+                                </div>
+                                <div class="spec__row">
+                                    <div class="spec__name">Battery Type</div>
+                                    <div class="spec__value">Li-lon</div>
+                                </div>
+                                <div class="spec__row">
+                                    <div class="spec__name">Number of Speeds</div>
+                                    <div class="spec__value">2</div>
+                                </div>
+                                <div class="spec__row">
+                                    <div class="spec__name">Charge Time</div>
+                                    <div class="spec__value">1.08 h</div>
+                                </div>
+                                <div class="spec__row">
+                                    <div class="spec__name">Weight</div>
+                                    <div class="spec__value">1.5 kg</div>
+                                </div>
+                            </div>
+                            <div class="spec__section">
+                                <h4 class="spec__section-title">Dimensions</h4>
+                                <div class="spec__row">
+                                    <div class="spec__name">Length</div>
+                                    <div class="spec__value">99 mm</div>
+                                </div>
+                                <div class="spec__row">
+                                    <div class="spec__name">Width</div>
+                                    <div class="spec__value">207 mm</div>
+                                </div>
+                                <div class="spec__row">
+                                    <div class="spec__name">Height</div>
+                                    <div class="spec__value">208 mm</div>
+                                </div>
+                            </div>
+                            <div class="spec__disclaimer">Information on technical characteristics, the delivery
+                                set, the country of manufacture and the appearance of the goods is for reference
+                                only and is based on the latest information available at the time of
+                                publication.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

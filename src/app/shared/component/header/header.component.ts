@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   isSearchMobileDropdown:boolean = false;
   isMenuShow:boolean = false;
   navMenu :Array<{name:string, path:string, child:Array<any>, isCollapse:boolean}> =[];
-  authGarudPath = ['/create-product'];
+  authGarudPath = ['/create-product', '/ads', '/favourite', '/setting'];
   
   constructor(
     private router: Router,
@@ -34,6 +34,9 @@ export class HeaderComponent implements OnInit {
       } else {
         this.navMenu[1].child = [];
         this.navMenu[1].child.push({name:'Create Product', path:'/create-product'});
+        this.navMenu[1].child.push({name:'My Ads', path:'/ads'});
+        this.navMenu[1].child.push({name:'Favourite', path:'/favourite'});
+        this.navMenu[1].child.push({name:'Setting', path:'/setting'});
         this.navMenu[1].child.push({name:'logout', path:'/logout'});
       }
     })
@@ -52,11 +55,11 @@ export class HeaderComponent implements OnInit {
 
   showWishList(device:string='desktop'): void{
     if(!this.isAuth){
-      this.router.navigate(['/login']);
+      this.routeTo('/login');
       return;
     }
     if(device == 'mobile'){
-      this.router.navigate(['/home']);
+      this.routeTo('/home');
     } else {
       this.isSearchDropdown = false;
       this.isWishListDropdown = !this.isWishListDropdown;
