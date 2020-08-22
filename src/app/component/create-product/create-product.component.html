@@ -81,7 +81,7 @@
                                     <div *ngIf="submittedProduct && f.price.errors" class="invalid-feedback">
                                         <div *ngIf="f.price.errors.required">Price is required</div>
                                     </div>
-                                    <div *ngIf="submittedProduct && f.price.min" class="invalid-feedback">
+                                    <div *ngIf="submittedProduct && f.price.errors" class="invalid-feedback">
                                         <div *ngIf="f.price.errors.min">Min 2 price is required</div>
                                     </div>
                                 </div>

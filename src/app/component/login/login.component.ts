@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  submittedRegister: boolean = false;
+  submittedLogin: boolean = false;
   isRequestLogin: boolean = false;
   constructor(
     private formBuilder: FormBuilder, 
@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
   
 
     onSubmitLogin() : void {
+      this.submittedLogin = true;
       if (this.loginForm.invalid) {
           return;
       }
