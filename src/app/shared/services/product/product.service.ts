@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
 import { Observable, of, throwError } from "rxjs/index";
 import { ICategoryResponse, ICategory } from 'src/app/interface/category';
+import { IFavouriteProduct, IProduct, IProductResponse, IFavouriteProductResponse } from 'src/app/interface/product';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,8 +17,49 @@ export class ProductService {
       if(!res.success){
         return throwError(res.message)
       }
-      res.data.map(c=>c.isCollapse = true);
+      res.data.map(category=>category.isCollapse = false);
       return of(res.data)
     }))
   }
+
+  getFavouriteProduct(paylaod: IFavouriteProduct) : Observable<any>{
+    let url: string  = '/Favourite/all';
+    return this.http.post<IFavouriteProductResponse>(url, paylaod).pipe(switchMap(res => {
+      if(!res.success){
+        return throwError(res.message)
+      }
+      return of(res.data)
+    }))
+  }
+
+  addFavouriteProduct(paylaod: IFavouriteProduct) : Observable<any>{
+    let url: string  = '/Favourite/add';
+    return this.http.post<IFavouriteProductResponse>(url, paylaod).pipe(switchMap(res => {
+      if(!res.success){
+        return throwError(res.message)
+      }
+      return of(res.data)
+    }))
+  }
+
+  removeFavouriteProduct(paylaod: IFavouriteProduct) : Observable<any>{
+    let url: string  = '/Favourite/remove';
+    return this.http.post<IFavouriteProductResponse>(url, paylaod).pipe(switchMap(res => {
+      if(!res.success){
+        return throwError(res.message)
+      }
+      return of(res.data)
+    }))
+  }
+  
+  createProduct(paylaod: IProduct) : Observable<any>{
+    let url: string  = '/Ad/new';
+    return this.http.post<IProductResponse>(url, paylaod).pipe(switchMap(res => {
+      if(!res.success){
+        return throwError(res.message)
+      }
+      return of(res.data)
+    }))
+  }
+
 }

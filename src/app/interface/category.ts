@@ -1,4 +1,6 @@
 import { IResponse } from './response';
+
+// remove this object when i will get proper category
 export interface ICategoryData {
     id: string;
     name: string;
@@ -6,6 +8,7 @@ export interface ICategoryData {
     isCollapse?: boolean;
     child: Array<ICategoryData>;
 }
+// remove this object when i will get proper category
 
 export interface ICategory {
     categoryId: string;

@@ -5,6 +5,7 @@ import { ProductService } from 'src/app/shared/services/product/product.service'
 import { ICategory, ISubCategory } from 'src/app/interface/category';
 import * as _ from 'lodash';
 import { CommonService } from 'src/app/shared/services/common/common.service';
+import { UserService } from 'src/app/shared/services/user/user.service';
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
@@ -66,12 +67,14 @@ export class CreateProductComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private productService: ProductService,
+    private userService: UserService,
     private commonService: CommonService
     ) { }
 
   ngOnInit(): void {
     this.productFormInit();
     this.getCategory();
+    this.getCountry();
   }
 
   productFormInit(): void {
@@ -113,7 +116,12 @@ export class CreateProductComponent implements OnInit {
   getCategory(){
     this.productService.getCategory().subscribe((data)=>{
       this.categoryArray = data;
-      console.log(data);
+    })
+  }
+
+  getCountry(){
+    this.userService.getCountry().subscribe((data)=>{
+      console.log(data)
     })
   }
   onChange(e){
