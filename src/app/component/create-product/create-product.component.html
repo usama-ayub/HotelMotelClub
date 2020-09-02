@@ -8,19 +8,19 @@
                         <div class="card-body">
                             <h3 class="card-title">Prodcut Details</h3>
                             <form [formGroup]="productForm" (ngSubmit)="onSubmitProduct()">
-                                <div class="form-group">
-                                    <label for="checkout-company-name">Title</label>
-                                    <input type="text" formControlName="title" class="form-control" placeholder="Title"
-                                        [ngClass]="{ 'is-invalid': submittedProduct && f.title.errors }">
-                                    <div *ngIf="submittedProduct && f.title.errors" class="invalid-feedback">
-                                        <div *ngIf="f.title.errors.required">First Name is required</div>
-                                    </div>
-                                </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
+                                        <label for="checkout-company-name">Title</label>
+                                        <input type="text" formControlName="title" class="form-control" placeholder="Title"
+                                            [ngClass]="{ 'is-invalid': submittedProduct && f.title.errors }">
+                                        <div *ngIf="submittedProduct && f.title.errors" class="invalid-feedback">
+                                            <div *ngIf="f.title.errors.required">Title is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
                                         <label>Country</label>
-                                        <select class="form-control" formControlName="country"
-                                            [ngClass]="{ 'is-invalid': submittedProduct && f.country.errors }">
+                                        <select class="form-control" formControlName="countryId"
+                                            [ngClass]="{ 'is-invalid': submittedProduct && f.countryId.errors }">
                                             <option [ngValue]="null" disabled>Select Country</option>
                                             <option>United States</option>
                                             <option>Russia</option>
@@ -30,20 +30,39 @@
                                             <option>Germany</option>
                                             <option>Australia</option>
                                         </select>
-                                        <div *ngIf="submittedProduct && f.country.errors" class="invalid-feedback">
-                                            <div *ngIf="f.country.errors.required">Country is required</div>
+                                        <div *ngIf="submittedProduct && f.countryId.errors" class="invalid-feedback">
+                                            <div *ngIf="f.countryId.errors.required">Country is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>State</label>
+                                        <select class="form-control" formControlName="stateId"
+                                            [ngClass]="{ 'is-invalid': submittedProduct && f.stateId.errors }">
+                                            <option [ngValue]="null" disabled>Select State</option>
+                                            <option>United States</option>
+                                            <option>Russia</option>
+                                            <option>Italy</option>
+                                            <option>France</option>
+                                            <option>Ukraine</option>
+                                            <option>Germany</option>
+                                            <option>Australia</option>
+                                        </select>
+                                        <div *ngIf="submittedProduct && f.stateId.errors" class="invalid-feedback">
+                                            <div *ngIf="f.stateId.errors.required">State is required</div>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>State</label>
-                                        <select class="form-control" formControlName="state"
-                                            [ngClass]="{ 'is-invalid': submittedProduct && f.state.errors }">
-                                            <option [ngValue]="null" disabled>Select a state...</option>
+                                        <label>City</label>
+                                        <select class="form-control" formControlName="cityId"
+                                            [ngClass]="{ 'is-invalid': submittedProduct && f.cityId.errors }">
+                                            <option [ngValue]="null" disabled>Select a city...</option>
                                             <option>United States</option>
                                             <option>Russia</option>
                                         </select>
-                                        <div *ngIf="submittedProduct && f.state.errors" class="invalid-feedback">
-                                            <div *ngIf="f.state.errors.required">State is required</div>
+                                        <div *ngIf="submittedProduct && f.cityId.errors" class="invalid-feedback">
+                                            <div *ngIf="f.cityId.errors.required">City is required</div>
                                         </div>
                                     </div>
                                 </div>
@@ -62,29 +81,86 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Sub Category</label>
-                                        <select class="form-control" formControlName="subcategory"
-                                            [ngClass]="{ 'is-invalid': submittedProduct && f.subcategory.errors }">
+                                        <select class="form-control" formControlName="subCategoryId"
+                                            [ngClass]="{ 'is-invalid': submittedProduct && f.subCategoryId.errors }">
                                             <option [value]="null" disabled>Select a sub category</option>
                                             <option *ngFor="let sub of subCategoryArray" [value]="sub.subCategoryId">{{sub.subCategoryName}}</option>
                                         </select>
-                                        <div *ngIf="submittedProduct && f.subcategory.errors" class="invalid-feedback">
-                                            <div *ngIf="f.subcategory.errors.required">Sub Category is required</div>
+                                        <div *ngIf="submittedProduct && f.subCategoryId.errors" class="invalid-feedback">
+                                            <div *ngIf="f.subCategoryId.errors.required">Sub Category is required</div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <label>Set A Price</label>
-                                    <input type="number" formControlName="price" class="form-control"
-                                        placeholder="Price"
-                                        [ngClass]="{ 'is-invalid': submittedProduct && f.price.errors }">
-                                    <div *ngIf="submittedProduct && f.price.errors" class="invalid-feedback">
-                                        <div *ngIf="f.price.errors.required">Price is required</div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>Set A Price</label>
+                                        <input type="number" formControlName="price" class="form-control"
+                                            placeholder="Price"
+                                            [ngClass]="{ 'is-invalid': submittedProduct && f.price.errors }">
+                                        <div *ngIf="submittedProduct && f.price.errors" class="invalid-feedback">
+                                            <div *ngIf="f.price.errors.required">Price is required</div>
+                                        </div>
+                                        <div *ngIf="submittedProduct && f.price.errors" class="invalid-feedback">
+                                            <div *ngIf="f.price.errors.min">Min 2 price is required</div>
+                                        </div>
                                     </div>
-                                    <div *ngIf="submittedProduct && f.price.errors" class="invalid-feedback">
-                                        <div *ngIf="f.price.errors.min">Min 2 price is required</div>
+                                    <div class="form-group col-md-6">
+                                        <label>First Address</label>
+                                        <input type="number" formControlName="addressLine1" class="form-control"
+                                            placeholder="Price"
+                                            [ngClass]="{ 'is-invalid': submittedProduct && f.addressLine1.errors }">
+                                        <div *ngIf="submittedProduct && f.addressLine1.errors" class="invalid-feedback">
+                                            <div *ngIf="f.addressLine1.errors.required">First Address is required</div>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>Second Address</label>
+                                        <input type="number" formControlName="addressLine2" class="form-control"
+                                            placeholder="Price"
+                                            [ngClass]="{ 'is-invalid': submittedProduct && f.addressLine2.errors }">
+                                        <div *ngIf="submittedProduct && f.addressLine2.errors" class="invalid-feedback">
+                                            <div *ngIf="f.addressLine2.errors.required">Second Address is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Third Address</label>
+                                        <input type="number" formControlName="addressLine3" class="form-control"
+                                            placeholder="Price"
+                                            [ngClass]="{ 'is-invalid': submittedProduct && f.addressLine3.errors }">
+                                        <div *ngIf="submittedProduct && f.addressLine3.errors" class="invalid-feedback">
+                                            <div *ngIf="f.addressLine3.errors.required">Third Address is required</div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6 editor-tag" (click)="focusTagInput()">
+                                                <span class="tag-item" *ngFor="let tag of tags">
+                                                    {{tag}}
+                                                    <span class="remove-tag" (click)="removeTag(tag)">×</span>
+                                                  </span>
+                                              <input
+                                              #tagInput type="text"
+                                              class="input-tag"
+                                              (keydown.enter)="$event.preventDefault()"
+                                              (keydown)="onKeyUp($event)"
+                                              formControlName="tag">
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label>Type</label>
+                                                <select class="form-control" formControlName="type"
+                                            [ngClass]="{ 'is-invalid': submittedProduct && f.type.errors }">
+                                            <option [ngValue]="null" disabled>Select a city...</option>
+                                            <option>United States</option>
+                                            <option>Russia</option>
+                                        </select>
+                                        <div *ngIf="submittedProduct && f.type.errors" class="invalid-feedback">
+                                            <div *ngIf="f.type.errors.required">Type is required</div>
+                                        </div>
+                                            </div>
+                                        </div>
                                 <div class="form-group">
                                     <label>Description </label>
                                     <angular-editor formControlName="description" id="description"

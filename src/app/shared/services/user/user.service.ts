@@ -20,9 +20,9 @@ export class UserService {
     }))
   }
 
-  getState(CountryId: string) : Observable<any>{
+  getState(CountryId: number) : Observable<any>{
     let url: string  = '/State/dd/states';
-    return this.http.post<IStateResponse>(url,CountryId).pipe(switchMap(res => {
+    return this.http.post<IStateResponse>(url,{countryId :CountryId}).pipe(switchMap(res => {
       if(!res.success){
         return throwError(res.message)
       }
@@ -30,9 +30,9 @@ export class UserService {
     }))
   }
 
-  getCity(StateId: string) : Observable<any>{
+  getCity(StateId: number) : Observable<any>{
     let url: string  = '/City/dd/cities';
-    return this.http.post<ICityResponse>(url,StateId).pipe(switchMap(res => {
+    return this.http.post<ICityResponse>(url,{stateId:StateId}).pipe(switchMap(res => {
       if(!res.success){
         return throwError(res.message)
       }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {  Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { ProductService } from 'src/app/shared/services/product/product.service';
@@ -12,7 +12,8 @@ import { UserService } from 'src/app/shared/services/user/user.service';
   styleUrls: ['./create-product.component.scss']
 })
 export class CreateProductComponent implements OnInit {
- 
+  @ViewChild('tagInput',{static:false}) tagInputRef: ElementRef;
+  tags: string[] = ['html', 'Angular'];
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -82,11 +83,17 @@ export class CreateProductComponent implements OnInit {
       description: ['', [Validators.required]],
       title: ['', [Validators.required]],
       category: [null, [Validators.required]],
-      country: [null, [Validators.required]],
-      state: [null, [Validators.required]],
-      subcategory: [{value:'', disabled:true}],
-      price: ['', [Validators.required, Validators.min(2)]],
-      imageurl: [[], [Validators.required]],
+      countryId: [null, [Validators.required]],
+      stateId: [{value:'', disabled:true}, [Validators.required]],
+      cityId: [{value:'', disabled:true}, [Validators.required]],
+      addressLine1: ['', [Validators.required]],
+      addressLine2: ['', [Validators.required]],
+      addressLine3: ['', [Validators.required]],
+      tag: [[], [Validators.required]],
+      type: ['', [Validators.required]],
+      subCategoryId: [{value:'', disabled:true}],
+      price: ['', [Validators.required, Validators.min(2)]]
+      // imageurl: [[], [Validators.required]],
     });
     this.productForm.get('category').valueChanges.subscribe(value => {
       let index = this.categoryArray.findIndex((res)=> {
@@ -122,15 +129,27 @@ export class CreateProductComponent implements OnInit {
   getCountry(){
     this.userService.getCountry().subscribe((data)=>{
       console.log(data)
+    });
+    this.onCountyChange();
+  }
+
+  onCountyChange(){
+    this.userService.getState(576).subscribe((res)=>{
+      console.log(res)
+    });
+    this.onStateChange();
+  }
+
+  onStateChange(){
+    this.userService.getCity(1).subscribe((res)=>{
+      console.log(res)
     })
   }
   onChange(e){
     // console.log(e,'blur')
   }
 
-
-
-
+  // Image Code start
 
   fileChangeEvent(fileInput: any, index:number) {
     if (fileInput.target.files && fileInput.target.files[0]) {
@@ -177,6 +196,46 @@ export class CreateProductComponent implements OnInit {
 removeImage(index:number) {
   this.uploadImageArray[index].imageUrl = null;
   this.uploadImageArray[index].isImageSaved = false;
+}
+
+// Image Code end
+
+// Tag Code start
+focusTagInput(): void {
+  this.tagInputRef.nativeElement.focus();
+}
+
+onKeyUp(event: KeyboardEvent) {
+  const inputValue: string = this.productForm.controls.tag.value;
+  if (event.code === 'Backspace' && !inputValue) {
+    this.removeTag();
+    return;
+  } else {
+    if(this.tags.length == 5 && event.code !== 'Backspace'){
+      return false;
+    }
+    if (event.code === 'Space') {
+      this.addTag(inputValue);
+      this.productForm.controls.tag.setValue('');
+    }
+  }
+}
+
+addTag(tag: string): void {
+  if (tag[tag.length - 1] === ',' || tag[tag.length - 1] === ' ') {
+    tag = tag.slice(0, -1);
+  }
+  if (tag.length > 0 && !_.find(this.tags, tag)) {
+    this.tags.push(tag);
+  }
+}
+
+removeTag(tag?: string): void {
+  if (!!tag) {
+    _.pull(this.tags, tag);
+  } else {
+    this.tags.splice(-1);
+  }
 }
 
   get f() { return this.productForm.controls; }
