@@ -3,18 +3,23 @@ import { Observable, of, throwError, BehaviorSubject } from "rxjs/index";
 import { HttpClient } from "@angular/common/http";
 import { ILogin, ILoginResponse, IRegister, IRegisterResponse, ILoginData, IRegisterData } from 'src/app/interface/auth';
 import { map, switchMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   
   isAuth$ = new BehaviorSubject<boolean>(false); 
-
-  constructor(private http: HttpClient) {
+  authGarudPath = ['/create-product', '/ads', '/favourite', '/setting'];
+  constructor(
+    private http: HttpClient,
+    private router: Router
+    ) {
     let token = localStorage.getItem('token');
     if(token) {
       this.isAuth$.next(true);
     }
+    console.log(this.router)
    }
 
   login(paylaod: ILogin): Observable<ILoginData> {
@@ -37,10 +42,13 @@ export class AuthService {
     }))
   }
 
-  logout(): Observable<any> {
+  logout(): Observable<boolean> {
     localStorage.removeItem('userId');
     localStorage.removeItem('token');
     this.isAuth$.next(false);
-    return of(true)
+    if(this.authGarudPath.includes(this.router.url)){
+      this.router.navigate(['/login']);
+   }
+  return of(true)
   }
 }

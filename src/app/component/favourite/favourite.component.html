@@ -2,11 +2,11 @@
     <app-breadcrumb [pageTitle]="'Favourite List'" [numberOfPath]="1"></app-breadcrumb>
     <div class="block">
         <div class="container">
-            <app-product-alt [listType]="'fav'"></app-product-alt>
+            <app-product-alt [listType]="'fav'" [product]="favProduct"></app-product-alt>
         </div>
         <div class="products-view__pagination">
             <app-pagination [page]="pagination.page" [totalPages]="pagination.totalPages"
-                (onPageChange)="onPageChange($event)">
+                (onPageChange)="onPageChange($event)" *ngIf="favProduct.length !== 0">
             </app-pagination>
         </div>
     </div>

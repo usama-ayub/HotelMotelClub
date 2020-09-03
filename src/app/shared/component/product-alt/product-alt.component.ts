@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 export class ProductAltComponent implements OnInit {
 
   @Input() listType: string = 'ads';
+  @Input() product: Array<any> = [];
   constructor(
     private router: Router
   ) { }

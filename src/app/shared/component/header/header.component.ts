@@ -74,10 +74,10 @@ export class HeaderComponent implements OnInit {
   }
   
   logout() :void{
-    this.authService.logout().subscribe((res:any)=>{
-      if(this.authGarudPath.includes(this.router.url)){
-         this.routeTo('/login')
-      }
+    this.authService.logout().subscribe((res:boolean)=>{
+      // if(this.authGarudPath.includes(this.router.url)){
+      //    this.routeTo('/login')
+      // }
     })
   }
 

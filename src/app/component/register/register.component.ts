@@ -37,14 +37,15 @@ export class RegisterComponent implements OnInit {
   
   
     registerFormInit(): void {
+      // secondaryContact: [Number, [Validators.required, Validators.pattern("[1-9]{12}")]]
       this.registerForm = this.formBuilder.group({
         email: ['', [Validators.required, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
         password: ['', [Validators.required, Validators.minLength(6)]],
         firstName: ['', [Validators.required]],
         middleName: ['', [Validators.required]],
         lastName: ['', [Validators.required]],
-        primaryContact: [Number, [Validators.required, Validators.pattern("[1-9]{12}")]],
-        secondaryContact: [Number, [Validators.required, Validators.pattern("[1-9]{12}")]],
+        primaryContact: [Number, [Validators.required]],
+        secondaryContact: [Number, [Validators.required]],
         addressLine1: ['', [Validators.required]],
         addressLine2: ['', [Validators.required]],
         addressLine3: ['', [Validators.required]],
@@ -71,6 +72,7 @@ export class RegisterComponent implements OnInit {
       .subscribe((res)=>{
         this.authService.login(this.registerForm.value).subscribe((data)=>{
           localStorage.setItem('token', data.token);
+          localStorage.setItem('userid',data.userid.toString());
           this.isRequestRegister = false;
           this.commonService.success('Logged In successfully');
           this.router.navigate(['/home']);

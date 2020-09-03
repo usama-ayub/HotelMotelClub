@@ -21,6 +21,10 @@ export class CommonService {
 
   constructor() { }
 
+  getUserId(): Number{
+    let userID = localStorage.getItem('userId');
+    return Number(userID)
+  }
   error(message:string) :void {
     this.errorObj.error = true;
     this.errorObj.message = message;
