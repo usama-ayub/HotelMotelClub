@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/shared/services/product/product.service';
 import { CommonService } from 'src/app/shared/services/common/common.service';
+import { IFavouriteProduct } from 'src/app/interface/product';
 
 @Component({
   selector: 'app-favourite',
@@ -23,18 +24,28 @@ export class FavouriteComponent implements OnInit {
     this.userId = this.commonService.getUserId();
   }
 
-  ngOnInit() {
+  ngOnInit(): void{
     this.getFavouriteProduct(this.pagination);
   }
-  onPageChange(e){
-
+  onPageChange(event){
+    // this.pagination.page = event.value;
+    // this.getFavouriteProduct(this.pagination);
   }
 
-  getFavouriteProduct(data){
+  getFavouriteProduct(data): void{
     let payload = {userId:data.userId,pageNumber:data.page,pageSize:data.pageSize};
     this.productService.getFavouriteProduct(payload).subscribe((res)=>{
       this.favProduct = res;
       console.log(res);
     })
   }
+
+  removeFavouriteProduct(productId:number): void{
+    let payload:IFavouriteProduct = {userId:this.userId,adId:productId};
+    this.productService.removeFavouriteProduct(payload).subscribe((res)=>{
+      console.log(res);
+      this.getFavouriteProduct(this.pagination);
+    })
+  }
+
 }
