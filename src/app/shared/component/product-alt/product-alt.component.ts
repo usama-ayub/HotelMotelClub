@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,6 +10,8 @@ export class ProductAltComponent implements OnInit {
 
   @Input() listType: string = 'ads';
   @Input() product: Array<any> = [];
+  @Output() removeProductChange = new EventEmitter();
+
   constructor(
     private router: Router
   ) { }
@@ -20,5 +22,9 @@ export class ProductAltComponent implements OnInit {
   routeTo(path:string, params:any){
     this.router.navigate([path,params]);
   }
+
+  removeProduct(id:number) {
+    this.removeProductChange.emit(id);
+  } 
 
 }

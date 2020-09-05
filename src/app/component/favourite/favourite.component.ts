@@ -12,10 +12,10 @@ export class FavouriteComponent implements OnInit {
   private userId;
   pagination = {
     page:1,
-    totalPages:1,
-    pageSize:10,
-    userId:0
+    pageSize:3,
+    totalPages:1
   }
+  isRemoveFavorite:boolean = false;
   public favProduct:Array<IFavouriteProductData> = [];
   constructor(
     private productService: ProductService,
@@ -26,26 +26,33 @@ export class FavouriteComponent implements OnInit {
 
   ngOnInit(): void{
     this.getFavouriteProduct(this.pagination);
-    // this.productService.addFavouriteProduct({userId:this.userId,adId:23}).subscribe((res)=>{})
+    // this.productService.addFavouriteProduct({userId:this.userId,adId:21}).subscribe((res)=>{})
   }
   onPageChange(event){
-    // this.pagination.page = event.value;
-    // this.getFavouriteProduct(this.pagination);
+    this.pagination.page = event.value;
+    this.getFavouriteProduct(this.pagination);
   }
 
   getFavouriteProduct(data): void{
     let payload = {userId:this.userId,pageNumber:data.page,pageSize:data.pageSize};
     this.productService.getFavouriteProduct(payload).subscribe((res)=>{
       this.favProduct = res;
-      console.log(res);
+      this.pagination.totalPages = Math.round((this.favProduct[0].total/this.pagination.pageSize));
+    }, (error)=>{
+      console.log(error);
     })
   }
-
-  removeFavouriteProduct(productId:number): void{
-    let payload:IFavouriteProduct = {userId:this.userId,adId:productId};
+  removeFavouriteProduct($event){
+    if(this.isRemoveFavorite) return;
+    let payload:IFavouriteProduct = {userId:this.userId,adId:$event};
+    this.isRemoveFavorite = true;
     this.productService.removeFavouriteProduct(payload).subscribe((res)=>{
-      console.log(res);
+      this.commonService.success('Ad has been removed from Favourite List');
+      this.isRemoveFavorite = false;
       this.getFavouriteProduct(this.pagination);
+    }, (error)=>{
+      this.isRemoveFavorite = false;
+      console.log(error);
     })
   }
 

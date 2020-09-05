@@ -293,7 +293,7 @@
                                             <div class="dropcart__product"
                                                 *ngFor="let item of favProduct; let i = index">
                                                 <div class="dropcart__product-image"><a><img
-                                                            src="assets/images/product/product-1.jpg" alt=""></a>
+                                                    [src]="item.coverImage" alt=""></a>
                                                 </div>
                                                 <div class="dropcart__product-info">
                                                     <div class="dropcart__product-name"><a>{{item.title}}</a></div>
