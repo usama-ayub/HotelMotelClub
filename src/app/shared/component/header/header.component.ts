@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
+import { ProductService } from '../../services/product/product.service';
+import { CommonService } from '../../services/common/common.service';
+import { IFavouriteProductData } from 'src/app/interface/product';
 
 @Component({
   selector: 'app-header',
@@ -16,11 +19,17 @@ export class HeaderComponent implements OnInit {
   isMenuShow:boolean = false;
   navMenu :Array<{name:string, path:string, child:Array<any>, isCollapse:boolean}> =[];
   authGarudPath = ['/create-product', '/ads', '/favourite', '/setting'];
-  
+  userId:number;
+  favProduct:Array<IFavouriteProductData> = [];
+  totalFavProduct :number = 0;
   constructor(
     private router: Router,
-    public authService: AuthService
-  ) { }
+    public authService: AuthService,
+    private productService: ProductService,
+    private commonService: CommonService
+  ) { 
+    this.userId = this.commonService.getUserId();
+  }
 
   ngOnInit() {
     this.initNav();
@@ -51,6 +60,11 @@ export class HeaderComponent implements OnInit {
       {name:'FAQ', path:'/faq',child:[],isCollapse:false},
       {name:'Policies', path:'/policy', child:[],isCollapse:false},
       )
+      this.productService.getFavouriteProduct({userId:this.userId,pageNumber:1,pageSize:3})
+      .subscribe((res)=>{
+         this.favProduct = res;
+         this.totalFavProduct = this.favProduct[0].total;
+      })
   }
 
   showWishList(device:string='desktop'): void{
@@ -59,7 +73,7 @@ export class HeaderComponent implements OnInit {
       return;
     }
     if(device == 'mobile'){
-      this.routeTo('/home');
+      this.routeTo('/favourite');
     } else {
       this.isSearchDropdown = false;
       this.isWishListDropdown = !this.isWishListDropdown;

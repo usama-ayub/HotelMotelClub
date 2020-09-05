@@ -26,6 +26,7 @@ export class FavouriteComponent implements OnInit {
 
   ngOnInit(): void{
     this.getFavouriteProduct(this.pagination);
+    // this.productService.addFavouriteProduct({userId:this.userId,adId:23}).subscribe((res)=>{})
   }
   onPageChange(event){
     // this.pagination.page = event.value;

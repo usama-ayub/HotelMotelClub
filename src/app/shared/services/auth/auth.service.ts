@@ -25,20 +25,20 @@ export class AuthService {
   login(paylaod: ILogin): Observable<ILoginData> {
     let url: string = 'Auth/login';
     return this.http.post<ILoginResponse>(url, paylaod).pipe(switchMap(res => {
-      if(!res.result.success){
-        return throwError(res.result.message)
+      if(!res.success){
+        return throwError(res.message)
       }
-      return of(res.result.data)
+      return of(res.data)
     }))
   }
 
   register(paylaod: IRegister): Observable<IRegisterData> {
     let url: string = 'Auth/register';
     return this.http.post<IRegisterResponse>(url, paylaod).pipe(switchMap(res => {
-      if(!res.result.success){
-        return throwError(res.result.message)
+      if(!res.success){
+        return throwError(res.message)
       }
-      return of(res.result.data)
+      return of(res.data)
     }))
   }
 

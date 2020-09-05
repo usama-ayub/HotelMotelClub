@@ -132,6 +132,18 @@ export class CreateProductComponent implements OnInit {
     if (this.productForm.invalid) {
         return;
     }
+    if(this.tags.length == 0){
+      return;
+    }
+    let isEmptyImg = this.uploadImageArray.some((pic)=>{
+      return !pic.image
+    });
+    if(this.tags.length == 0){
+      return;
+    }
+    if(isEmptyImg){
+      return;
+    }
     let productPlayload :IProduct;
     productPlayload = this.productForm.value;
     productPlayload.userId = this.userId;
@@ -145,15 +157,12 @@ export class CreateProductComponent implements OnInit {
       delete pic.isImageSaved;
       pic.image = pic.image.split(',')[1];
     })
-    console.log(this.productForm.value)
-    console.log(this.uploadImageArray)
-    console.log(productPlayload)
-    this.isRequestProduct = true
+    this.isRequestProduct = true;
     this.productService.createProduct(productPlayload).subscribe((res)=>{
       this.isRequestProduct = false;
+      this.submittedProduct = false;
       this.resetForm();
       this.commonService.success('Ad Posted Successfully');
-      console.log(res);
     }, (error) => {
       this.isRequestProduct = false;
       // this.commonService.error(error);
@@ -257,8 +266,19 @@ export class CreateProductComponent implements OnInit {
 }
 
 removeImage(index:number) {
+  if(this.uploadImageArray[index].coverImage){
+    this.uploadImageArray[0].coverImage = true;
+  }
   this.uploadImageArray[index].image = null;
   this.uploadImageArray[index].isImageSaved = false;
+  if(index !== 0){
+    this.uploadImageArray[index].coverImage = false;
+  }
+}
+
+selectCoverImage(index:number){
+  this.uploadImageArray.map(res=>res.coverImage = false);
+  this.uploadImageArray[index].coverImage = true;
 }
 
 // Image Code end

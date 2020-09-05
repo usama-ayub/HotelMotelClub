@@ -32,9 +32,9 @@ export class ProductService {
     }))
   }
 
-  addFavouriteProduct(paylaod: IFavouriteProduct) : Observable<any>{
+  addFavouriteProduct(paylaod: IFavouriteProduct) : Observable<number>{
     let url: string  = 'Favourite/add';
-    return this.http.post<IFavouriteProductResponse>(url, paylaod).pipe(switchMap(res => {
+    return this.http.post<{success:boolean,message:string,data:number}>(url, paylaod).pipe(switchMap(res => {
       if(!res.success){
         return throwError(res.message)
       }
@@ -42,9 +42,9 @@ export class ProductService {
     }))
   }
 
-  removeFavouriteProduct(paylaod: IFavouriteProduct) : Observable<any>{
+  removeFavouriteProduct(paylaod: IFavouriteProduct) : Observable<number>{
     let url: string  = 'Favourite/remove';
-    return this.http.post<IFavouriteProductResponse>(url, paylaod).pipe(switchMap(res => {
+    return this.http.post<{success:boolean,message:string,data:number}>(url, paylaod).pipe(switchMap(res => {
       if(!res.success){
         return throwError(res.message)
       }

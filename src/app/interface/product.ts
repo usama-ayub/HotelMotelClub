@@ -39,5 +39,5 @@ export interface IProduct {
     total:number
   }
 
-  export type IProductResponse  = IResponse<any>;
+  export type IProductResponse  = IResponse<number>;
   export type IFavouriteProductResponse  = IResponse<Array<IFavouriteProductData>>;
