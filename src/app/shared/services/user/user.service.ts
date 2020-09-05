@@ -11,7 +11,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   getCountry() : Observable<Array<ICountryData>>{
-    let url: string  = '/Country/dd/countries';
+    let url: string  = 'Country/dd/countries';
     return this.http.get<ICountryResponse>(url).pipe(switchMap(res => {
       if(!res.success){
         return throwError(res.message)
@@ -21,7 +21,7 @@ export class UserService {
   }
 
   getState(CountryId: number) : Observable<Array<IStateData>>{
-    let url: string  = '/State/dd/states';
+    let url: string  = 'State/dd/states';
     return this.http.post<IStateResponse>(url,{countryId :CountryId}).pipe(switchMap(res => {
       if(!res.success){
         return throwError(res.message)
@@ -31,7 +31,7 @@ export class UserService {
   }
 
   getCity(StateId: number) : Observable<Array<ICityData>>{
-    let url: string  = '/City/dd/cities';
+    let url: string  = 'City/dd/cities';
     return this.http.post<ICityResponse>(url,{stateId:StateId}).pipe(switchMap(res => {
       if(!res.success){
         return throwError(res.message)
