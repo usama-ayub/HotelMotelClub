@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ICategoryData } from 'src/app/interface/category';
+import { ICategory } from 'src/app/interface/category';
+import { ProductService } from 'src/app/shared/services/product/product.service';
 
 declare const noUiSlider: any
 @Component({
@@ -19,7 +20,7 @@ export class ProductListComponent implements OnInit {
   }
   brandArray: Array<{ name: string, availabe: boolean }> = [];
   sellerArray: Array<{ name: string, availabe: boolean }> = [];
-  categoryArray: Array<ICategoryData> = [];
+  categoryArray: Array<ICategory> = [];
   filterPayload = {
     brand: '',
     seller: [], 
@@ -35,7 +36,7 @@ export class ProductListComponent implements OnInit {
     next: true,
     prev: true
   }
-  constructor() { }
+  constructor(private productService:ProductService) { }
 
   ngOnInit() {
     this.silderInit();
@@ -49,56 +50,60 @@ export class ProductListComponent implements OnInit {
       { name: 'WeVALT', availabe: false },
       { name: 'Mitasia', availabe: true }
     );
-    this.categoryArray.push(
-      {
-        id: '1', name: 'Hotel Jobs', description: 'Hotel Jobs',
-        isCollapse:false,
-        child: [
-          { id: '1.1', name: 'Management', description: 'Management', child: [] },
-          { id: '1.2', name: 'Front Desk', description: 'Front Desk', child: [] },
-          { id: '1.2', name: 'House Keeper', description: 'House Keeper', child: [] },
-          { id: '1.2', name: 'Maintenance', description: 'Maintenance', child: [] },
-        ]
-      },
-      {
-        id: '2', name: 'Housekeeping Supplies', description: 'Housekeeping Supplies',
-        isCollapse:false,
-        child: [
-          { id: '1.1', name: 'Chemicals', description: 'Chemicals', child: [] },
-          { id: '1.2', name: 'Linnen', description: 'Linnen', child: [] },
-          { id: '1.2', name: 'Misc', description: 'Misc', child: [] }
-        ]
-      },
-      {
-        id: '3', name: 'Real Estate', description: 'Real Estate',
-        isCollapse:false,
-        child: [
-          { id: '1.1', name: 'For Sale', description: 'For Sale', child: [] },
-          { id: '1.2', name: 'For Rent', description: 'For Rent', child: [] },
-          { id: '1.2', name: 'Others', description: 'Others', child: [] }
-        ]
-      },
-      {
-        id: '4', name: 'Misc', description: 'Misc',
-        isCollapse:false,
-        child: []
-      },
-      {
-        id: '5', name: 'Events & Announcements', description: 'Events & Announcements',
-        isCollapse:false,
-        child: []
-      },
-      {
-        id: '6', name: 'Guest Supplies', description: 'Guest Supplies',
-        isCollapse:false,
-        child: []
-      },
-      {
-        id: '7', name: 'Hotel Furniture', description: 'Guest Supplies',
-        isCollapse:false,
-        child: []
-      }
-    );
+    this.productService.getCategory().subscribe((res)=>{
+      this.categoryArray = res;
+      console.log(res)
+    })
+    // this.categoryArray.push(
+    //   {
+    //     id: '1', name: 'Hotel Jobs', description: 'Hotel Jobs',
+    //     isCollapse:false,
+    //     child: [
+    //       { id: '1.1', name: 'Management', description: 'Management', child: [] },
+    //       { id: '1.2', name: 'Front Desk', description: 'Front Desk', child: [] },
+    //       { id: '1.2', name: 'House Keeper', description: 'House Keeper', child: [] },
+    //       { id: '1.2', name: 'Maintenance', description: 'Maintenance', child: [] },
+    //     ]
+    //   },
+    //   {
+    //     id: '2', name: 'Housekeeping Supplies', description: 'Housekeeping Supplies',
+    //     isCollapse:false,
+    //     child: [
+    //       { id: '1.1', name: 'Chemicals', description: 'Chemicals', child: [] },
+    //       { id: '1.2', name: 'Linnen', description: 'Linnen', child: [] },
+    //       { id: '1.2', name: 'Misc', description: 'Misc', child: [] }
+    //     ]
+    //   },
+    //   {
+    //     id: '3', name: 'Real Estate', description: 'Real Estate',
+    //     isCollapse:false,
+    //     child: [
+    //       { id: '1.1', name: 'For Sale', description: 'For Sale', child: [] },
+    //       { id: '1.2', name: 'For Rent', description: 'For Rent', child: [] },
+    //       { id: '1.2', name: 'Others', description: 'Others', child: [] }
+    //     ]
+    //   },
+    //   {
+    //     id: '4', name: 'Misc', description: 'Misc',
+    //     isCollapse:false,
+    //     child: []
+    //   },
+    //   {
+    //     id: '5', name: 'Events & Announcements', description: 'Events & Announcements',
+    //     isCollapse:false,
+    //     child: []
+    //   },
+    //   {
+    //     id: '6', name: 'Guest Supplies', description: 'Guest Supplies',
+    //     isCollapse:false,
+    //     child: []
+    //   },
+    //   {
+    //     id: '7', name: 'Hotel Furniture', description: 'Guest Supplies',
+    //     isCollapse:false,
+    //     child: []
+    //   }
+    // );
     this.sellerArray.push(
       { name: 'Wakita', availabe: true },
       { name: 'Zosch', availabe: true },

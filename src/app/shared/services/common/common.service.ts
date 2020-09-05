@@ -21,8 +21,8 @@ export class CommonService {
 
   constructor() { }
 
-  getUserId(): Number{
-    let userID = localStorage.getItem('userId');
+  getUserId(): number{
+    let userID = localStorage.getItem('userid');
     return Number(userID)
   }
   error(message:string) :void {

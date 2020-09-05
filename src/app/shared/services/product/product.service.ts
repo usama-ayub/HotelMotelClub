@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
 import { Observable, of, throwError } from "rxjs/index";
 import { ICategoryResponse, ICategory } from 'src/app/interface/category';
-import { IFavouriteProduct, IProduct, IProductResponse, IFavouriteProductResponse } from 'src/app/interface/product';
+import { IFavouriteProduct, IProduct, IProductResponse, IFavouriteProductResponse, IFavouriteProductData } from 'src/app/interface/product';
 @Injectable({
   providedIn: 'root'
 })
@@ -22,8 +22,8 @@ export class ProductService {
     }))
   }
 
-  getFavouriteProduct(paylaod: IFavouriteProduct) : Observable<any>{
-    let url: string  = '/Favourite/all';
+  getFavouriteProduct(paylaod: IFavouriteProduct) : Observable<Array<IFavouriteProductData>>{
+    let url: string  = 'Favourite/all';
     return this.http.post<IFavouriteProductResponse>(url, paylaod).pipe(switchMap(res => {
       if(!res.success){
         return throwError(res.message)
@@ -33,7 +33,7 @@ export class ProductService {
   }
 
   addFavouriteProduct(paylaod: IFavouriteProduct) : Observable<any>{
-    let url: string  = '/Favourite/add';
+    let url: string  = 'Favourite/add';
     return this.http.post<IFavouriteProductResponse>(url, paylaod).pipe(switchMap(res => {
       if(!res.success){
         return throwError(res.message)
@@ -43,7 +43,7 @@ export class ProductService {
   }
 
   removeFavouriteProduct(paylaod: IFavouriteProduct) : Observable<any>{
-    let url: string  = '/Favourite/remove';
+    let url: string  = 'Favourite/remove';
     return this.http.post<IFavouriteProductResponse>(url, paylaod).pipe(switchMap(res => {
       if(!res.success){
         return throwError(res.message)
@@ -52,8 +52,8 @@ export class ProductService {
     }))
   }
   
-  createProduct(paylaod: IProduct) : Observable<any>{
-    let url: string  = '/Ad/new';
+  createProduct(paylaod: IProduct) : Observable<number>{
+    let url: string  = 'Ad/new';
     return this.http.post<IProductResponse>(url, paylaod).pipe(switchMap(res => {
       if(!res.success){
         return throwError(res.message)

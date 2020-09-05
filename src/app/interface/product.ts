@@ -13,13 +13,14 @@ export interface IProduct {
     addressLine1: string,
     addressLine2: string,
     addressLine3: string,
-    tags: string,
+    tags: string[],
     type: string,
   }
   
   export interface IProductImage {
     image: string;
     coverImage: boolean,
+    isImageSaved?: boolean
   }
 
 
@@ -30,5 +31,13 @@ export interface IProduct {
     adId?: number
   }
 
+  export interface IFavouriteProductData {
+    adId: number,
+    coverImage?: any,
+    price: number,
+    title: string,
+    total:number
+  }
+
   export type IProductResponse  = IResponse<any>;
-  export type IFavouriteProductResponse  = IResponse<any>;
+  export type IFavouriteProductResponse  = IResponse<Array<IFavouriteProductData>>;

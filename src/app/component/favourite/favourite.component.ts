@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/shared/services/product/product.service';
 import { CommonService } from 'src/app/shared/services/common/common.service';
-import { IFavouriteProduct } from 'src/app/interface/product';
+import { IFavouriteProduct, IFavouriteProductData } from 'src/app/interface/product';
 
 @Component({
   selector: 'app-favourite',
@@ -14,9 +14,9 @@ export class FavouriteComponent implements OnInit {
     page:1,
     totalPages:1,
     pageSize:10,
-    userId:this.userId
+    userId:0
   }
-  public favProduct:Array<any> = [];
+  public favProduct:Array<IFavouriteProductData> = [];
   constructor(
     private productService: ProductService,
     private commonService: CommonService,
@@ -33,7 +33,7 @@ export class FavouriteComponent implements OnInit {
   }
 
   getFavouriteProduct(data): void{
-    let payload = {userId:data.userId,pageNumber:data.page,pageSize:data.pageSize};
+    let payload = {userId:this.userId,pageNumber:data.page,pageSize:data.pageSize};
     this.productService.getFavouriteProduct(payload).subscribe((res)=>{
       this.favProduct = res;
       console.log(res);

@@ -6,6 +6,9 @@ import { ICategory, ISubCategory } from 'src/app/interface/category';
 import * as _ from 'lodash';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
+import { ICountryData, IStateData, ICityData } from 'src/app/interface/user';
+import { IProduct, IProductImage } from 'src/app/interface/product';
+
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
@@ -13,8 +16,9 @@ import { UserService } from 'src/app/shared/services/user/user.service';
 })
 export class CreateProductComponent implements OnInit {
   @ViewChild('tagInput',{static:false}) tagInputRef: ElementRef;
-  tags: string[] = ['html', 'Angular'];
-
+  private userId: number;
+  tags: string[] = [];
+  TypeArray: string[] = ['Cash','Lease'];
   editorConfig: AngularEditorConfig = {
     editable: true,
     height: '15rem',
@@ -55,14 +59,16 @@ export class CreateProductComponent implements OnInit {
   isRequestProduct: boolean = false;
   categoryArray: Array<ICategory> = [];
   subCategoryArray: Array<ISubCategory> = [];
-
-  uploadImageArray = [
-    {imageUrl:'',isImageSaved:false},
-    {imageUrl:'',isImageSaved:false},
-    {imageUrl:'',isImageSaved:false},
-    {imageUrl:'',isImageSaved:false},
-    {imageUrl:'',isImageSaved:false},
-    {imageUrl:'',isImageSaved:false},
+  countryArray: Array<ICountryData> = [];
+  stateArray: Array<IStateData> = [];
+  cityArray: Array<ICityData> = [];
+  uploadImageArray: Array<IProductImage> = [
+    {image:'',isImageSaved:false, coverImage:true},
+    {image:'',isImageSaved:false, coverImage:false},
+    {image:'',isImageSaved:false,coverImage:false},
+    {image:'',isImageSaved:false,coverImage:false},
+    {image:'',isImageSaved:false,coverImage:false},
+    {image:'',isImageSaved:false,coverImage:false},
   ]
 
   constructor(
@@ -70,7 +76,10 @@ export class CreateProductComponent implements OnInit {
     private productService: ProductService,
     private userService: UserService,
     private commonService: CommonService
-    ) { }
+    ) { 
+      this.userId = this.commonService.getUserId();
+      console.log(this.userId);
+    }
 
   ngOnInit(): void {
     this.productFormInit();
@@ -84,32 +93,38 @@ export class CreateProductComponent implements OnInit {
       title: ['', [Validators.required]],
       category: [null, [Validators.required]],
       countryId: [null, [Validators.required]],
-      stateId: [{value:'', disabled:true}, [Validators.required]],
-      cityId: [{value:'', disabled:true}, [Validators.required]],
+      stateId: [{value:null, disabled:true}, [Validators.required]],
+      cityId: [{value:null, disabled:true}, [Validators.required]],
       addressLine1: ['', [Validators.required]],
       addressLine2: ['', [Validators.required]],
       addressLine3: ['', [Validators.required]],
-      tag: [[], [Validators.required]],
-      type: ['', [Validators.required]],
-      subCategoryId: [{value:'', disabled:true}],
+      tags: [[], [Validators.required]],
+      type: [null, [Validators.required]],
+      subCategoryId: [{value:null, disabled:true}],
       price: ['', [Validators.required, Validators.min(2)]]
       // imageurl: [[], [Validators.required]],
     });
     this.productForm.get('category').valueChanges.subscribe(value => {
-      let index = this.categoryArray.findIndex((res)=> {
-        return res.categoryId.toString() === value
-      });
-      if (this.categoryArray[index].subcategory.length !==0) {
-        this.subCategoryArray = this.categoryArray[index].subcategory;
-        this.productForm.get('subcategory').setValue('');
-        this.productForm.get('subcategory').enable();
-        this.productForm.get('subcategory').setValidators([Validators.required])
+      if(value !== null){
+        let index = this.categoryArray.findIndex((res)=> {
+          return res.categoryId.toString() === value
+        });
+        if (this.categoryArray[index].subcategory.length !==0) {
+          this.subCategoryArray = this.categoryArray[index].subcategory;
+          this.productForm.get('subCategoryId').setValue('');
+          this.productForm.get('subCategoryId').enable();
+          this.productForm.get('subCategoryId').setValidators([Validators.required])
+        }
+        else {
+          this.productForm.get('subCategoryId').setValidators(null);
+          this.productForm.get('subCategoryId').disable();
+        }
+        this.productForm.get('subCategoryId').updateValueAndValidity();
+      } else {
+        this.productForm.get('subCategoryId').setValue(null);
+        this.productForm.get('subCategoryId').setValidators(null);
+        this.productForm.get('subCategoryId').disable();
       }
-      else {
-        this.productForm.get('subcategory').setValidators(null);
-        this.productForm.get('subcategory').disable();
-      }
-      this.productForm.get('subcategory').updateValueAndValidity();
     });
   }
   onSubmitProduct(): void {
@@ -117,9 +132,55 @@ export class CreateProductComponent implements OnInit {
     if (this.productForm.invalid) {
         return;
     }
+    let productPlayload :IProduct;
+    productPlayload = this.productForm.value;
+    productPlayload.userId = this.userId;
+    productPlayload.tags = this.tags;
+    productPlayload.cityId = Number(productPlayload.cityId);
+    productPlayload.stateId = Number(productPlayload.stateId);
+    productPlayload.countryId = Number(productPlayload.countryId);
+    productPlayload.subCategoryId = Number(productPlayload.subCategoryId);
+    productPlayload.pictures =  JSON.parse(JSON.stringify(this.uploadImageArray));
+    productPlayload.pictures.map((pic)=>{
+      delete pic.isImageSaved;
+      pic.image = pic.image.split(',')[1];
+    })
     console.log(this.productForm.value)
+    console.log(this.uploadImageArray)
+    console.log(productPlayload)
+    this.isRequestProduct = true
+    this.productService.createProduct(productPlayload).subscribe((res)=>{
+      this.isRequestProduct = false;
+      this.resetForm();
+      this.commonService.success('Ad Posted Successfully');
+      console.log(res);
+    }, (error) => {
+      this.isRequestProduct = false;
+      // this.commonService.error(error);
+      console.log(error);
+    })
   }
  
+  resetForm(): void{
+     this.productForm.get('category').setValue(null);
+     this.productForm.get('countryId').setValue(null);
+     this.productForm.get('stateId').setValue(null);
+     this.productForm.get('cityId').setValue(null);
+     this.productForm.get('type').setValue(null);
+     this.productForm.get('addressLine2').setValue('');
+     this.productForm.get('addressLine1').setValue('');
+     this.productForm.get('addressLine3').setValue('');
+     this.productForm.get('tags').setValue([]);
+     this.productForm.get('description').setValue('');
+     this.productForm.get('title').setValue('');
+     this.productForm.get('price').setValue('');
+     this.tags = [];
+     this.uploadImageArray.map((res)=>{
+       res.image = '';
+       res.isImageSaved = false;
+     })
+  }
+
   getCategory(){
     this.productService.getCategory().subscribe((data)=>{
       this.categoryArray = data;
@@ -128,21 +189,23 @@ export class CreateProductComponent implements OnInit {
 
   getCountry(){
     this.userService.getCountry().subscribe((data)=>{
-      console.log(data)
+      this.countryArray = data;
     });
-    this.onCountyChange();
+    // this.onCountyChange();
   }
 
-  onCountyChange(){
-    this.userService.getState(576).subscribe((res)=>{
-      console.log(res)
+  onCountyChange($event){
+    this.userService.getState(Number($event.target.value)).subscribe((res)=>{
+      this.stateArray = res;
+      this.productForm.get('stateId').enable();
     });
-    this.onStateChange();
   }
 
-  onStateChange(){
-    this.userService.getCity(1).subscribe((res)=>{
+  onStateChange($event){
+    this.userService.getCity(Number($event.target.value)).subscribe((res)=>{
       console.log(res)
+      this.cityArray = res;
+      this.productForm.get('cityId').enable();
     })
   }
   onChange(e){
@@ -183,7 +246,7 @@ export class CreateProductComponent implements OnInit {
                     return false;
                 } else {
                     const imgBase64Path = e.target.result;
-                    this.uploadImageArray[index].imageUrl = imgBase64Path;
+                    this.uploadImageArray[index].image = imgBase64Path;
                     this.uploadImageArray[index].isImageSaved = true;
                 }
             };
@@ -194,7 +257,7 @@ export class CreateProductComponent implements OnInit {
 }
 
 removeImage(index:number) {
-  this.uploadImageArray[index].imageUrl = null;
+  this.uploadImageArray[index].image = null;
   this.uploadImageArray[index].isImageSaved = false;
 }
 
@@ -206,7 +269,7 @@ focusTagInput(): void {
 }
 
 onKeyUp(event: KeyboardEvent) {
-  const inputValue: string = this.productForm.controls.tag.value;
+  const inputValue: string = this.productForm.controls.tags.value;
   if (event.code === 'Backspace' && !inputValue) {
     this.removeTag();
     return;
@@ -216,7 +279,7 @@ onKeyUp(event: KeyboardEvent) {
     }
     if (event.code === 'Space') {
       this.addTag(inputValue);
-      this.productForm.controls.tag.setValue('');
+      this.productForm.controls.tags.setValue('');
     }
   }
 }

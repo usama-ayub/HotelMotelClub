@@ -7,8 +7,24 @@ export interface IUser {
     repassword?: string;
 }
 
-export type ICountryResponse  = IResponse<any>;
-export type IStateResponse  = IResponse<any>;
-export type ICityResponse  = IResponse<any>;
+export interface ICountryData {
+    countryId: number;
+    countryName: string;
+}
+
+export interface IStateData {
+    stateId: number;
+    stateName: string;
+}
+
+export interface ICityData {
+    cityId: number;
+    cityName: string;
+}
+
+
+export type ICountryResponse  = IResponse<Array<ICountryData>>;
+export type IStateResponse  = IResponse<Array<IStateData>>;
+export type ICityResponse  = IResponse<Array<ICityData>>;
 
 

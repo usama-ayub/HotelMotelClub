@@ -28,24 +28,24 @@
                                                                 [ngClass]="{'widget-categories__item--open': category.isCollapse}">
                                                                 <div class="widget-categories__row">
                                                                     <a>
-                                                                        <svg *ngIf="category.child.length !== 0"
+                                                                        <svg *ngIf="category.subcategory.length !== 0"
                                                                             class="widget-categories__arrow" width="6px"
                                                                             height="9px">
                                                                             <use
                                                                                 xlink:href="assets/images/sprite.svg#arrow-rounded-right-6x9">
                                                                             </use>
-                                                                        </svg> {{category.name}} </a>
-                                                                    <ng-container *ngIf="category.child.length !== 0">
+                                                                        </svg> {{category.categoryName}} </a>
+                                                                    <ng-container *ngIf="category.subcategory.length !== 0">
                                                                         <button class="widget-categories__expander"
                                                                             type="button"
                                                                             (click)="categoryCollapse(i)"></button>
                                                                     </ng-container>
                                                                 </div>
                                                                 <div class="widget-categories__subs"
-                                                                    *ngIf="category.child.length !== 0">
+                                                                    *ngIf="category.subcategory.length !== 0">
                                                                     <ul>
-                                                                        <li *ngFor="let child of category.child">
-                                                                            <a>{{child.name}}</a></li>
+                                                                        <li *ngFor="let child of category.subcategory">
+                                                                            <a>{{child.subCategoryName}}</a></li>
                                                                     </ul>
                                                                 </div>
                                                             </li>
