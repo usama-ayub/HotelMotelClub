@@ -1,12 +1,12 @@
 <div class="site__body">
-    <app-breadcrumb [pageTitle]="'Create Prodcut'"></app-breadcrumb>
+    <app-breadcrumb [pageTitle]="pageTitle"></app-breadcrumb>
     <div class="checkout block">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-lg-6 col-xl-12">
                     <div class="card mb-lg-0">
                         <div class="card-body">
-                            <h3 class="card-title">Prodcut Details</h3>
+                            <h3 class="card-title">Ads Details</h3>
                             <form [formGroup]="productForm" (ngSubmit)="onSubmitProduct()">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
@@ -186,7 +186,9 @@
                                     
                                 </div>
 
-                                <button type="submit" class="btn btn-primary mt-4" [ngClass]="{'btn-loading': isRequestProduct}" [disabled]="isRequestProduct == true ? true : null">Create Product</button>
+                                <button type="submit" class="btn btn-primary mt-4" [ngClass]="{'btn-loading': isRequestProduct}" [disabled]="isRequestProduct == true ? true : null">
+                                    {{pageTitle}}
+                                </button>
                             </form>
                             <!-- <button (click)="resetForm()" class="btn btn-primary mt-4"> resetForm</button> -->
                         </div>

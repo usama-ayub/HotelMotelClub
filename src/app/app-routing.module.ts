@@ -25,6 +25,7 @@ const routes: Routes = [
   // {path: 'product-list', component: ProductListComponent},
   {path: 'product/:id', component: ProductDetailComponent},
   {path: 'create-product', component: CreateProductComponent, canActivate: [AuthGuard]},
+  {path: 'update-ads/:id', component: CreateProductComponent, canActivate: [AuthGuard]},
   {path: 'setting', component: SettingComponent, canActivate: [AuthGuard]},
   {path: 'favourite', component: FavouriteComponent, canActivate: [AuthGuard]},
   {path: 'ads', component: MyAdsComponent, canActivate: [AuthGuard]},

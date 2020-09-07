@@ -46,7 +46,8 @@ export interface IProduct {
     type: string,
     pageNumber?: number,
     pageSize?: number,
-    adId?: number
+    adId?: number,
+    categoryId?:number
   }
   export interface IFavouriteProduct {
     userId: number,

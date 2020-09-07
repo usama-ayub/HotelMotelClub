@@ -7,7 +7,8 @@ import * as _ from 'lodash';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { ICountryData, IStateData, ICityData } from 'src/app/interface/user';
-import { IProduct, IProductImage } from 'src/app/interface/product';
+import { IProduct, IProductImage, IProductData } from 'src/app/interface/product';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-create-product',
@@ -19,6 +20,8 @@ export class CreateProductComponent implements OnInit {
   private userId: number;
   tags: string[] = [];
   TypeArray: string[] = ['Cash','Lease'];
+  adsId:number = 0;
+  adsDetail:IProductData;
   editorConfig: AngularEditorConfig = {
     editable: true,
     height: '15rem',
@@ -70,15 +73,20 @@ export class CreateProductComponent implements OnInit {
     {image:'',isImageSaved:false,coverImage:false},
     {image:'',isImageSaved:false,coverImage:false},
   ]
-
+  pageTitle:string = 'Create Ads';
   constructor(
     private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
     private productService: ProductService,
     private userService: UserService,
     private commonService: CommonService
     ) { 
       this.userId = this.commonService.getUserId();
-      console.log(this.userId);
+      this.adsId = Number(this.route.snapshot.params.id);
+      if(this.adsId){
+        this.getAdsDetail();
+        this.pageTitle = "Update Ads"
+      }
     }
 
   ngOnInit(): void {
@@ -86,7 +94,24 @@ export class CreateProductComponent implements OnInit {
     this.getCategory();
     this.getCountry();
   }
-
+  getAdsDetail(): void{
+    this.productService.adsDetail({userId:this.userId,adId:this.adsId})
+    .subscribe((res)=>{
+      this.adsDetail = res;
+      this.uploadImageArray.map((pic,index)=>{
+        pic.image = res.images[index].picture;
+        pic.isImageSaved = true;
+        pic.coverImage = res.images[index].coverImage;
+      })
+      this.tags = res.tags;
+      this.productForm.get('price').setValue(res.price);
+      this.productForm.get('description').setValue(res.description);
+      this.productForm.get('addressLine1').setValue(res.addressLine1);
+      this.productForm.get('addressLine2').setValue(res.addressLine2);
+      this.productForm.get('addressLine3').setValue(res.addressLine3);
+      this.productForm.get('type').setValue(res.type);
+    })
+  }
   productFormInit(): void {
     this.productForm = this.formBuilder.group({
       description: ['', [Validators.required]],
@@ -107,11 +132,15 @@ export class CreateProductComponent implements OnInit {
     this.productForm.get('category').valueChanges.subscribe(value => {
       if(value !== null){
         let index = this.categoryArray.findIndex((res)=> {
-          return res.categoryId.toString() === value
+          return res.categoryId.toString() === value.toString();
         });
         if (this.categoryArray[index].subcategory.length !==0) {
           this.subCategoryArray = this.categoryArray[index].subcategory;
-          this.productForm.get('subCategoryId').setValue('');
+          if(this.adsId){
+             this.productForm.get('subCategoryId').setValue(this.adsDetail.subCategoryId);
+          } else {
+            this.productForm.get('subCategoryId').setValue('');
+          }
           this.productForm.get('subCategoryId').enable();
           this.productForm.get('subCategoryId').setValidators([Validators.required])
         }
@@ -158,6 +187,9 @@ export class CreateProductComponent implements OnInit {
       pic.image = pic.image.split(',')[1];
     })
     this.isRequestProduct = true;
+    if(this.adsId){
+      return;
+    }
     this.productService.createProduct(productPlayload).subscribe((res)=>{
       this.isRequestProduct = false;
       this.submittedProduct = false;
@@ -193,20 +225,42 @@ export class CreateProductComponent implements OnInit {
   getCategory(){
     this.productService.getCategory().subscribe((data)=>{
       this.categoryArray = data;
+      if(this.adsId){
+        this.productForm.get('category').setValue(this.adsDetail.categoryId);
+      }
     })
   }
 
   getCountry(){
     this.userService.getCountry().subscribe((data)=>{
       this.countryArray = data;
+      if(this.adsId){
+        let id = this.countryArray.find((c)=>{
+          return c.countryName = this.adsDetail.country;
+        }).countryId;
+        this.productForm.get('countryId').setValue(id);
+        this.onCountyChange(id,'ts');
+      }
     });
-    // this.onCountyChange();
   }
 
-  onCountyChange($event){
-    this.userService.getState(Number($event.target.value)).subscribe((res)=>{
+  onCountyChange($event, type:string = 'html'){
+    let countryId = 0;
+    if(type == 'html'){
+      countryId = Number($event.target.value)
+    } else {
+      countryId = $event;
+    }
+    this.userService.getState(countryId).subscribe((res)=>{
       this.stateArray = res;
       this.productForm.get('stateId').enable();
+      // if(this.adsId){
+      //   let id = this.stateArray.find((c)=>{
+      //     return c.stateName = this.adsDetail.st;
+      //   }).countryId;
+      //   this.productForm.get('countryId').setValue(id);
+      //   this.onCountyChange(id,'ts');
+      // }
     });
   }
 

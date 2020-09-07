@@ -19,7 +19,7 @@
                 </td>
                 <td class="wishlist__column wishlist__column--price">Job</td>
                 <td class="wishlist__column wishlist__column--price">${{item.price}}.00</td>
-                <td class="wishlist__column wishlist__column--tocart" *ngIf="listType == 'ads'"><button type="button" class="btn btn-primary btn-sm">Edit</button></td>
+                <td class="wishlist__column wishlist__column--tocart" *ngIf="listType == 'ads'"><button type="button" class="btn btn-primary btn-sm" (click)="routeTo('update-ads',item.adId)">Edit</button></td>
                 <td class="wishlist__column wishlist__column--remove">
                     <button type="button" class="btn btn-light btn-sm btn-svg-icon" (click)="removeProduct(item.adId)"><svg width="12px" height="12px">
                             <use xlink:href="assets/images/sprite.svg#cross-12"></use>
