@@ -31,6 +31,15 @@ export class ProductService {
       return of(res.data)
     }))
   }
+  getMyAds(paylaod: IFavouriteProduct) : Observable<Array<IFavouriteProductData>>{
+    let url: string  = 'Ad/myads';
+    return this.http.post<IFavouriteProductResponse>(url, paylaod).pipe(switchMap(res => {
+      if(!res.success){
+        return throwError(res.message)
+      }
+      return of(res.data)
+    }))
+  }
 
   addFavouriteProduct(paylaod: IFavouriteProduct) : Observable<number>{
     let url: string  = 'Favourite/add';
@@ -62,4 +71,13 @@ export class ProductService {
     }))
   }
 
+  adsDetail(paylaod: IFavouriteProduct): Observable<any>{
+    let url: string  = 'Ad/addetails';
+    return this.http.post<IFavouriteProductResponse>(url, paylaod).pipe(switchMap(res => {
+      if(!res.success){
+        return throwError(res.message)
+      }
+      return of(res.data)
+    }))
+  }
 }
