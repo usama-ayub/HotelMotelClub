@@ -11,10 +11,10 @@
     </thead>
     <tbody class="wishlist__body">
             <tr class="wishlist__row" *ngFor="let item of product; let i = index">
-                <td class="wishlist__column wishlist__column--image pointer" (click)="routeTo('product',i)">
+                <td class="wishlist__column wishlist__column--image pointer" (click)="routeTo('product',item.adId)">
                     <a><img [src]="item.coverImage" alt=""></a>
                 </td>
-                <td class="wishlist__column wishlist__column--product pointer" (click)="routeTo('product',i)">
+                <td class="wishlist__column wishlist__column--product pointer" (click)="routeTo('product',item.adId)">
                     <a class="wishlist__product-name">{{item.title}}</a>
                 </td>
                 <td class="wishlist__column wishlist__column--price">Job</td>

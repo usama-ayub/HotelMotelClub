@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
 import { Observable, of, throwError } from "rxjs/index";
 import { ICategoryResponse, ICategory } from 'src/app/interface/category';
-import { IFavouriteProduct, IProduct, IProductResponse, IFavouriteProductResponse, IFavouriteProductData } from 'src/app/interface/product';
+import { IFavouriteProduct, IProduct, IProductResponse, IFavouriteProductResponse, IFavouriteProductData, IProductData } from 'src/app/interface/product';
 @Injectable({
   providedIn: 'root'
 })
@@ -63,7 +63,7 @@ export class ProductService {
   
   createProduct(paylaod: IProduct) : Observable<number>{
     let url: string  = 'Ad/new';
-    return this.http.post<IProductResponse>(url, paylaod).pipe(switchMap(res => {
+    return this.http.post<{success:boolean,message:string,data:number}>(url, paylaod).pipe(switchMap(res => {
       if(!res.success){
         return throwError(res.message)
       }
@@ -71,9 +71,9 @@ export class ProductService {
     }))
   }
 
-  adsDetail(paylaod: IFavouriteProduct): Observable<any>{
+  adsDetail(paylaod: IFavouriteProduct): Observable<IProductData>{
     let url: string  = 'Ad/addetails';
-    return this.http.post<IFavouriteProductResponse>(url, paylaod).pipe(switchMap(res => {
+    return this.http.post<IProductResponse>(url, paylaod).pipe(switchMap(res => {
       if(!res.success){
         return throwError(res.message)
       }

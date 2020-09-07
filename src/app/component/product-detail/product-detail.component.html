@@ -26,9 +26,9 @@
                                         <div class="owl-stage"
                                             style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 488px;">
                                             <ng-container *ngFor="let img of productDetailImage; let i = index">
-                                                <div class="owl-item active pointer" style="width: 87.5px; margin-right: 10px;" (click)="onImageSelect(img.path,i)">
-                                                    <a class="product-gallery__carousel-item" [ngClass]="{'product-gallery__carousel-item--active': img.active}">
-                                                        <img class="product-gallery__carousel-image" [src]="img.path" alt="" style="height: 48px;"> </a>
+                                                <div class="owl-item active pointer" style="width: 87.5px; margin-right: 10px;" (click)="onImageSelect(img.picture,i)">
+                                                    <a class="product-gallery__carousel-item" [ngClass]="{'product-gallery__carousel-item--active': img.coverImage}">
+                                                        <img class="product-gallery__carousel-image" [src]="img.picture" alt="" style="height: 48px;"> </a>
                                                     </div>
                                             </ng-container>
                                         </div>
@@ -53,11 +53,11 @@
                                     <use xlink:href="assets/images/sprite.svg#compare-16"></use>
                                 </svg></button> -->
                         </div>
-                        <h1 class="product__name">Brandix Screwdriver SCREW1500ACC</h1>
+                        <h1 class="product__name">{{adsDetails.title}}</h1>
                         <!-- <div class="product__rating">
                             <div class="product__rating-stars">
                                 <div class="rating">
-                                    <div class="rating__body"><svg class="rating__star rating__star--active"
+                                    <div class="rating__body"><svg class="rating__star rating__star--coverImage"
                                             width="13px" height="12px">
                                             <g class="rating__fill">
                                                 <use xlink:href="assets/images/sprite.svg#star-normal"></use>
@@ -66,14 +66,14 @@
                                                 <use xlink:href="assets/images/sprite.svg#star-normal-stroke"></use>
                                             </g>
                                         </svg>
-                                        <div class="rating__star rating__star--only-edge rating__star--active">
+                                        <div class="rating__star rating__star--only-edge rating__star--coverImage">
                                             <div class="rating__fill">
                                                 <div class="fake-svg-icon"></div>
                                             </div>
                                             <div class="rating__stroke">
                                                 <div class="fake-svg-icon"></div>
                                             </div>
-                                        </div><svg class="rating__star rating__star--active" width="13px" height="12px">
+                                        </div><svg class="rating__star rating__star--coverImage" width="13px" height="12px">
                                             <g class="rating__fill">
                                                 <use xlink:href="assets/images/sprite.svg#star-normal"></use>
                                             </g>
@@ -81,14 +81,14 @@
                                                 <use xlink:href="assets/images/sprite.svg#star-normal-stroke"></use>
                                             </g>
                                         </svg>
-                                        <div class="rating__star rating__star--only-edge rating__star--active">
+                                        <div class="rating__star rating__star--only-edge rating__star--coverImage">
                                             <div class="rating__fill">
                                                 <div class="fake-svg-icon"></div>
                                             </div>
                                             <div class="rating__stroke">
                                                 <div class="fake-svg-icon"></div>
                                             </div>
-                                        </div><svg class="rating__star rating__star--active" width="13px" height="12px">
+                                        </div><svg class="rating__star rating__star--coverImage" width="13px" height="12px">
                                             <g class="rating__fill">
                                                 <use xlink:href="assets/images/sprite.svg#star-normal"></use>
                                             </g>
@@ -96,14 +96,14 @@
                                                 <use xlink:href="assets/images/sprite.svg#star-normal-stroke"></use>
                                             </g>
                                         </svg>
-                                        <div class="rating__star rating__star--only-edge rating__star--active">
+                                        <div class="rating__star rating__star--only-edge rating__star--coverImage">
                                             <div class="rating__fill">
                                                 <div class="fake-svg-icon"></div>
                                             </div>
                                             <div class="rating__stroke">
                                                 <div class="fake-svg-icon"></div>
                                             </div>
-                                        </div><svg class="rating__star rating__star--active" width="13px" height="12px">
+                                        </div><svg class="rating__star rating__star--coverImage" width="13px" height="12px">
                                             <g class="rating__fill">
                                                 <use xlink:href="assets/images/sprite.svg#star-normal"></use>
                                             </g>
@@ -111,14 +111,14 @@
                                                 <use xlink:href="assets/images/sprite.svg#star-normal-stroke"></use>
                                             </g>
                                         </svg>
-                                        <div class="rating__star rating__star--only-edge rating__star--active">
+                                        <div class="rating__star rating__star--only-edge rating__star--coverImage">
                                             <div class="rating__fill">
                                                 <div class="fake-svg-icon"></div>
                                             </div>
                                             <div class="rating__stroke">
                                                 <div class="fake-svg-icon"></div>
                                             </div>
-                                        </div><svg class="rating__star rating__star--active" width="13px" height="12px">
+                                        </div><svg class="rating__star rating__star--coverImage" width="13px" height="12px">
                                             <g class="rating__fill">
                                                 <use xlink:href="assets/images/sprite.svg#star-normal"></use>
                                             </g>
@@ -126,7 +126,7 @@
                                                 <use xlink:href="assets/images/sprite.svg#star-normal-stroke"></use>
                                             </g>
                                         </svg>
-                                        <div class="rating__star rating__star--only-edge rating__star--active">
+                                        <div class="rating__star rating__star--only-edge rating__star--coverImage">
                                             <div class="rating__fill">
                                                 <div class="fake-svg-icon"></div>
                                             </div>
@@ -144,18 +144,18 @@
                             elit. Curabitur ornare, mi in ornare elementum, libero nibh lacinia urna, quis
                             convallis lorem erat at purus. Maecenas eu varius nisi.</div>
                         <ul class="product__features">
-                            <li>Speed: 750 RPM</li>
-                            <li>Power Source: Cordless-Electric</li>
-                            <li>Battery Cell Type: Lithium</li>
-                            <li>Voltage: 20 Volts</li>
-                            <li>Battery Capacity: 2 Ah</li>
+                            <li>Price: ${{adsDetails.price}}.00</li>
+                            <li>Country: {{adsDetails.country}}</li>
+                            <li>City: {{adsDetails.city}}</li>
+                            <li>Contact Number: {{adsDetails.contact}}</li>
+                            <li>Address: {{adsDetails.addressLine1}}</li>
                         </ul>
-                        <ul class="product__meta">
+                        <!-- <ul class="product__meta">
                             <li class="product__meta-availability">Availability: <span class="text-success">In
                                     Stock</span></li>
                             <li>Brand: <a>Wakita</a></li>
                             <li>SKU: 83690/32</li>
-                        </ul>
+                        </ul> -->
                     </div><!-- .product__info / end -->
                     <!-- .product__sidebar -->
                     <!-- .product__end -->
@@ -186,8 +186,8 @@
                 </div>
                 <div class="product-tabs__content">
                     <div class="product-tabs__pane" [ngClass]="{'product-tabs__pane--active': productTab.description}">
-                        <div class="typography">
-                            <h3>Product Full Description</h3>
+                        <div class="typography" [innerHtml]="adsDetails.description">
+                            <!-- <h3>Product Full Description</h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum, diam
                                 non iaculis finibus, ipsum arcu sollicitudin dolor, ut cursus sapien sem sed
                                 purus. Donec vitae fringilla tortor, sed fermentum nunc. Suspendisse sodales
@@ -210,7 +210,7 @@
                                 cursus in nulla ut, laoreet commodo quam. Pellentesque et ornare sapien. In ac
                                 est tempus urna tincidunt finibus. Integer erat ipsum, tristique ac lobortis sit
                                 amet, dapibus sit amet purus. Nam sed lorem nisi. Vestibulum ultrices tincidunt
-                                turpis, sit amet fringilla odio scelerisque non.</p>
+                                turpis, sit amet fringilla odio scelerisque non.</p> -->
                         </div>
                     </div>
                     <div class="product-tabs__pane"
@@ -220,53 +220,31 @@
                             <div class="spec__section">
                                 <h4 class="spec__section-title">General</h4>
                                 <div class="spec__row">
-                                    <div class="spec__name">Material</div>
-                                    <div class="spec__value">Aluminium, Plastic</div>
+                                    <div class="spec__name">Type</div>
+                                    <div class="spec__value">{{adsDetails.type}}</div>
                                 </div>
                                 <div class="spec__row">
-                                    <div class="spec__name">Engine Type</div>
-                                    <div class="spec__value">Brushless</div>
+                                    <div class="spec__name">First Address</div>
+                                    <div class="spec__value">{{adsDetails.addressLine1}}</div>
                                 </div>
                                 <div class="spec__row">
-                                    <div class="spec__name">Battery Voltage</div>
-                                    <div class="spec__value">18 V</div>
+                                    <div class="spec__name">Third Address</div>
+                                    <div class="spec__value">{{adsDetails.addressLine2}}</div>
                                 </div>
                                 <div class="spec__row">
-                                    <div class="spec__name">Battery Type</div>
-                                    <div class="spec__value">Li-lon</div>
+                                    <div class="spec__name">Second Address</div>
+                                    <div class="spec__value">{{adsDetails.addressLine3}}</div>
                                 </div>
                                 <div class="spec__row">
-                                    <div class="spec__name">Number of Speeds</div>
-                                    <div class="spec__value">2</div>
-                                </div>
-                                <div class="spec__row">
-                                    <div class="spec__name">Charge Time</div>
-                                    <div class="spec__value">1.08 h</div>
-                                </div>
-                                <div class="spec__row">
-                                    <div class="spec__name">Weight</div>
-                                    <div class="spec__value">1.5 kg</div>
+                                    <div class="spec__name">Tags</div>
+                                    <div class="spec__value">{{getCommaTag()}}</div>
                                 </div>
                             </div>
-                            <div class="spec__section">
-                                <h4 class="spec__section-title">Dimensions</h4>
-                                <div class="spec__row">
-                                    <div class="spec__name">Length</div>
-                                    <div class="spec__value">99 mm</div>
-                                </div>
-                                <div class="spec__row">
-                                    <div class="spec__name">Width</div>
-                                    <div class="spec__value">207 mm</div>
-                                </div>
-                                <div class="spec__row">
-                                    <div class="spec__name">Height</div>
-                                    <div class="spec__value">208 mm</div>
-                                </div>
-                            </div>
-                            <div class="spec__disclaimer">Information on technical characteristics, the delivery
+                           
+                            <!-- <div class="spec__disclaimer">Information on technical characteristics, the delivery
                                 set, the country of manufacture and the appearance of the goods is for reference
                                 only and is based on the latest information available at the time of
-                                publication.</div>
+                                publication.</div> -->
                         </div>
                     </div>
                 </div>
