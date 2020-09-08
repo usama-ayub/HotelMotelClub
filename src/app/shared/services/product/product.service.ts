@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
 import { Observable, of, throwError } from "rxjs/index";
 import { ICategoryResponse, ICategory } from 'src/app/interface/category';
-import { IFavouriteProduct, IProduct, IProductResponse, IFavouriteProductResponse, IFavouriteProductData, IProductData } from 'src/app/interface/product';
+import { IFavouriteProduct, IProduct, IProductResponse, IFavouriteProductResponse, IFavouriteProductData, IProductData, IProductList, IProductListResponse, IProductListData } from 'src/app/interface/product';
 @Injectable({
   providedIn: 'root'
 })
@@ -74,6 +74,15 @@ export class ProductService {
   adsDetail(paylaod: IFavouriteProduct): Observable<IProductData>{
     let url: string  = 'Ad/addetails';
     return this.http.post<IProductResponse>(url, paylaod).pipe(switchMap(res => {
+      if(!res.success){
+        return throwError(res.message)
+      }
+      return of(res.data)
+    }))
+  }
+  getAdsList(payload:IProductList): Observable<Array<IProductListData>>{
+    let url: string  = 'Ad/all';
+    return this.http.post<IProductListResponse>(url, payload).pipe(switchMap(res => {
       if(!res.success){
         return throwError(res.message)
       }

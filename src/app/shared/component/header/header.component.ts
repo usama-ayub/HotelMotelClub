@@ -60,11 +60,13 @@ export class HeaderComponent implements OnInit {
       {name:'FAQ', path:'/faq',child:[],isCollapse:false},
       {name:'Policies', path:'/policy', child:[],isCollapse:false},
       )
-      this.productService.getFavouriteProduct({userId:this.userId,pageNumber:1,pageSize:3})
-      .subscribe((res)=>{
-         this.favProduct = res;
-         this.totalFavProduct = this.favProduct[0].total;
-      })
+      if(this.isAuth){
+        this.productService.getFavouriteProduct({userId:this.userId,pageNumber:1,pageSize:3})
+        .subscribe((res)=>{
+           this.favProduct = res;
+           this.totalFavProduct = this.favProduct[0].total;
+        })
+      }
   }
 
   showWishList(device:string='desktop'): void{

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { IProductListData } from 'src/app/interface/product';
 
 @Component({
   selector: 'app-product',
@@ -8,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class ProductComponent implements OnInit {
   @Input() index: number;
+  @Input() item: IProductListData;
   constructor(
     private router: Router
   ) { }

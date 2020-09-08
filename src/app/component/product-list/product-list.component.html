@@ -173,7 +173,7 @@
                     <div class="products-view">
                         <div class="products-view__options">
                             <div class="view-options">
-                                <div class="view-options__legend">Showing 6 of 98 products</div>
+                                <!-- <div class="view-options__legend">Showing {{adsListArray.length}} of 98 products</div> -->
                                 <div class="view-options__divider"></div>
                                 <div class="view-options__control"><label for="">Sort By</label>
                                     <div><select class="form-control form-control-sm" name="" id="">
@@ -192,15 +192,22 @@
                         <div class="products-view__list products-list" data-layout="grid-3-sidebar"
                             data-with-features="false">
                             <div class="products-list__body">
-                                <div class="products-list__item" *ngFor="let item of [].constructor(10); let i = index">
-                                    <app-product [index]="i+1"></app-product>
+                                <div class="products-list__item" *ngFor="let item of adsListArray; let i = index">
+                                    <app-product [index]="i+1" [item]="item"></app-product>
                                 </div>
                             </div>
                         </div>
                         <div class="products-view__pagination">
-                            <app-pagination [page]="filterPayload.page" [totalPages]="filterPayload.totalPages"
+                            <!-- <div class="widget-filters__actions d-flex">
+                                <button class="btn btn-primary btn-sm" (click)="applyFiler()" [ngClass]="{'btn-loading': isRequestFilter}" [disabled]="isRequestFilter == true ? true : null" [disabled]="isRequestReset == true ? true : null">Filter</button>
+                                <button class="btn btn-secondary btn-sm ml-2" [ngClass]="{'btn-loading': isRequestReset}" [disabled]="isRequestFilter == true ? true : null" [disabled]="isRequestReset == true ? true : null">Reset</button>
+                            </div>  -->
+                            <ul class="pagination justify-content-center">
+                                <button class="btn btn-primary btn-sm" [ngClass]="{'btn-loading': isRequestLoadMore}" [disabled]="isRequestLoadMore == true ? true : null" (click)="loadMore()">Load More</button>
+                            </ul>
+                            <!-- <app-pagination [page]="filterPayload.page" [totalPages]="filterPayload.totalPages"
                                 (onPageChange)="onPageChange($event)">
-                            </app-pagination>
+                            </app-pagination> -->
                         </div>
                     </div>
                 </div>

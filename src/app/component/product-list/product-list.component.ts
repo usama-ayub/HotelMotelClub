@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ICategory } from 'src/app/interface/category';
 import { ProductService } from 'src/app/shared/services/product/product.service';
+import { IProductList, IProductListData } from 'src/app/interface/product';
 
 declare const noUiSlider: any
 @Component({
@@ -12,6 +13,7 @@ declare const noUiSlider: any
 export class ProductListComponent implements OnInit {
   isRequestFilter = false;
   isRequestReset = false;
+  isRequestLoadMore = false;
   isFilterCollapse  = {
     isCategory: true,
     isBrand: true,
@@ -21,14 +23,18 @@ export class ProductListComponent implements OnInit {
   brandArray: Array<{ name: string, availabe: boolean }> = [];
   sellerArray: Array<{ name: string, availabe: boolean }> = [];
   categoryArray: Array<ICategory> = [];
-  filterPayload = {
-    brand: '',
-    seller: [], 
-    max:0,
-    min:0,
-    page:1,
-    totalPages:20
+  filterPayload:IProductList = {
+    pageNumber:1,
   }
+  adsListArray:Array<IProductListData> = [];
+  // filterPayload = {
+  //   brand: '',
+  //   seller: [], 
+  //   max:0,
+  //   min:0,
+  //   page:1,
+  //   totalPages:20
+  // }
   paginationOption = {
     current:2,
     perPag:3,
@@ -41,6 +47,7 @@ export class ProductListComponent implements OnInit {
   ngOnInit() {
     this.silderInit();
     this.initFilter();
+    this.getAdsList();
   }
 
   initFilter(): void {
@@ -52,58 +59,7 @@ export class ProductListComponent implements OnInit {
     );
     this.productService.getCategory().subscribe((res)=>{
       this.categoryArray = res;
-      console.log(res)
     })
-    // this.categoryArray.push(
-    //   {
-    //     id: '1', name: 'Hotel Jobs', description: 'Hotel Jobs',
-    //     isCollapse:false,
-    //     child: [
-    //       { id: '1.1', name: 'Management', description: 'Management', child: [] },
-    //       { id: '1.2', name: 'Front Desk', description: 'Front Desk', child: [] },
-    //       { id: '1.2', name: 'House Keeper', description: 'House Keeper', child: [] },
-    //       { id: '1.2', name: 'Maintenance', description: 'Maintenance', child: [] },
-    //     ]
-    //   },
-    //   {
-    //     id: '2', name: 'Housekeeping Supplies', description: 'Housekeeping Supplies',
-    //     isCollapse:false,
-    //     child: [
-    //       { id: '1.1', name: 'Chemicals', description: 'Chemicals', child: [] },
-    //       { id: '1.2', name: 'Linnen', description: 'Linnen', child: [] },
-    //       { id: '1.2', name: 'Misc', description: 'Misc', child: [] }
-    //     ]
-    //   },
-    //   {
-    //     id: '3', name: 'Real Estate', description: 'Real Estate',
-    //     isCollapse:false,
-    //     child: [
-    //       { id: '1.1', name: 'For Sale', description: 'For Sale', child: [] },
-    //       { id: '1.2', name: 'For Rent', description: 'For Rent', child: [] },
-    //       { id: '1.2', name: 'Others', description: 'Others', child: [] }
-    //     ]
-    //   },
-    //   {
-    //     id: '4', name: 'Misc', description: 'Misc',
-    //     isCollapse:false,
-    //     child: []
-    //   },
-    //   {
-    //     id: '5', name: 'Events & Announcements', description: 'Events & Announcements',
-    //     isCollapse:false,
-    //     child: []
-    //   },
-    //   {
-    //     id: '6', name: 'Guest Supplies', description: 'Guest Supplies',
-    //     isCollapse:false,
-    //     child: []
-    //   },
-    //   {
-    //     id: '7', name: 'Hotel Furniture', description: 'Guest Supplies',
-    //     isCollapse:false,
-    //     child: []
-    //   }
-    // );
     this.sellerArray.push(
       { name: 'Wakita', availabe: true },
       { name: 'Zosch', availabe: true },
@@ -144,33 +100,43 @@ export class ProductListComponent implements OnInit {
       },
     });
       let value = slider.noUiSlider.get();
-      this.filterPayload.min = value[0];
-      this.filterPayload.max = value[1];
+      // this.filterPayload.min = value[0];
+      // this.filterPayload.max = value[1];
     slider.noUiSlider.on('change',()=>{
       value = slider.noUiSlider.get();
-      this.filterPayload.min = value[0];
-      this.filterPayload.max = value[1];
+      // this.filterPayload.min = value[0];
+      // this.filterPayload.max = value[1];
     })
   }
   
   onCheckboxChange(event:any): void{
     if(event.target.checked) { 
-       this.filterPayload.seller.push(event.target.value);
+      //  this.filterPayload.seller.push(event.target.value);
     } else {
-      this.filterPayload.seller.splice(event.target.value,1);
+      // this.filterPayload.seller.splice(event.target.value,1);
     }
   }
 
   applyFiler(): void {
     this.isRequestFilter = true;
     console.log(this.filterPayload);
-    setTimeout(()=>{
-      this.isRequestFilter = false;
-    },1000)
+    // this.getAdsList();
   }
-
-  onPageChange(event: any) {
-    this.filterPayload.page = event.value;
+ 
+  getAdsList(): void{
+    this.productService.getAdsList(this.filterPayload)
+    .subscribe((res)=>{
+      this.adsListArray = this.adsListArray.concat(res);
+      this.isRequestLoadMore = false;
+    },(error)=>{
+      this.isRequestLoadMore = false;
+      console.log(error);
+    })
+  }
+  loadMore(){
+    this.filterPayload.pageNumber = this.filterPayload.pageNumber + 1;
+    this.isRequestLoadMore = true;
+    this.getAdsList();
   }
 
 }

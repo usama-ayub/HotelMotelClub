@@ -64,5 +64,27 @@ export interface IProduct {
     total:number
   }
 
+  export interface IProductList {
+    countryId?: number,
+    stateId?: number,
+    cityId?: number,
+    title?: string,
+    minPrice?: number,
+    maxPrice?: number,
+    categoryId?: number,
+    subCategoryId?: number,
+    type?: string,
+    pageNumber: number
+  }
+
+  export interface IProductListData {
+    city: string,
+    coverImage: string,
+    featureOn: any,
+    price: number,
+    tags: string,
+    title: string
+  }
   export type IProductResponse  = IResponse<IProductData>;
+  export type IProductListResponse  = IResponse<Array<IProductListData>>;
   export type IFavouriteProductResponse  = IResponse<Array<IFavouriteProductData>>;
