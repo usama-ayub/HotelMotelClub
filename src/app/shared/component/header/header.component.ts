@@ -41,6 +41,7 @@ export class HeaderComponent implements OnInit {
         this.navMenu[1].child.push({name:'Login', path:'/login'});
         this.navMenu[1].child.push({name:'Register', path:'/register'});
       } else {
+        this.getFavouriteProduct();
         this.navMenu[1].child = [];
         this.navMenu[1].child.push({name:'Create Product', path:'/create-product'});
         this.navMenu[1].child.push({name:'My Ads', path:'/ads'});
@@ -50,7 +51,14 @@ export class HeaderComponent implements OnInit {
       }
     })
   }
-
+ 
+  getFavouriteProduct(){
+    this.productService.getFavouriteProduct({userId:this.userId,pageNumber:1,pageSize:3})
+        .subscribe((res)=>{
+           this.favProduct = res;
+           this.totalFavProduct = this.favProduct[0].total;
+        })
+  }
   initNav():void {
     this.navMenu.push(
       {name:'Home', path:'/home', child:[],isCollapse:false},
@@ -60,13 +68,6 @@ export class HeaderComponent implements OnInit {
       {name:'FAQ', path:'/faq',child:[],isCollapse:false},
       {name:'Policies', path:'/policy', child:[],isCollapse:false},
       )
-      if(this.isAuth){
-        this.productService.getFavouriteProduct({userId:this.userId,pageNumber:1,pageSize:3})
-        .subscribe((res)=>{
-           this.favProduct = res;
-           this.totalFavProduct = this.favProduct[0].total;
-        })
-      }
   }
 
   showWishList(device:string='desktop'): void{

@@ -35,7 +35,8 @@
                                                                                 xlink:href="assets/images/sprite.svg#arrow-rounded-right-6x9">
                                                                             </use>
                                                                         </svg> {{category.categoryName}} </a>
-                                                                    <ng-container *ngIf="category.subcategory.length !== 0">
+                                                                    <ng-container
+                                                                        *ngIf="category.subcategory.length !== 0">
                                                                         <button class="widget-categories__expander"
                                                                             type="button"
                                                                             (click)="categoryCollapse(i)"></button>
@@ -67,7 +68,7 @@
                                         </button>
                                         <div class="filter__body">
                                             <div class="filter__container">
-                                                <div class="filter-price" data-min="500" data-max="1500" data-from="590"
+                                                <!-- <div class="filter-price" data-min="500" data-max="1500" data-from="590"
                                                     data-to="1130">
                                                     <div id="slider"
                                                         class="filter-price__slider noUi-target noUi-ltr noUi-horizontal">
@@ -76,6 +77,16 @@
                                                             class="filter-price__min-value">{{this.filterPayload.min}}</span>
                                                         – $<span
                                                             class="filter-price__max-value">{{this.filterPayload.max}}</span>
+                                                    </div>
+                                                </div> -->
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <input name="min" type="text" digitOnly [(ngModel)]="filterPayload.min" class="form-control"
+                                                            placeholder="Min" (keydown.space)="$event.preventDefault()" (change)="onRangeChange($event)">
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <input name="max"  [(ngModel)]="filterPayload.max"  type="text" digitOnly  class="form-control"
+                                                            placeholder="Max" (keydown.space)="$event.preventDefault()" (change)="onRangeChange($event)">
                                                     </div>
                                                 </div>
                                             </div>
@@ -161,9 +172,16 @@
                                 </div>
                             </div>
                             <div class="widget-filters__actions d-flex">
-                                <button class="btn btn-primary btn-sm" (click)="applyFiler()" [ngClass]="{'btn-loading': isRequestFilter}" [disabled]="isRequestFilter == true ? true : null" [disabled]="isRequestReset == true ? true : null">Filter</button>
-                                <button class="btn btn-secondary btn-sm ml-2" [ngClass]="{'btn-loading': isRequestReset}" [disabled]="isRequestFilter == true ? true : null" [disabled]="isRequestReset == true ? true : null">Reset</button>
-                            </div> 
+                                <!-- <button class="btn btn-primary btn-sm" (click)="applyFiler()"
+                                    [ngClass]="{'btn-loading': isRequestFilter}"
+                                    [disabled]="isRequestFilter == true ? true : null"
+                                    [disabled]="isRequestReset == true ? true : null">Filter</button> -->
+                                <button class="btn btn-primary btn-sm"
+                                    [ngClass]="{'btn-loading': isRequestFilter}"
+                                    [disabled]="isRequestFilter == true ? true : null"
+                                    (click)="reset()"
+                                >Reset</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -203,7 +221,9 @@
                                 <button class="btn btn-secondary btn-sm ml-2" [ngClass]="{'btn-loading': isRequestReset}" [disabled]="isRequestFilter == true ? true : null" [disabled]="isRequestReset == true ? true : null">Reset</button>
                             </div>  -->
                             <ul class="pagination justify-content-center">
-                                <button class="btn btn-primary btn-sm" [ngClass]="{'btn-loading': isRequestLoadMore}" [disabled]="isRequestLoadMore == true ? true : null" (click)="loadMore()">Load More</button>
+                                <button class="btn btn-primary btn-sm" [ngClass]="{'btn-loading': isRequestLoadMore}"
+                                    [disabled]="isRequestLoadMore == true ? true : null" (click)="loadMore()">Load
+                                    More</button>
                             </ul>
                             <!-- <app-pagination [page]="filterPayload.page" [totalPages]="filterPayload.totalPages"
                                 (onPageChange)="onPageChange($event)">

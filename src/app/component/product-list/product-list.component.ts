@@ -25,6 +25,10 @@ export class ProductListComponent implements OnInit {
   categoryArray: Array<ICategory> = [];
   filterPayload:IProductList = {
     pageNumber:1,
+    maxPrice:0,
+    min:0,
+    max:0,
+    minPrice:0,
   }
   adsListArray:Array<IProductListData> = [];
   // filterPayload = {
@@ -45,7 +49,7 @@ export class ProductListComponent implements OnInit {
   constructor(private productService:ProductService) { }
 
   ngOnInit() {
-    this.silderInit();
+    // this.silderInit();
     this.initFilter();
     this.getAdsList();
   }
@@ -96,16 +100,16 @@ export class ProductListComponent implements OnInit {
       connect: true,
       range: {
         'min': 100,
-        'max': 1000
+        'max': 9000
       },
     });
       let value = slider.noUiSlider.get();
-      // this.filterPayload.min = value[0];
-      // this.filterPayload.max = value[1];
+      this.filterPayload.min = value[0];
+      this.filterPayload.max = value[1];
     slider.noUiSlider.on('change',()=>{
       value = slider.noUiSlider.get();
-      // this.filterPayload.min = value[0];
-      // this.filterPayload.max = value[1];
+      this.filterPayload.min = value[0];
+      this.filterPayload.max = value[1];
     })
   }
   
@@ -117,26 +121,53 @@ export class ProductListComponent implements OnInit {
     }
   }
 
-  applyFiler(): void {
+  // applyFiler(): void {
+  //   this.isRequestFilter = true;
+  //   if(this.filterPayload.max){
+  //     this.filterPayload.maxPrice =  Number(this.filterPayload.max);
+  //   }
+  //   if(this.filterPayload.min){
+  //     this.filterPayload.minPrice = Number(this.filterPayload.min);
+  //   }
+  //   this.getAdsList();
+  // }
+  onRangeChange(e){
     this.isRequestFilter = true;
-    console.log(this.filterPayload);
-    // this.getAdsList();
   }
- 
   getAdsList(): void{
+    if(this.filterPayload.max){
+      this.filterPayload.maxPrice =  Number(this.filterPayload.max);
+    }
+    if(this.filterPayload.min){
+      this.filterPayload.minPrice = Number(this.filterPayload.min);
+    }
     this.productService.getAdsList(this.filterPayload)
     .subscribe((res)=>{
+      if(this.isRequestFilter){
+        this.adsListArray = [];
+      }
       this.adsListArray = this.adsListArray.concat(res);
       this.isRequestLoadMore = false;
+      this.isRequestFilter = false;
     },(error)=>{
       this.isRequestLoadMore = false;
+      this.isRequestFilter = false;
       console.log(error);
     })
   }
   loadMore(){
-    this.filterPayload.pageNumber = this.filterPayload.pageNumber + 1;
+    if(this.isRequestFilter){
+      this.filterPayload.pageNumber = 1;
+    } else {
+      this.filterPayload.pageNumber = this.filterPayload.pageNumber + 1;
+    }
     this.isRequestLoadMore = true;
     this.getAdsList();
   }
-
+ reset(): void{
+  this.isRequestFilter = true;
+  this.filterPayload.maxPrice = 0;
+  this.filterPayload.minPrice = 0;
+  this.getAdsList();
+ }
 }
