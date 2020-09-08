@@ -26,8 +26,8 @@ export class ProductListComponent implements OnInit {
   filterPayload:IProductList = {
     pageNumber:1,
     maxPrice:0,
-    min:0,
-    max:0,
+    min:'',
+    max:'',
     minPrice:0,
   }
   adsListArray:Array<IProductListData> = [];
