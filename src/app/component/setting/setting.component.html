@@ -12,28 +12,37 @@
                 <div class="product-tabs__content">
                     <div class="product-tabs__pane" [ngClass]="{'product-tabs__pane--active': settingTab.description}">
                         <div class="typography">
-                                <h3 class="card-title">Change password</h3>
+                                <h3 class="card-title">Verify Password</h3>
                                 <form>
                                     <div class="form-group">
-                                        <label>Old Password</label> 
-                                        <input type="email" class="form-control" placeholder="Enter email">
+                                        <label>Current Password</label> 
+                                        <input type="password" name="cPassword" [(ngModel)]="verifyPassword" class="form-control" placeholder="Enter Current Password">
+                                        <button type="submit" class="btn btn-primary mt-4" (click)="verifyPasswordC()">Verify</button>
                                     </div>
+                                </form>
+                                <form>
                                     <div class="form-group">
                                         <label>New Password</label> 
-                                        <input type="password" class="form-control" placeholder="Password">
+                                        <input type="password" class="form-control" [ngClass]="{ 'is-invalid': (this.updatePasswordPayload.submit &&  updatePasswordPayload.newPass.length < 6 )}" name="newPass" [(ngModel)]="updatePasswordPayload.newPass" placeholder="New Password" [disabled]="isVerify == false ? true : null">
+                                        <div *ngIf="this.updatePasswordPayload.submit &&  this.updatePasswordPayload.newPass.length < 6" class="invalid-feedback">
+                                            <div>New Password must be at least 6 characters </div>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Confirm Password</label> 
-                                        <input type="password" class="form-control" placeholder="Password">
+                                        <input type="password" [ngClass]="{ 'is-invalid': isValidUpdatePasswordForm().err }" class="form-control" name="confirmPass" [(ngModel)]="updatePasswordPayload.confirmPass" placeholder="Confirm Password" [disabled]="isVerify == false ? true : null">
+                                        <div *ngIf="isValidUpdatePasswordForm().err" class="invalid-feedback">
+                                            <div>{{isValidUpdatePasswordForm().meg}} </div>
+                                        </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary mt-4">Change Password</button>
+                                    <button type="submit" class="btn btn-primary mt-4" (click)="updatePassword()" [disabled]="(updatePasswordPayload.confirmPass == '' && updatePasswordPayload.newPass == '') ? true : null">Change Password</button>
                                 </form>
                         </div>
                     </div>
                     <div class="product-tabs__pane"
                         [ngClass]="{'product-tabs__pane--active': settingTab.specification}">
                         <div class="spec">
-                            <h3 class="spec__header">Notifications</h3>
+                            <h3 class="spec__header">User Info</h3>
                             <div class="spec__section">
                                 <h4 class="spec__section-title">General</h4>
                                 <div class="spec__row">

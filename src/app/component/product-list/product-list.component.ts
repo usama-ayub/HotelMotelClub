@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ICategory } from 'src/app/interface/category';
 import { ProductService } from 'src/app/shared/services/product/product.service';
 import { IProductList, IProductListData } from 'src/app/interface/product';
+import { ICountryData, IStateData, ICityData } from 'src/app/interface/user';
+import { UserService } from 'src/app/shared/services/user/user.service';
 
 declare const noUiSlider: any
 @Component({
@@ -16,37 +18,38 @@ export class ProductListComponent implements OnInit {
   isRequestLoadMore = false;
   isFilterCollapse  = {
     isCategory: true,
-    isBrand: true,
-    isSeller: true,
-    isPrice: true
+    isCountry: true,
+    isType: true,
+    isPrice: true,
+    isCity:true,
+    isState:true
   }
-  brandArray: Array<{ name: string, availabe: boolean }> = [];
-  sellerArray: Array<{ name: string, availabe: boolean }> = [];
+  countryArray: Array<ICountryData> = [];
+  stateArray: Array<IStateData> = [];
+  cityArray: Array<ICityData> = [];
+  typeArray: Array<{ name: string, availabe: boolean }> = [
+    { name: 'Cash', availabe: true },
+      { name: 'Lease', availabe: true },
+  ];
   categoryArray: Array<ICategory> = [];
   filterPayload:IProductList = {
     pageNumber:1,
+    categoryId:0,
+    subCategoryId:0,
+    countryId:0,
+    stateId:0,
+    cityId:0,
     maxPrice:0,
     min:'',
     max:'',
     minPrice:0,
   }
   adsListArray:Array<IProductListData> = [];
-  // filterPayload = {
-  //   brand: '',
-  //   seller: [], 
-  //   max:0,
-  //   min:0,
-  //   page:1,
-  //   totalPages:20
-  // }
-  paginationOption = {
-    current:2,
-    perPag:3,
-    total : 10,
-    next: true,
-    prev: true
-  }
-  constructor(private productService:ProductService) { }
+
+  constructor(
+    private productService:ProductService,
+    private userService: UserService
+    ) { }
 
   ngOnInit() {
     // this.silderInit();
@@ -55,21 +58,12 @@ export class ProductListComponent implements OnInit {
   }
 
   initFilter(): void {
-    this.brandArray.push(
-      { name: 'Wakita', availabe: true },
-      { name: 'Zosch', availabe: true },
-      { name: 'WeVALT', availabe: false },
-      { name: 'Mitasia', availabe: true }
-    );
     this.productService.getCategory().subscribe((res)=>{
       this.categoryArray = res;
+    });
+    this.userService.getCountry().subscribe((res)=>{
+      this.countryArray = res;
     })
-    this.sellerArray.push(
-      { name: 'Wakita', availabe: true },
-      { name: 'Zosch', availabe: true },
-      { name: 'WeVALT', availabe: false },
-      { name: 'Mitasia', availabe: true }
-    )
   }
 
   categoryCollapse(index:number): void {
@@ -80,11 +74,17 @@ export class ProductListComponent implements OnInit {
      if(type == 'category'){
        this.isFilterCollapse.isCategory = !this.isFilterCollapse.isCategory;
      }
-     if(type == 'brand'){
-      this.isFilterCollapse.isBrand = !this.isFilterCollapse.isBrand;
+     if(type == 'country'){
+      this.isFilterCollapse.isCountry = !this.isFilterCollapse.isCountry;
     }
-    if(type == 'seller'){
-      this.isFilterCollapse.isSeller = !this.isFilterCollapse.isSeller;
+    if(type == 'city'){
+      this.isFilterCollapse.isCity = !this.isFilterCollapse.isCity;
+    }
+    if(type == 'state'){
+      this.isFilterCollapse.isState = !this.isFilterCollapse.isState;
+    }
+    if(type == 'type'){
+      this.isFilterCollapse.isType = !this.isFilterCollapse.isType;
     }
     if(type == 'price'){
       this.isFilterCollapse.isPrice = !this.isFilterCollapse.isPrice;
@@ -115,12 +115,30 @@ export class ProductListComponent implements OnInit {
   
   onCheckboxChange(event:any): void{
     if(event.target.checked) { 
-      //  this.filterPayload.seller.push(event.target.value);
+       this.filterPayload.type = event.target.value;
     } else {
-      // this.filterPayload.seller.splice(event.target.value,1);
+      delete this.filterPayload.type;
     }
+    this.isRequestFilter = true;
+    this.loadMore();
   }
-
+  onCountyChange($event){
+    this.filterPayload.countryId = Number($event.target.value);
+    this.getState();
+    this.isRequestFilter = true;
+    this.loadMore();
+  }
+  onStateChange($event){
+    this.filterPayload.stateId = Number($event.target.value);
+    this.getCity();
+    this.isRequestFilter = true;
+    this.loadMore();
+  }
+  onCityChange($event){
+    this.filterPayload.cityId = Number($event.target.value);
+    this.isRequestFilter = true;
+    this.loadMore();
+  }
   // applyFiler(): void {
   //   this.isRequestFilter = true;
   //   if(this.filterPayload.max){
@@ -133,6 +151,15 @@ export class ProductListComponent implements OnInit {
   // }
   onRangeChange(e){
     this.isRequestFilter = true;
+  }
+  onCategoryChange(id:number, type:string){
+    if(type == 'category'){
+      this.filterPayload.categoryId = id;
+    } else {
+      this.filterPayload.subCategoryId = id;
+    }
+    this.isRequestFilter = true;
+    this.loadMore();
   }
   getAdsList(): void{
     if(this.filterPayload.max){
@@ -155,6 +182,16 @@ export class ProductListComponent implements OnInit {
       console.log(error);
     })
   }
+  getState(){
+    this.userService.getState(this.filterPayload.countryId).subscribe((res)=>{
+      this.stateArray = res;
+    })
+  }
+  getCity(){
+    this.userService.getCity(this.filterPayload.stateId).subscribe((res)=>{
+      this.cityArray = res;
+    })
+  }
   loadMore(){
     if(this.isRequestFilter){
       this.filterPayload.pageNumber = 1;
@@ -168,6 +205,14 @@ export class ProductListComponent implements OnInit {
   this.isRequestFilter = true;
   this.filterPayload.maxPrice = 0;
   this.filterPayload.minPrice = 0;
+  this.filterPayload.cityId = 0;
+  this.filterPayload.countryId = 0;
+  this.filterPayload.stateId = 0;
+  this.filterPayload.categoryId = 0;
+  this.filterPayload.subCategoryId = 0;
+  delete this.filterPayload.type;
+  this.stateArray = [];
+  this.cityArray = [];
   this.getAdsList();
  }
 }

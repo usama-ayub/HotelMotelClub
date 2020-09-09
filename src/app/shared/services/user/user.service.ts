@@ -40,4 +40,24 @@ export class UserService {
     }))
   }
 
+  verifyPassword(password: string) : Observable<number>{
+    let url: string  = `User/verifypassword?password=${password}`;
+    return this.http.post<{success:boolean,message:string,data:number}>(url,{}).pipe(switchMap(res => {
+      if(!res.success){
+        return throwError(res.message)
+      }
+      return of(res.data)
+    }))
+  }
+
+  updatePassword(password: string) : Observable<number>{
+    let url: string  = `User/updatepassword?password=${password}`;
+    return this.http.post<{success:boolean,message:string,data:number}>(url,{}).pipe(switchMap(res => {
+      if(!res.success){
+        return throwError(res.message)
+      }
+      return of(res.data)
+    }))
+  }
+
 }

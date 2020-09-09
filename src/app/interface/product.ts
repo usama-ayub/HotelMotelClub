@@ -50,7 +50,7 @@ export interface IProduct {
     categoryId?:number
   }
   export interface IFavouriteProduct {
-    userId: number,
+    userId?: number,
     pageNumber?: number,
     pageSize?: number,
     adId?: number
@@ -82,10 +82,11 @@ export interface IProduct {
   export interface IProductListData {
     city: string,
     coverImage: string,
-    featureOn: any,
+    featuredOn: any,
     price: number,
     tags: string,
-    title: string
+    title: string,
+    id:number
   }
   export type IProductResponse  = IResponse<IProductData>;
   export type IProductListResponse  = IResponse<Array<IProductListData>>;

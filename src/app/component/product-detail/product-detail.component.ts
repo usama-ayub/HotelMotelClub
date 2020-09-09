@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/shared/services/product/product.service';
 import { CommonService } from 'src/app/shared/services/common/common.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IProductData, IProductImage } from 'src/app/interface/product';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -21,7 +22,9 @@ export class ProductDetailComponent implements OnInit {
      {picture:'assets/images/product/product-3.jpg',coverImage:false},
      {picture:'assets/images/product/product-4.jpg',coverImage:false},
     ]
-  adId: number = 0
+  adId: number = 0;
+  userId: number = 0;
+  isAuth:boolean = false;
   adsDetails:IProductData = {
     title:'',
     description:'',
@@ -44,12 +47,18 @@ export class ProductDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private productService:ProductService,
     private commonService:CommonService,
+    public authService: AuthService,
+    private router: Router
   ) { 
     this.adId = Number(this.route.snapshot.params.id);
+    this.userId = this.commonService.getUserId();
   }
 
   ngOnInit() {
     this.getAdsDetail();
+    this.authService.isAuth$.subscribe((res)=>{
+     this.isAuth = res;
+    })
   }
 
   onTabChange(type:string): void{
@@ -70,7 +79,7 @@ export class ProductDetailComponent implements OnInit {
     this.selectedImage = image;
   }
   getAdsDetail(): void{
-    this.productService.adsDetail({userId:this.commonService.getUserId(),adId:this.adId}).subscribe((res)=>{
+    this.productService.adsDetail({adId:this.adId}).subscribe((res)=>{
        console.log(res);
        this.adsDetails = res;
        this.productDetailImage = this.adsDetails.images;
@@ -90,5 +99,18 @@ export class ProductDetailComponent implements OnInit {
      }
    })
    return tags;
+  }
+  addFavouriteAds(){
+    if(!this.isAuth){
+       this.routeTo('/login');
+       return;
+    }
+    this.productService.addFavouriteProduct({userId:this.userId,adId:this.adsDetails.adId})
+    .subscribe((res)=>{
+      this.commonService.success('Ad has been added to Favourite List')
+    })
+  }
+  routeTo(path:string){
+    this.router.navigate([path]);
   }
 }

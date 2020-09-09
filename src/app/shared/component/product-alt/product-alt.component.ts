@@ -10,6 +10,7 @@ export class ProductAltComponent implements OnInit {
 
   @Input() listType: string = 'ads';
   @Input() product: Array<any> = [];
+  @Output() removeFavProductChange = new EventEmitter();
   @Output() removeProductChange = new EventEmitter();
 
   constructor(
@@ -24,7 +25,11 @@ export class ProductAltComponent implements OnInit {
   }
 
   removeProduct(id:number) {
-    this.removeProductChange.emit(id);
+    if(this.listType == 'ads'){
+      this.removeProductChange.emit(id);
+    } else {
+      this.removeFavProductChange.emit(id);
+    }
   } 
 
 }

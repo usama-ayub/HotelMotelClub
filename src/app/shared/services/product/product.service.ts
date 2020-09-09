@@ -89,4 +89,13 @@ export class ProductService {
       return of(res.data)
     }))
   }
+  removeProduct(id:number): Observable<number>{
+    let url: string  = `Ad/delete?AdId=${id}`;
+    return this.http.post<{success:boolean,message:string,data:number}>(url, {}).pipe(switchMap(res => {
+      if(!res.success){
+        return throwError(res.message)
+      }
+      return of(res.data)
+    }))
+  }
 }

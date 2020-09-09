@@ -39,4 +39,13 @@ export class MyAdsComponent implements OnInit {
       this.pagination.totalPages = Math.round((this.myAds[0].total/this.pagination.pageSize));
     })
   }
+  removeProduct($event:number){
+      this.productService.removeProduct($event).subscribe((res)=>{
+        console.log(res);
+        this.commonService.success('Ad Deleted Successfully"');
+       this.getMyAds(this.pagination);
+      }, (error)=>{
+        console.log(error);
+      })
+  }
 }

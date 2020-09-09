@@ -42,7 +42,7 @@
                     <!-- .product__gallery / end -->
                     <!-- .product__info -->
                     <div class="product__info">
-                        <div class="product__wishlist-compare">
+                        <div class="product__wishlist-compare" (click)="addFavouriteAds()">
                             <button type="button" class="btn btn-sm btn-light btn-svg-icon" data-toggle="tooltip"
                                 data-placement="right" title="Wishlist"><svg width="16px" height="16px">
                                     <use xlink:href="assets/images/sprite.svg#wishlist-16"></use>
@@ -258,13 +258,6 @@
                 <h3 class="block-header__title">Related Products</h3>
                 <div class="block-header__divider"></div>
                 <div class="block-header__arrows-list">
-                    <!-- <button class="block-header__arrow block-header__arrow--left"
-                    type="button"><svg width="7px" height="11px">
-                        <use xlink:href="images/sprite.svg#arrow-rounded-left-7x11"></use>
-                    </svg></button> <button class="block-header__arrow block-header__arrow--right"
-                    type="button"><svg width="7px" height="11px">
-                        <use xlink:href="images/sprite.svg#arrow-rounded-right-7x11"></use>
-                    </svg></button> -->
                 </div>
             </div>
             <div class="block-products-carousel__slider">
@@ -287,7 +280,7 @@
                                 style="width: 212px; margin-right: 12px;">
                                 <div class="block-products-carousel__column">
                                     <div class="block-products-carousel__cell">
-                                        <app-product [index]="i+1"></app-product>
+                                        <!-- <app-product [index]="i+1"></app-product> -->
                                     </div>
                                 </div>
                             </div>
