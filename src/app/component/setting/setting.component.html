@@ -7,7 +7,7 @@
                     <a class="product-tabs__item" [ngClass]="{'product-tabs__item--active': settingTab.description}"
                         (click)="onTabChange('desc')">Privacy</a>
                     <a class="product-tabs__item" [ngClass]="{'product-tabs__item--active': settingTab.specification}"
-                        (click)="onTabChange('speci')">Notification</a>
+                        (click)="onTabChange('speci')">User Detail</a>
                 </div>
                 <div class="product-tabs__content">
                     <div class="product-tabs__pane" [ngClass]="{'product-tabs__pane--active': settingTab.description}">
@@ -20,79 +20,157 @@
                                         <button type="submit" class="btn btn-primary mt-4" (click)="verifyPasswordC()">Verify</button>
                                     </div>
                                 </form>
-                                <form>
+                                <form [formGroup]="updatePasswordForm">
                                     <div class="form-group">
-                                        <label>New Password</label> 
-                                        <input type="password" class="form-control" [ngClass]="{ 'is-invalid': (this.updatePasswordPayload.submit &&  updatePasswordPayload.newPass.length < 6 )}" name="newPass" [(ngModel)]="updatePasswordPayload.newPass" placeholder="New Password" [disabled]="isVerify == false ? true : null">
-                                        <div *ngIf="this.updatePasswordPayload.submit &&  this.updatePasswordPayload.newPass.length < 6" class="invalid-feedback">
-                                            <div>New Password must be at least 6 characters </div>
+                                        <label>New Password</label>  
+                                        <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submittedPassword && p.password.errors }" placeholder="New Password" [disabled]="isVerify == false ? true : null">
+                                        <div *ngIf="submittedPassword && p.password.errors" class="invalid-feedback">
+                                            <div *ngIf="p.password.errors.required">Password is required</div>
+                                            <div *ngIf="p.password.errors.minlength">Password must be at least 6
+                                                characters
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Confirm Password</label> 
-                                        <input type="password" [ngClass]="{ 'is-invalid': isValidUpdatePasswordForm().err }" class="form-control" name="confirmPass" [(ngModel)]="updatePasswordPayload.confirmPass" placeholder="Confirm Password" [disabled]="isVerify == false ? true : null">
-                                        <div *ngIf="isValidUpdatePasswordForm().err" class="invalid-feedback">
-                                            <div>{{isValidUpdatePasswordForm().meg}} </div>
+                                        <input type="password" formControlName="confirmPassword" [ngClass]="{ 'is-invalid': submittedPassword && p.confirmPassword.errors }" class="form-control" placeholder="Confirm Password" [disabled]="isVerify == false ? true : null">
+                                        <div *ngIf="submittedPassword && p.confirmPassword.errors"
+                                        class="invalid-feedback">
+                                        <div *ngIf="p.confirmPassword.errors.required">Repeat Password is required
+                                        </div>
+                                        <div *ngIf="p.confirmPassword.errors.minlength">Repeat Password must be at
+                                            least
+                                            6 characters</div>
+                                        <div *ngIf="p.confirmPassword.errors.mustMatch">Repeat Passwords must match
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary mt-4" (click)="updatePassword()" [disabled]="(updatePasswordPayload.confirmPass == '' && updatePasswordPayload.newPass == '') ? true : null">Change Password</button>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mt-4" (click)="updatePassword()" [disabled]="isRequestPassword == true ? true : null" [disabled]="isVerify == false ? true : null">Change Password</button>
                                 </form>
                         </div>
                     </div>
                     <div class="product-tabs__pane"
                         [ngClass]="{'product-tabs__pane--active': settingTab.specification}">
-                        <div class="spec">
-                            <h3 class="spec__header">User Info</h3>
-                            <div class="spec__section">
-                                <h4 class="spec__section-title">General</h4>
-                                <div class="spec__row">
-                                    <div class="spec__name">Material</div>
-                                    <div class="spec__value">Aluminium, Plastic</div>
+                        <div class="typography">
+                            <h3 class="card-title">User Info</h3>
+                            <form [formGroup]="userForm">
+                                <div class="form-row">
+
+                                    <div class="form-group col-md-6">
+                                        <label>Email address</label>
+                                        <input type="email" formControlName="email" class="form-control"
+                                            placeholder="Enter Email"
+                                            [ngClass]="{ 'is-invalid': submittedUser && f.email.errors }">
+                                        <div *ngIf="submittedUser && f.email.errors" class="invalid-feedback">
+                                            <div *ngIf="f.email.errors.required">Email is required</div>
+                                            <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>First Name</label>
+                                        <input type="text" formControlName="firstName" class="form-control"
+                                            placeholder="Enter First Name"
+                                            [ngClass]="{ 'is-invalid': submittedUser && f.firstName.errors }">
+                                        <div *ngIf="submittedUser && f.firstName.errors" class="invalid-feedback">
+                                            <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="spec__row">
-                                    <div class="spec__name">Engine Type</div>
-                                    <div class="spec__value">Brushless</div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>Middle Name</label>
+                                        <input type="text" formControlName="middleName" class="form-control"
+                                            placeholder="Enter Middle Name"
+                                            [ngClass]="{ 'is-invalid': submittedUser && f.middleName.errors }">
+                                        <div *ngIf="submittedUser && f.middleName.errors" class="invalid-feedback">
+                                            <div *ngIf="f.middleName.errors.required">Middle Name is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Last Name</label>
+                                        <input type="text" formControlName="lastName" class="form-control"
+                                            placeholder="Enter Last Name"
+                                            [ngClass]="{ 'is-invalid': submittedUser && f.lastName.errors }">
+                                        <div *ngIf="submittedUser && f.lastName.errors" class="invalid-feedback">
+                                            <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="spec__row">
-                                    <div class="spec__name">Battery Voltage</div>
-                                    <div class="spec__value">18 V</div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>Primary Contact</label>
+                                        <input type="number" formControlName="primaryContact" class="form-control"
+                                            placeholder="Enter Primary Contact"
+                                            [ngClass]="{ 'is-invalid': submittedUser && f.primaryContact.errors }">
+                                        <div *ngIf="submittedUser && f.primaryContact.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f.primaryContact.errors.required">Primary Contact is required
+                                            </div>
+                                            <div *ngIf="f.primaryContact.errors.pattern">Primary Contact must be at least 12 numbers and Select 1 to 9 digit</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Secondary Contact</label>
+                                        <input type="number" formControlName="secondaryContact" class="form-control"
+                                            placeholder="Enter Secondary Contact"
+                                            [ngClass]="{ 'is-invalid': submittedUser && f.secondaryContact.errors }">
+                                        <div *ngIf="submittedUser && f.secondaryContact.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f.secondaryContact.errors.required">Secondary Contact is
+                                                required
+                                            </div>
+                                            <div *ngIf="f.secondaryContact.errors.pattern">Secondary Contact must be at least 12 numbers and Select 1 to 9 digit</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="spec__row">
-                                    <div class="spec__name">Battery Type</div>
-                                    <div class="spec__value">Li-lon</div>
+                                <div class="form-group">
+                                    <label>Preferred Contact</label>
+                                    <select class="form-control" formControlName="preferredContact" [ngClass]="{ 'is-invalid': submittedUser && f.preferredContact.errors }">
+                                        <option [ngValue]="null" disabled>Select Preferred Contact</option>
+                                        <option *ngFor="let contact of preferredContact" [ngValue]="contact.value">{{contact.type}}</option>
+                                    </select>
+                                    <div *ngIf="submittedUser && f.preferredContact.errors" class="invalid-feedback">
+                                        <div *ngIf="f.preferredContact.errors.required">Preferred Contact is required
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="spec__row">
-                                    <div class="spec__name">Number of Speeds</div>
-                                    <div class="spec__value">2</div>
+
+                                <div class="form-group">
+                                    <label>First Address</label>
+                                    <input type="text" formControlName="addressLine1" class="form-control"
+                                        placeholder="Enter First Address"
+                                        [ngClass]="{ 'is-invalid': submittedUser && f.addressLine1.errors }">
+                                    <div *ngIf="submittedUser && f.addressLine1.errors" class="invalid-feedback">
+                                        <div *ngIf="f.addressLine1.errors.required">First Address is required</div>
+                                    </div>
                                 </div>
-                                <div class="spec__row">
-                                    <div class="spec__name">Charge Time</div>
-                                    <div class="spec__value">1.08 h</div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>Second Address</label>
+                                        <input type="text" formControlName="addressLine2" class="form-control"
+                                            placeholder="Enter Second Address"
+                                            [ngClass]="{ 'is-invalid': submittedUser && f.addressLine2.errors }">
+                                        <div *ngIf="submittedUser && f.addressLine2.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f.addressLine2.errors.required">Second Address is required</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label>Third Address</label>
+                                        <input type="text" formControlName="addressLine3" class="form-control"
+                                            placeholder="Enter Third Address"
+                                            [ngClass]="{ 'is-invalid': submittedUser && f.addressLine3.errors }">
+                                        <div *ngIf="submittedUser && f.addressLine3.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f.addressLine3.errors.required">Third Address is required</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="spec__row">
-                                    <div class="spec__name">Weight</div>
-                                    <div class="spec__value">1.5 kg</div>
-                                </div>
-                            </div>
-                            <div class="spec__section">
-                                <h4 class="spec__section-title">Dimensions</h4>
-                                <div class="spec__row">
-                                    <div class="spec__name">Length</div>
-                                    <div class="spec__value">99 mm</div>
-                                </div>
-                                <div class="spec__row">
-                                    <div class="spec__name">Width</div>
-                                    <div class="spec__value">207 mm</div>
-                                </div>
-                                <div class="spec__row">
-                                    <div class="spec__name">Height</div>
-                                    <div class="spec__value">208 mm</div>
-                                </div>
-                            </div>
-                            <div class="spec__disclaimer">Information on technical characteristics, the delivery
-                                set, the country of manufacture and the appearance of the goods is for reference
-                                only and is based on the latest information available at the time of
-                                publication.</div>
+                                <button (click)="onSubmitUser()" class="btn btn-primary mt-4"
+                                    [ngClass]="{'btn-loading': isRequestUser}"
+                                    [disabled]="isRequestUser == true ? true : null">Update</button>
+                            </form>
                         </div>
                     </div>
                 </div>

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
 import { Observable, of, throwError } from "rxjs/index";
-import { ICountryResponse, IStateResponse, ICityResponse, ICountryData, IStateData, ICityData } from 'src/app/interface/user';
+import { ICountryResponse, IStateResponse, ICityResponse, ICountryData, IStateData, ICityData, IUser, IUserResponse } from 'src/app/interface/user';
 @Injectable({
   providedIn: 'root'
 })
@@ -59,5 +59,25 @@ export class UserService {
       return of(res.data)
     }))
   }
+  updateUserInfo(payload:IUser): Observable<any>{
+    let url: string  = `User/updateinfo`;
+    return this.http.post<{success:boolean,message:string,data:any}>(url,payload)
+    .pipe(switchMap(res => {
+      if(!res.success){
+        return throwError(res.message)
+      }
+      return of(res.data)
+    }))
+  }
 
+  getUserInfo(): Observable<IUser>{
+    let url: string  = `User/personal`;
+    return this.http.post<IUserResponse>(url,{})
+    .pipe(switchMap(res => {
+      if(!res.success){
+        return throwError(res.message)
+      }
+      return of(res.data)
+    }))
+  }
 }

@@ -1,12 +1,18 @@
 import { IResponse } from './response';
 
 export interface IUser {
-    id: string;
+    userid?:number,
     email: string;
-    password: string;
-    repassword?: string;
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    primaryContact: number;
+    secondaryContact: number;
+    addressLine1: string;
+    addressLine2: string;
+    addressLine3: string;
+    preferredContact: number;
 }
-
 export interface ICountryData {
     countryId: number;
     countryName: string;
@@ -26,5 +32,6 @@ export interface ICityData {
 export type ICountryResponse  = IResponse<Array<ICountryData>>;
 export type IStateResponse  = IResponse<Array<IStateData>>;
 export type ICityResponse  = IResponse<Array<ICityData>>;
+export type IUserResponse  = IResponse<IUser>;
 
 

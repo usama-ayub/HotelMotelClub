@@ -4,7 +4,10 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class CommonService {
-
+  preferredContact:Array<{type:string,value:number}>= [
+    {type:'Primary Contact',value:1},
+    {type:'Secondary Contact',value:2}
+  ]
   public isMenuShow:boolean = false;
   errorObj = {
     message: '',
