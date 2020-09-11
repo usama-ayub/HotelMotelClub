@@ -24,11 +24,11 @@ export class ProductAltComponent implements OnInit {
     this.router.navigate([path,params]);
   }
 
-  removeProduct(id:number) {
+  removeProduct(id:number,index:number) {
     if(this.listType == 'ads'){
       this.removeProductChange.emit(id);
     } else {
-      this.removeFavProductChange.emit(id);
+      this.removeFavProductChange.emit({id:id,index:index});
     }
   } 
 

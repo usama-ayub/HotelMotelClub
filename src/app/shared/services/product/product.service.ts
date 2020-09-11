@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
-import { Observable, of, throwError } from "rxjs/index";
+import { Observable, of, throwError, BehaviorSubject } from "rxjs/index";
 import { ICategoryResponse, ICategory } from 'src/app/interface/category';
 import { IFavouriteProduct, IProduct, IProductResponse, IFavouriteProductResponse, IFavouriteProductData, IProductData, IProductList, IProductListResponse, IProductListData } from 'src/app/interface/product';
+import { CommonService } from '../common/common.service';
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  
-  constructor(private http: HttpClient) { }
+  isFavouriteHit$ = new BehaviorSubject<boolean>(false); 
+  constructor(private http: HttpClient, private common:CommonService) { }
 
   getCategory() : Observable<Array<ICategory>>{
     let url: string  = 'Category/fetchadcategories';
@@ -24,7 +25,9 @@ export class ProductService {
 
   getFavouriteProduct(paylaod: IFavouriteProduct) : Observable<Array<IFavouriteProductData>>{
     let url: string  = 'Favourite/all';
-    return this.http.post<IFavouriteProductResponse>(url, paylaod).pipe(switchMap(res => {
+    return this.http.post<IFavouriteProductResponse>(url, paylaod)
+    .pipe(
+      switchMap(res => {
       if(!res.success){
         return throwError(res.message)
       }
@@ -47,7 +50,8 @@ export class ProductService {
       if(!res.success){
         return throwError(res.message)
       }
-      return of(res.data)
+      this.isFavouriteHit$.next(true);
+      return of(res.data);
     }))
   }
 
@@ -57,6 +61,7 @@ export class ProductService {
       if(!res.success){
         return throwError(res.message)
       }
+      this.isFavouriteHit$.next(true);
       return of(res.data)
     }))
   }
@@ -98,4 +103,5 @@ export class ProductService {
       return of(res.data)
     }))
   }
+
 }

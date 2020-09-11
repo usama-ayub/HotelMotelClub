@@ -50,13 +50,18 @@ export class HeaderComponent implements OnInit {
         this.navMenu[1].child.push({name:'logout', path:'/logout'});
       }
     })
+    this.productService.isFavouriteHit$.subscribe((res)=>{
+      if(res){
+        this.getFavouriteProduct();
+      }
+    });
   }
  
   getFavouriteProduct(){
     this.productService.getFavouriteProduct({userId:this.userId,pageNumber:1,pageSize:3})
         .subscribe((res)=>{
            this.favProduct = res;
-           this.totalFavProduct = this.favProduct[0].total;
+           this.totalFavProduct = this.favProduct.length == 0 ? 0 : this.favProduct[0].total;
         })
   }
   initNav():void {

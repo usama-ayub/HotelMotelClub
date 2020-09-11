@@ -1,23 +1,25 @@
-
-    <div class="product-card">
-        <div class="product-card__badges-list">
-            <div class="product-card__badge product-card__badge--new">New {{index}}</div>
-        </div>
-        <div class="product-card__image" (click)="routeTo('product',item.id)">
+<div class="product-card">
+    <button class="product-card__quickview" type="button" (click)="addFavouriteAds(item.id)"><svg width="16px" height="16px">
+            <use  xlink:href="assets/images/sprite.svg#wishlist-16">></use>
+        </svg></button>
+    <div class="product-card__badges-list">
+        <div class="product-card__badge product-card__badge--new">New {{index}}</div>
+    </div>
+    <div class="product-card__image" (click)="routeTo('product',item.id)">
         <!-- <div class="product-card__image"> -->
-            <!-- <a><img [src]="item.coverImage" alt="" style="height: 135px; width: 225px;"></a> -->
-            <a><img [src]="item.coverImage"></a>
-        </div>
-        <div class="product-card__info">
-            <div class="product-card__name" style="width: 216px;"><a>
-               {{item.title}}</a></div>
-            <ul class="product-card__features-list" style="display: initial;">
-                <li>City: {{item.city}}</li>
-                <li>Tag: {{item.tags}}</li>
-                <li>{{item.featuredOn}}</li>
-            </ul>
-        </div>
-        <div class="product-card__actions">
-            <div class="product-card__prices">${{item.price}}.00</div>
-        </div>
-    </div> 
+        <!-- <a><img [src]="item.coverImage" alt="" style="height: 135px; width: 225px;"></a> -->
+        <a><img [src]="item.coverImage"></a>
+    </div>
+    <div class="product-card__info">
+        <div class="product-card__name" style="width: 216px;"><a>
+                {{item.title}}</a></div>
+        <ul class="product-card__features-list" style="display: initial;">
+            <li>City: {{item.city}}</li>
+            <li>Tag: {{item.tags}}</li>
+            <li>{{item.featuredOn}}</li>
+        </ul>
+    </div>
+    <div class="product-card__actions">
+        <div class="product-card__prices">${{item.price}}.00</div>
+    </div>
+</div>

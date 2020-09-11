@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { ICategory } from 'src/app/interface/category';
 import { ProductService } from 'src/app/shared/services/product/product.service';
 import { IProductList, IProductListData } from 'src/app/interface/product';
@@ -13,6 +13,7 @@ declare const noUiSlider: any
 })
 // https://stackblitz.com/edit/angular-pagination-bkfqss?file=app%2Fpagination%2Fpagination.component.html
 export class ProductListComponent implements OnInit {
+  @ViewChildren('selectedRadio') selectedRadio:any;
   isRequestFilter = false;
   isRequestReset = false;
   isRequestLoadMore = false;
@@ -139,18 +140,15 @@ export class ProductListComponent implements OnInit {
     this.isRequestFilter = true;
     this.loadMore();
   }
-  // applyFiler(): void {
-  //   this.isRequestFilter = true;
-  //   if(this.filterPayload.max){
-  //     this.filterPayload.maxPrice =  Number(this.filterPayload.max);
-  //   }
-  //   if(this.filterPayload.min){
-  //     this.filterPayload.minPrice = Number(this.filterPayload.min);
-  //   }
-  //   this.getAdsList();
-  // }
-  onRangeChange(e){
+  onRangeChange(){
     this.isRequestFilter = true;
+    if(this.filterPayload.max){
+      this.filterPayload.maxPrice =  Number(this.filterPayload.max);
+    }
+    if(this.filterPayload.min){
+      this.filterPayload.minPrice = Number(this.filterPayload.min);
+    }
+    this.loadMore();
   }
   onCategoryChange(id:number, type:string){
     if(type == 'category'){
@@ -162,12 +160,6 @@ export class ProductListComponent implements OnInit {
     this.loadMore();
   }
   getAdsList(): void{
-    if(this.filterPayload.max){
-      this.filterPayload.maxPrice =  Number(this.filterPayload.max);
-    }
-    if(this.filterPayload.min){
-      this.filterPayload.minPrice = Number(this.filterPayload.min);
-    }
     this.productService.getAdsList(this.filterPayload)
     .subscribe((res)=>{
       if(this.isRequestFilter){
@@ -205,11 +197,16 @@ export class ProductListComponent implements OnInit {
   this.isRequestFilter = true;
   this.filterPayload.maxPrice = 0;
   this.filterPayload.minPrice = 0;
+  this.filterPayload.min = '';
+  this.filterPayload.max = '';
   this.filterPayload.cityId = 0;
   this.filterPayload.countryId = 0;
   this.filterPayload.stateId = 0;
   this.filterPayload.categoryId = 0;
   this.filterPayload.subCategoryId = 0;
+  this.selectedRadio._results.map((res,index)=>{
+    this.selectedRadio._results[index].nativeElement.querySelector('.input-radio__input').checked = false;
+  })
   delete this.filterPayload.type;
   this.stateArray = [];
   this.cityArray = [];

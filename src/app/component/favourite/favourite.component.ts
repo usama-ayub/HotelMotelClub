@@ -42,20 +42,28 @@ export class FavouriteComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((res)=>{
       this.favProduct = res;
-      this.pagination.totalPages = Math.round(((this.favProduct[0].total+1)/this.pagination.pageSize));
+      if(this.favProduct.length !== 0){
+        this.pagination.totalPages = Math.round(((this.favProduct[0].total+1)/this.pagination.pageSize));
+      }
     }, (error)=>{
       console.log(error);
     })
   }
-  removeFavouriteProduct($event){
+  removeFavouriteProduct($event:{id:number,index:number}): void{
     if(this.isRemoveFavorite) return;
-    let payload:IFavouriteProduct = {userId:this.userId,adId:$event};
+    let payload:IFavouriteProduct = {userId:this.userId,adId:$event.id};
     this.isRemoveFavorite = true;
     this.productService.removeFavouriteProduct(payload)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((res)=>{
       this.commonService.success('Ad has been removed from Favourite List');
       this.isRemoveFavorite = false;
+      this.favProduct.splice($event.index,1)
+      if(this.favProduct.length == 0){
+        if(this.pagination.page !== 1){
+          this.pagination.page = this.pagination.page - 1
+        }
+      }
       this.getFavouriteProduct(this.pagination);
     }, (error)=>{
       this.isRemoveFavorite = false;
