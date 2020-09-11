@@ -27,7 +27,7 @@
                                                             <li class="widget-categories__item"
                                                                 [ngClass]="{'widget-categories__item--open': category.isCollapse}">
                                                                 <div class="widget-categories__row">
-                                                                    <a (click)="onCategoryChange(category.categoryId,'category')">
+                                                                    <a (click)="onCategoryChange(category.categoryId,'category')" [ngClass]="{'collapse-select': category.categoryId == filterPayload.categoryId}">
                                                                         <svg *ngIf="category.subcategory.length !== 0"
                                                                             class="widget-categories__arrow" width="6px"
                                                                             height="9px">
@@ -45,8 +45,8 @@
                                                                 <div class="widget-categories__subs"
                                                                     *ngIf="category.subcategory.length !== 0">
                                                                     <ul>
-                                                                        <li *ngFor="let child of category.subcategory" (click)="onCategoryChange(child.subCategoryId, '')">
-                                                                            <a>{{child.subCategoryName}}</a></li>
+                                                                        <li *ngFor="let child of category.subcategory" (click)="onCategoryChange(child.subCategoryId,'',category.categoryId)">
+                                                                            <a [ngClass]="{'collapse-select': child.subCategoryId == filterPayload.subCategoryId}">{{child.subCategoryName}}</a></li>
                                                                     </ul>
                                                                 </div>
                                                             </li>

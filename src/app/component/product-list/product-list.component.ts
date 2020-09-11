@@ -152,10 +152,12 @@ export class ProductListComponent implements OnInit {
     }
     this.loadMore();
   }
-  onCategoryChange(id:number, type:string){
+  onCategoryChange(id:number, type:string,parentId:number = 0){
     if(type == 'category'){
       this.filterPayload.categoryId = id;
+      this.filterPayload.subCategoryId = 0;
     } else {
+      this.filterPayload.categoryId = parentId;
       this.filterPayload.subCategoryId = id;
     }
     this.isRequestFilter = true;
