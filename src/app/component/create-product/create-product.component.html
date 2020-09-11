@@ -6,12 +6,13 @@
                 <div class="col-12 col-lg-6 col-xl-12">
                     <div class="card mb-lg-0">
                         <div class="card-body">
-                            <h3 class="card-title">Ads Details</h3>
-                            <form [formGroup]="productForm" (ngSubmit)="onSubmitProduct()">
+                            <h3 class="card-title">Ad Details</h3>
+                            <form [formGroup]="productForm">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="checkout-company-name">Title</label>
-                                        <input type="text" formControlName="title" class="form-control" placeholder="Title"
+                                        <input type="text" formControlName="title" class="form-control"
+                                            placeholder="Title"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.title.errors }">
                                         <div *ngIf="submittedProduct && f.title.errors" class="invalid-feedback">
                                             <div *ngIf="f.title.errors.required">Title is required</div>
@@ -20,10 +21,11 @@
                                     <div class="form-group col-md-6">
                                         <label>Country</label>
                                         <select class="form-control" formControlName="countryId"
-                                            [ngClass]="{ 'is-invalid': submittedProduct && f.countryId.errors }" (change)="onCountyChange($event)">
+                                            [ngClass]="{ 'is-invalid': submittedProduct && f.countryId.errors }"
+                                            (change)="onCountyChange($event)">
                                             <option [value]="null" disabled>Select a country</option>
-                                            <option *ngFor="let country of countryArray"
-                                                [value]="country.countryId">{{country.countryName}}</option>
+                                            <option *ngFor="let country of countryArray" [value]="country.countryId">
+                                                {{country.countryName}}</option>
                                         </select>
                                         <div *ngIf="submittedProduct && f.countryId.errors" class="invalid-feedback">
                                             <div *ngIf="f.countryId.errors.required">Country is required</div>
@@ -34,10 +36,14 @@
                                     <div class="form-group col-md-6">
                                         <label>State</label>
                                         <select class="form-control" formControlName="stateId"
-                                            [ngClass]="{ 'is-invalid': submittedProduct && f.stateId.errors }" (change)="onStateChange($event)">
-                                            <option [value]="null" disabled>Select State <svg width="16px" height="16px"><use xlink:href="images/sprite.svg#quickview-16"></use></svg></option>
-                                            <option *ngFor="let state of stateArray"
-                                            [value]="state.stateId">{{state.stateName}}</option>
+                                            [ngClass]="{ 'is-invalid': submittedProduct && f.stateId.errors }"
+                                            (change)="onStateChange($event)">
+                                            <option [value]="null" disabled>Select State <svg width="16px"
+                                                    height="16px">
+                                                    <use xlink:href="images/sprite.svg#quickview-16"></use>
+                                                </svg></option>
+                                            <option *ngFor="let state of stateArray" [value]="state.stateId">
+                                                {{state.stateName}}</option>
                                         </select>
                                         <div *ngIf="submittedProduct && f.stateId.errors" class="invalid-feedback">
                                             <div *ngIf="f.stateId.errors.required">State is required</div>
@@ -48,8 +54,8 @@
                                         <select class="form-control" formControlName="cityId"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.cityId.errors }">
                                             <option [value]="null" disabled>Select a city</option>
-                                            <option *ngFor="let city of cityArray"
-                                            [value]="city.cityId">{{city.cityName}}</option>
+                                            <option *ngFor="let city of cityArray" [value]="city.cityId">
+                                                {{city.cityName}}</option>
                                         </select>
                                         <div *ngIf="submittedProduct && f.cityId.errors" class="invalid-feedback">
                                             <div *ngIf="f.cityId.errors.required">City is required</div>
@@ -74,9 +80,11 @@
                                         <select class="form-control" formControlName="subCategoryId"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.subCategoryId.errors }">
                                             <option [value]="null" disabled>Select a sub category</option>
-                                            <option *ngFor="let sub of subCategoryArray" [value]="sub.subCategoryId">{{sub.subCategoryName}}</option>
+                                            <option *ngFor="let sub of subCategoryArray" [value]="sub.subCategoryId">
+                                                {{sub.subCategoryName}}</option>
                                         </select>
-                                        <div *ngIf="submittedProduct && f.subCategoryId.errors" class="invalid-feedback">
+                                        <div *ngIf="submittedProduct && f.subCategoryId.errors"
+                                            class="invalid-feedback">
                                             <div *ngIf="f.subCategoryId.errors.required">Sub Category is required</div>
                                         </div>
                                     </div>
@@ -84,71 +92,77 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Set A Price</label>
-                                        <input type="number" formControlName="price" class="form-control"
+                                        <input type="text" formControlName="price" digitOnly class="form-control"
                                             placeholder="Price"
-                                            [ngClass]="{ 'is-invalid': submittedProduct && f.price.errors }">
+                                            [ngClass]="{ 'is-invalid': submittedProduct && f.price.errors }"
+                                            (keydown.space)="$event.preventDefault()">
                                         <div *ngIf="submittedProduct && f.price.errors" class="invalid-feedback">
                                             <div *ngIf="f.price.errors.required">Price is required</div>
                                         </div>
                                         <div *ngIf="submittedProduct && f.price.errors" class="invalid-feedback">
-                                            <div *ngIf="f.price.errors.min">Min 2 price is required</div>
+                                            <div *ngIf="f.price.errors.minlength">Min 2 digits is required</div>
+                                            <div *ngIf="f.price.errors.maxlength">Max 5 digits is required</div>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>First Address</label>
+                                        <label>Address Line 1</label>
                                         <input type="text" formControlName="addressLine1" class="form-control"
                                             placeholder="First Address"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.addressLine1.errors }">
                                         <div *ngIf="submittedProduct && f.addressLine1.errors" class="invalid-feedback">
-                                            <div *ngIf="f.addressLine1.errors.required">First Address is required</div>
+                                            <div *ngIf="f.addressLine1.errors.required">Address Line 1 is required</div>
+                                            <div *ngIf="f.addressLine1.errors.maxlength">Should be less than 50 characters</div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label>Second Address</label>
+                                        <label>Address Line 2</label>
                                         <input type="text" formControlName="addressLine2" class="form-control"
                                             placeholder="Second Address"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.addressLine2.errors }">
                                         <div *ngIf="submittedProduct && f.addressLine2.errors" class="invalid-feedback">
-                                            <div *ngIf="f.addressLine2.errors.required">Second Address is required</div>
+                                            <div *ngIf="f.addressLine2.errors.required">Address Line 2 is required</div>
+                                            <div *ngIf="f.addressLine2.errors.maxlength">Should be less than 50 characters</div>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>Third Address</label>
+                                        <label>Address Line 3</label>
                                         <input type="text" formControlName="addressLine3" class="form-control"
                                             placeholder="Third Address"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.addressLine3.errors }">
                                         <div *ngIf="submittedProduct && f.addressLine3.errors" class="invalid-feedback">
-                                            <div *ngIf="f.addressLine3.errors.required">Third Address is required</div>
+                                            <div *ngIf="f.addressLine3.errors.required">Address Line 3 is required</div>
+                                            <div *ngIf="f.addressLine3.errors.maxlength">Should be less than 50 characters</div>
                                         </div>
+                                        
                                     </div>
+                                </div>
+                                <div class="form-row">
+                                    <label>Type</label>
+                                    <select class="form-control" formControlName="type"
+                                        [ngClass]="{ 'is-invalid': submittedProduct && f.type.errors }">
+                                        <option [value]="null" disabled>Select a type</option>
+                                        <option *ngFor="let type of TypeArray" [value]="type">{{type}}</option>
+                                    </select>
+                                    <div *ngIf="submittedProduct && f.type.errors" class="invalid-feedback">
+                                        <div *ngIf="f.type.errors.required">Type is required</div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6 editor-tag" [ngClass]="{ 'tag-error': submittedProduct && tags.length == 0 }" (click)="focusTagInput()">
-                                                <span class="tag-item" *ngFor="let tag of tags">
-                                                    {{tag}}
-                                                    <span class="remove-tag" (click)="removeTag(tag)">×</span>
-                                                  </span>
-                                              <input
-                                              #tagInput type="text"
-                                              class="input-tag"
-                                              (keydown.enter)="$event.preventDefault()"
-                                              (keydown)="onKeyUp($event)"
-                                              formControlName="tags">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label>Type</label>
-                                                <select class="form-control" formControlName="type"
-                                            [ngClass]="{ 'is-invalid': submittedProduct && f.type.errors }">
-                                            <option [value]="null" disabled>Select a type</option>
-                                            <option *ngFor="let type of TypeArray" [value]="type">{{type}}</option>
-                                        </select>
-                                        <div *ngIf="submittedProduct && f.type.errors" class="invalid-feedback">
-                                            <div *ngIf="f.type.errors.required">Type is required</div>
-                                        </div>
-                                            </div>
-                                        </div>
+                                </div>
+                                <br>
+                                <label>Tags</label>
+                                <div class="form-group col-md-12 editor-tag"
+                                    [ngClass]="{ 'tag-error': submittedProduct && tags.length == 0 }"
+                                    (click)="focusTagInput()">
+                                    <span class="tag-item" *ngFor="let tag of tags">
+                                        {{tag}}
+                                        <span class="remove-tag" (click)="removeTag(tag)">×</span>
+                                    </span>
+                                    <input #tagInput type="text" class="input-tag"
+                                    formControlName="tags"
+                                        (keydown.enter)="$event.preventDefault()" (keydown)="onKeyUp($event)"
+                                    >
+                                </div>
                                 <div class="form-group">
                                     <label>Description </label>
                                     <angular-editor formControlName="description" id="description"
@@ -160,33 +174,39 @@
                                 </div>
 
                                 <div class="form-row">
-                                    <div class="form-group col-md-3" *ngFor="let img of uploadImageArray; let i = index">
+                                    <div class="form-group col-md-3"
+                                        *ngFor="let img of uploadImageArray; let i = index">
                                         <fieldset class="form-group">
                                             <div class="custom-file fileInputProfileWrap">
-                                                <div class="img-space" [ngClass]="{ 'tag-error': submittedProduct && !img.image }">
+                                                <div class="img-space"
+                                                    [ngClass]="{ 'tag-error': submittedProduct && !img.image }">
                                                     <ng-container *ngIf="img.isImageSaved; else elseTemplate">
                                                         <img [src]="img.image" />
                                                     </ng-container>
                                                     <ng-template #elseTemplate>
                                                         <i class="fa fa-upload upload-icon" aria-hidden="true"></i>
                                                     </ng-template>
-                                                    <i class="fa fa-check-square check-icon"  [ngClass]="{'check-icon-unselect': !img.coverImage}" *ngIf="img.isImageSaved" (click)="selectCoverImage(i)"></i>
+                                                    <i class="fa fa-check-square check-icon"
+                                                        [ngClass]="{'check-icon-unselect': !img.coverImage}"
+                                                        *ngIf="img.isImageSaved" (click)="selectCoverImage(i)"></i>
                                                     <i class="fa fa-times del-icon" (click)="removeImage(i)"
-                                                    *ngIf="img.isImageSaved"></i>
+                                                        *ngIf="img.isImageSaved"></i>
                                                 </div>
 
                                             </div>
-                                            <label class="btn btn-primary upload-btn"> Upload  
-                                                <input type="file" class="uploadFile img" 
-                                                (change)="fileChangeEvent($event, i)" value="Upload Photo" 
-                                                style="width: 0px;height: 0px;overflow: hidden;">
+                                            <label class="btn btn-primary upload-btn"> Upload
+                                                <input type="file" class="uploadFile img"
+                                                    (change)="fileChangeEvent($event, i)" value="Upload Photo"
+                                                    style="width: 0px;height: 0px;overflow: hidden;">
                                             </label>
                                         </fieldset>
                                     </div>
-                                    
+
                                 </div>
 
-                                <button type="submit" class="btn btn-primary mt-4" [ngClass]="{'btn-loading': isRequestProduct}" [disabled]="isRequestProduct == true ? true : null">
+                                <button (click)="onSubmitProduct()" class="btn btn-primary mt-4"
+                                    [ngClass]="{'btn-loading': isRequestProduct}"
+                                    [disabled]="isRequestProduct == true ? true : null">
                                     {{pageTitle}}
                                 </button>
                             </form>

@@ -1,5 +1,5 @@
 <div class="site__body">
-    <app-breadcrumb [pageTitle]="'Product'"></app-breadcrumb>
+    <app-breadcrumb [pageTitle]="'Ads'"></app-breadcrumb>
     <div class="container">
         <div class="shop-layout shop-layout--sidebar--start">
             <div class="shop-layout__sidebar">
@@ -10,7 +10,7 @@
 
                             <div class="widget-filters__list">
                                 <div class="widget-filters__item">
-                                    <div class="filter" [ngClass]="{'filter--opened ': isFilterCollapse.isCategory}">
+                                    <div class="filter pointer" [ngClass]="{'filter--opened ': isFilterCollapse.isCategory}">
                                         <button type="button" class="filter__title"
                                             (click)="filterCollapse('category')">Categories
                                             <svg class="filter__arrow" width="12px" height="7px">
@@ -151,7 +151,7 @@
                                         <div class="filter__body">
                                             <div class="filter__container">
                                                 <div class="form-row">
-                                                    <select class="form-control" [(ngModel)]="filterPayload.countryId"
+                                                    <select class="form-control pointer" [(ngModel)]="filterPayload.countryId"
                                                              (change)="onCountyChange($event)">
                                                             <option [value]="0" disabled>Select a country</option>
                                                             <option *ngFor="let country of countryArray"
@@ -174,7 +174,7 @@
                                         <div class="filter__body">
                                             <div class="filter__container">
                                                 <div class="form-row">
-                                                    <select class="form-control" [(ngModel)]="filterPayload.stateId"
+                                                    <select class="form-control pointer" [(ngModel)]="filterPayload.stateId"
                                                              (change)="onStateChange($event)">
                                                             <option [value]="0" disabled>Select a State</option>
                                                             <option *ngFor="let state of stateArray"
@@ -197,7 +197,7 @@
                                         <div class="filter__body">
                                             <div class="filter__container">
                                                 <div class="form-row">
-                                                    <select class="form-control" [(ngModel)]="filterPayload.cityId"
+                                                    <select class="form-control pointer" [(ngModel)]="filterPayload.cityId"
                                                              (change)="onCityChange($event)">
                                                             <option [value]="0" disabled>Select a City</option>
                                                             <option *ngFor="let city of cityArray"

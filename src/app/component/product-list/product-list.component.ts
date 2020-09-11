@@ -126,12 +126,14 @@ export class ProductListComponent implements OnInit {
   onCountyChange($event){
     this.filterPayload.countryId = Number($event.target.value);
     this.getState();
+    this.filterPayload.stateId = 0;
     this.isRequestFilter = true;
     this.loadMore();
   }
   onStateChange($event){
     this.filterPayload.stateId = Number($event.target.value);
     this.getCity();
+    this.filterPayload.cityId = 0;
     this.isRequestFilter = true;
     this.loadMore();
   }

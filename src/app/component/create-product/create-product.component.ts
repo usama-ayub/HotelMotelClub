@@ -34,19 +34,16 @@ export class CreateProductComponent implements OnInit {
     toolbarPosition: 'top',
     toolbarHiddenButtons: [
       [
-        'justifyLeft',
-        'justifyCenter',
-        'justifyRight',
         'justifyFull',
         'subscript',
         'superscript',
-        'bold', 'italic', 'underline', 'strikeThrough', 'insertUnorderedList',
+        'underline', 'strikeThrough',
         'undo',
         'redo',
         'indent',
         'fontName',
         'outdent',
-        'insertOrderedList'],
+      ],
       ['fontSize', 'insertImage',
         'toggleEditorMode',
         'textColor',
@@ -73,7 +70,7 @@ export class CreateProductComponent implements OnInit {
     {image:'',isImageSaved:false,coverImage:false},
     {image:'',isImageSaved:false,coverImage:false},
   ]
-  pageTitle:string = 'Create Ads';
+  pageTitle:string = 'Create Ad';
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -120,13 +117,13 @@ export class CreateProductComponent implements OnInit {
       countryId: [null, [Validators.required]],
       stateId: [{value:null, disabled:true}, [Validators.required]],
       cityId: [{value:null, disabled:true}, [Validators.required]],
-      addressLine1: ['', [Validators.required]],
-      addressLine2: ['', [Validators.required]],
-      addressLine3: ['', [Validators.required]],
-      tags: [[], [Validators.required]],
+      addressLine1: ['', [Validators.required, Validators.maxLength(50)]],
+      addressLine2: ['', [Validators.required, Validators.maxLength(50)]],
+      addressLine3: ['', [Validators.required, Validators.maxLength(50)]],
+      tags: [''],
       type: [null, [Validators.required]],
       subCategoryId: [{value:null, disabled:true}],
-      price: ['', [Validators.required, Validators.min(2)]]
+      price: ['', [Validators.required, Validators.minLength(2),Validators.maxLength(5)]]
       // imageurl: [[], [Validators.required]],
     });
     this.productForm.get('category').valueChanges.subscribe(value => {
@@ -178,6 +175,7 @@ export class CreateProductComponent implements OnInit {
     productPlayload.userId = this.userId;
     productPlayload.tags = this.tags;
     productPlayload.cityId = Number(productPlayload.cityId);
+    productPlayload.price = Number(productPlayload.price);
     productPlayload.stateId = Number(productPlayload.stateId);
     productPlayload.countryId = Number(productPlayload.countryId);
     productPlayload.subCategoryId = Number(productPlayload.subCategoryId);
@@ -351,7 +349,7 @@ onKeyUp(event: KeyboardEvent) {
     if(this.tags.length == 5 && event.code !== 'Backspace'){
       return false;
     }
-    if (event.code === 'Space') {
+    if (event.code === 'Enter') {
       this.addTag(inputValue);
       this.productForm.controls.tags.setValue('');
     }

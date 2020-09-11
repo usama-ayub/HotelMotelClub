@@ -21,7 +21,7 @@ import { MyAdsComponent } from './component/my-ads/my-ads.component';
 
 
 const routes: Routes = [
-  {path: 'home', component: ProductListComponent},
+  {path: '', component: ProductListComponent},
   // {path: 'product-list', component: ProductListComponent},
   {path: 'product/:id', component: ProductDetailComponent},
   {path: 'create-product', component: CreateProductComponent, canActivate: [AuthGuard]},
@@ -38,7 +38,7 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard]},
   {path: 'error', component: NotFoundComponent},
   {path: 'welcome', component: WelcomeComponent},
-  { path: '**', redirectTo: 'home', pathMatch: 'full'},
+  { path: '**', redirectTo: '', pathMatch: 'full'},
 ];
 
 @NgModule({
