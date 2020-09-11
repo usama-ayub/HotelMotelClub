@@ -4,13 +4,12 @@ import { switchMap } from 'rxjs/operators';
 import { Observable, of, throwError, BehaviorSubject } from "rxjs/index";
 import { ICategoryResponse, ICategory } from 'src/app/interface/category';
 import { IFavouriteProduct, IProduct, IProductResponse, IFavouriteProductResponse, IFavouriteProductData, IProductData, IProductList, IProductListResponse, IProductListData } from 'src/app/interface/product';
-import { CommonService } from '../common/common.service';
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
   isFavouriteHit$ = new BehaviorSubject<boolean>(false); 
-  constructor(private http: HttpClient, private common:CommonService) { }
+  constructor(private http: HttpClient) { }
 
   getCategory() : Observable<Array<ICategory>>{
     let url: string  = 'Category/fetchadcategories';
