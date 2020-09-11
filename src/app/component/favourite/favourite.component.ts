@@ -42,7 +42,7 @@ export class FavouriteComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((res)=>{
       this.favProduct = res;
-      this.pagination.totalPages = Math.round((this.favProduct[0].total/this.pagination.pageSize));
+      this.pagination.totalPages = Math.round(((this.favProduct[0].total+1)/this.pagination.pageSize));
     }, (error)=>{
       console.log(error);
     })

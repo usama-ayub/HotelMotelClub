@@ -36,7 +36,7 @@ export class MyAdsComponent implements OnInit {
     let payload = {userId:this.userId,pageNumber:data.page,pageSize:data.pageSize};
     this.productService.getMyAds(payload).subscribe((res)=>{
       this.myAds = res;
-      this.pagination.totalPages = Math.round((this.myAds[0].total/this.pagination.pageSize));
+      this.pagination.totalPages = Math.round(((this.myAds[0].total+1)/this.pagination.pageSize));
     })
   }
   removeProduct($event:number){
