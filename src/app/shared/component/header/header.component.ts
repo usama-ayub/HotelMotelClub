@@ -45,7 +45,7 @@ export class HeaderComponent implements OnInit {
       } else {
         this.getFavouriteProduct();
         this.navMenu[1].child = [];
-        this.navMenu[1].child.push({name:'Create Product', path:'/create-product'});
+        this.navMenu[1].child.push({name:'Create Ad', path:'/create-product'});
         this.navMenu[1].child.push({name:'My Ads', path:'/ads'});
         this.navMenu[1].child.push({name:'Favourite', path:'/favourite'});
         this.navMenu[1].child.push({name:'Setting', path:'/setting'});
