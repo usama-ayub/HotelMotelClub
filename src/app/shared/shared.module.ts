@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule } from '@angular/forms';
 //Component
 import { FooterComponent } from './component/footer/footer.component';
 import { HeaderComponent } from './component/header/header.component';
@@ -44,6 +44,7 @@ import { ClickOutSideDirective } from './directive/click-outside.directive';
     ClickOutSideDirective
   ],
   imports: [
+    FormsModule,
     CommonModule
   ]
 })

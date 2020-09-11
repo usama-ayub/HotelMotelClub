@@ -187,7 +187,7 @@
             <div class="site-header__search" click-outside (clickOutside)="searchOutSideClick($event)">
                 <div class="search" [ngClass]="{'indicator--trigger--click indicator--opened': isSearchDropdown}">
                     <form class="search__form">
-                        <input class="search__input" placeholder="Search over 10,000 products" type="text">
+                        <input class="search__input" placeholder="Search over 10,000 products" name="search" [(ngModel)]="searchAdsTitle" type="text">
                         <button class="search__button" type="button" (click)="onClickSearch()">
                             <svg class="indicator__icon" width="20px" height="20px" style="transform: none;opacity: 1;">
                                 <use xlink:href="assets/images/sprite.svg#search-20"></use>
@@ -198,23 +198,25 @@
                             <div class="dropcart" style="width: auto; border-radius: 3px;">
                                 <div class="dropcart__products-list">
                                     <div class="dropcart__product"
-                                        *ngFor="let item of [].constructor(3); let i = index">
+                                        *ngFor="let item of adsListArray | slice:1:4; let i = index" (click)="routeTo('product',item.id);">
                                         <div class="dropcart__product-image"><a><img
-                                                    src="assets/images/product/product-1.jpg" alt=""></a>
+                                            [src]="item.coverImage"></a>
                                         </div>
                                         <div class="dropcart__product-info">
-                                            <div class="dropcart__product-name"><a>Electric Planer Brandix
-                                                    KL370090G 300 Watts</a></div>
-                                            <div class="dropcart__product-meta"><span
-                                                    class="dropcart__product-quantity">Color: Yellow</span> x <span
-                                                    class="dropcart__product-price">$699.00</span></div>
+                                            <div class="dropcart__product-name"><a>{{item.title}}</a></div>
+                                            <div class="dropcart__product-meta">
+                                                <span class="dropcart__product-quantity">City: {{item.city}}</span>
+                                            </div>
+                                            <div class="dropcart__product-meta">
+                                                <span class="dropcart__product-price">${{item.price}}.00</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="dropcart__totals pointer">
                                     <table>
                                         <tr>
-                                            <th (click)="routeTo('/home'); showWishList();">See More</th>
+                                            <th (click)="routeTo('/home');">See More</th>
                                             <td></td>
                                         </tr>
                                     </table>

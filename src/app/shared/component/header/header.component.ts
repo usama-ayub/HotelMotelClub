@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
 import { ProductService } from '../../services/product/product.service';
 import { CommonService } from '../../services/common/common.service';
-import { IFavouriteProductData } from 'src/app/interface/product';
+import { IFavouriteProductData, IProductListData } from 'src/app/interface/product';
 
 @Component({
   selector: 'app-header',
@@ -22,6 +22,8 @@ export class HeaderComponent implements OnInit {
   userId:number;
   favProduct:Array<IFavouriteProductData> = [];
   totalFavProduct :number = 0;
+  searchAdsTitle:string = '';
+  adsListArray:Array<IProductListData> = [];
   constructor(
     private router: Router,
     public authService: AuthService,
@@ -83,7 +85,6 @@ export class HeaderComponent implements OnInit {
     if(device == 'mobile'){
       this.routeTo('/favourite');
     } else {
-      this.isSearchDropdown = false;
       this.isWishListDropdown = !this.isWishListDropdown;
     }
   }
@@ -104,16 +105,29 @@ export class HeaderComponent implements OnInit {
   }
 
   onClickSearch() :void{
-    this.isWishListDropdown = false;
-    this.isSearchDropdown = !this.isSearchDropdown;
+    this.productService.getAdsList({pageNumber:1,title:this.searchAdsTitle})
+    .subscribe((res)=>{
+      console.log(res);
+      this.adsListArray = res;
+      if(this.adsListArray.length !== 0){
+        this.isWishListDropdown = false;
+        this.isSearchDropdown = !this.isSearchDropdown;
+      }
+    })
+    
   }
 
-  routeTo(path:string) :void{
+  routeTo(path:string, params:number = 0) :void{
+    this.isSearchDropdown = false;
     if(path){
       if(path == '/logout'){
         this.logout();
       } else {
-        this.router.navigate([path]);
+        if(params){
+          this.router.navigate([path,params]);
+        } else {
+          this.router.navigate([path]);
+        }
         this.isMenuShow = false;
       }
     }
