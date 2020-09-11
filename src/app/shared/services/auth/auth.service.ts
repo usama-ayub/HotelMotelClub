@@ -43,7 +43,7 @@ export class AuthService {
   }
 
   logout(): Observable<boolean> {
-    localStorage.removeItem('userId');
+    localStorage.removeItem('userid');
     localStorage.removeItem('token');
     this.isAuth$.next(false);
     if(this.authGarudPath.includes(this.router.url)){
