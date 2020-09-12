@@ -78,7 +78,7 @@
                                                             placeholder="Max" (keydown.space)="$event.preventDefault()" [disabled]="filterPayload.min == '' ? true : null">
                                                     </div>
                                                     <div class="form-group col-md-6">
-                                                        <button class="btn btn-primary btn-sm" (click)="onRangeChange()" [ngClass]="{'btn-loading': isRequestFilter}"
+                                                        <button class="btn btn-primary btn-sm" (click)="onRangeChange('','')" [ngClass]="{'btn-loading': isRequestFilter}"
                                                         [disabled]="isRequestFilter == true ? true : null">Apply</button>
                                                     </div>
                                                 </div>

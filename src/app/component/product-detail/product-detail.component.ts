@@ -15,7 +15,10 @@ import { takeUntil } from 'rxjs/operators';
 export class ProductDetailComponent implements OnInit,OnDestroy {
   // placeholder loading animation css
   // placeholder loading angular
+  // https://cloudcannon.com/deconstructions/2014/11/15/facebook-content-placeholder-deconstruction.html
+  // https://stackoverflow.com/questions/35151887/how-to-create-placeholder-while-loading-like-facebook/35151954
   private unsubscribe$ = new Subject;
+  isDetailAdRequest:boolean = false;
    productTab = {
      description : true,
      specification: false
@@ -90,10 +93,12 @@ export class ProductDetailComponent implements OnInit,OnDestroy {
     this.selectedImage = image;
   }
   getAdsDetail(): void{
+    this.isDetailAdRequest = true
     this.productService.adsDetail({adId:this.adId})
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((res)=>{
        console.log(res);
+       this.isDetailAdRequest = false
        this.adsDetails = res;
        this.productDetailImage = this.adsDetails.images;
        this.selectedImage = this.productDetailImage.find((pic)=>{
