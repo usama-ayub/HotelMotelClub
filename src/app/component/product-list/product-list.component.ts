@@ -4,6 +4,7 @@ import { ProductService } from 'src/app/shared/services/product/product.service'
 import { IProductList, IProductListData } from 'src/app/interface/product';
 import { ICountryData, IStateData, ICityData } from 'src/app/interface/user';
 import { UserService } from 'src/app/shared/services/user/user.service';
+import { CommonService } from 'src/app/shared/services/common/common.service';
 
 declare const noUiSlider: any
 @Component({
@@ -49,6 +50,7 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private productService:ProductService,
+    private commonService:CommonService,
     private userService: UserService
     ) { }
 
@@ -142,7 +144,23 @@ export class ProductListComponent implements OnInit {
     this.isRequestFilter = true;
     this.loadMore();
   }
-  onRangeChange(){
+  onRangeChange($event:any,type:string){
+    console.log($event)
+    if(type == 'min'){
+      this.filterPayload.max = '';
+      return;
+    }
+    if(type == 'max'){
+      if(Number(this.filterPayload.min) >= Number(this.filterPayload.max)){
+        this.filterPayload.max = '';
+        this.commonService.warning('Max Price Should be greater than Min Price')
+      }
+      return;
+    }
+    // if(!this.filterPayload.min || !this.filterPayload.max){
+    //   this.commonService.warning('Max And Min Price both are required');
+    //   return
+    // }
     this.isRequestFilter = true;
     if(this.filterPayload.max){
       this.filterPayload.maxPrice =  Number(this.filterPayload.max);

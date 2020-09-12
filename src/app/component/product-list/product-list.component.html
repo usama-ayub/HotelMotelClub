@@ -70,12 +70,12 @@
                                             <div class="filter__container">
                                                 <div class="form-row">
                                                     <div class="form-group col-md-6">
-                                                        <input name="min" type="text" digitOnly [(ngModel)]="filterPayload.min" class="form-control"
+                                                        <input name="min" type="text" digitOnly [(ngModel)]="filterPayload.min" (change)="onRangeChange($event,'min')" class="form-control"
                                                             placeholder="Min" (keydown.space)="$event.preventDefault()">
                                                     </div>
                                                     <div class="form-group col-md-6">
-                                                        <input name="max"  [(ngModel)]="filterPayload.max"  type="text" digitOnly  class="form-control"
-                                                            placeholder="Max" (keydown.space)="$event.preventDefault()">
+                                                        <input name="max"  [(ngModel)]="filterPayload.max" (change)="onRangeChange($event,'max')"  type="text" digitOnly  class="form-control"
+                                                            placeholder="Max" (keydown.space)="$event.preventDefault()" [disabled]="filterPayload.min == '' ? true : null">
                                                     </div>
                                                     <div class="form-group col-md-6">
                                                         <button class="btn btn-primary btn-sm" (click)="onRangeChange()" [ngClass]="{'btn-loading': isRequestFilter}"
@@ -89,7 +89,7 @@
                                 <div class="widget-filters__item">
                                     <div class="filter" [ngClass]="{'filter--opened': isFilterCollapse.isType}">
                                         <button type="button" class="filter__title"
-                                            (click)="filterCollapse('seller')">Type
+                                            (click)="filterCollapse('type')">Type
                                             <svg class="filter__arrow" width="12px" height="7px">
                                                 <use xlink:href="assets/images/sprite.svg#arrow-rounded-down-12x7">
                                                 </use>
@@ -237,12 +237,12 @@
                                             <option value="">Name (A-Z)</option>
                                         </select></div>
                                 </div>
-                                <div class="view-options__control"><label for="">Show</label>
+                                <!-- <div class="view-options__control"><label for="">Show</label>
                                     <div><select class="form-control form-control-sm" name="" id="">
                                             <option value="">12</option>
                                             <option value="">24</option>
                                         </select></div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="products-view__list products-list" data-layout="grid-3-sidebar"

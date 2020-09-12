@@ -36,6 +36,14 @@ export class CommonService {
     },2000)
   }
 
+  warning(message:string) :void {
+    this.warningObj.warning = true;
+    this.warningObj.message = message;
+    setTimeout(()=>{
+      this.warningObj.warning = false;
+    },3000)
+  }
+
   success(message:string) :void {
     this.successObj.success = true;
     this.successObj.message = message;

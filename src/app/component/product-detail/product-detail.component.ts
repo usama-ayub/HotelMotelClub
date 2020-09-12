@@ -13,17 +13,19 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./product-detail.component.scss']
 })
 export class ProductDetailComponent implements OnInit,OnDestroy {
+  // placeholder loading animation css
+  // placeholder loading angular
   private unsubscribe$ = new Subject;
    productTab = {
      description : true,
      specification: false
    }
-   selectedImage = 'assets/images/product/product-1.jpg';
+   selectedImage = 'assets/images/product/loading.png';
    productDetailImage:Array<IProductImage> = [
-     {picture:'assets/images/product/product-1.jpg',coverImage:true},
-     {picture:'assets/images/product/product-2.jpg',coverImage:false},
-     {picture:'assets/images/product/product-3.jpg',coverImage:false},
-     {picture:'assets/images/product/product-4.jpg',coverImage:false},
+     {picture:'assets/images/product/loading.png',coverImage:true},
+     {picture:'assets/images/product/loading.png',coverImage:false},
+     {picture:'assets/images/product/loading.png',coverImage:false},
+     {picture:'assets/images/product/loading.png',coverImage:false},
     ]
   adId: number = 0;
   userId: number = 0;

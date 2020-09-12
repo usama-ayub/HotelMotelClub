@@ -17,4 +17,7 @@
   <div class="alert alert-success error-alert toaster" role="alert" [ngClass]="{'show-toaster': commonService.successObj.success, 'hide-toaster': !commonService.successObj.success}">
     {{commonService.successObj.message}}
   </div>
+  <div class="alert alert-warning error-alert toaster" role="alert" [ngClass]="{'show-toaster': commonService.warningObj.warning, 'hide-toaster': !commonService.warningObj.warning}">
+    {{commonService.warningObj.message}}
+  </div>
 
