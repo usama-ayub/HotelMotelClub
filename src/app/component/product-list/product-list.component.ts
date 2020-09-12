@@ -157,10 +157,10 @@ export class ProductListComponent implements OnInit {
       }
       return;
     }
-    // if(!this.filterPayload.min || !this.filterPayload.max){
-    //   this.commonService.warning('Max And Min Price both are required');
-    //   return
-    // }
+    if(!this.filterPayload.min || !this.filterPayload.max){
+      this.commonService.warning('Max And Min Price both are required');
+      return
+    }
     this.isRequestFilter = true;
     if(this.filterPayload.max){
       this.filterPayload.maxPrice =  Number(this.filterPayload.max);
