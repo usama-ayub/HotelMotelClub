@@ -5,6 +5,7 @@ import { IProductList, IProductListData } from 'src/app/interface/product';
 import { ICountryData, IStateData, ICityData } from 'src/app/interface/user';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { CommonService } from 'src/app/shared/services/common/common.service';
+import * as _ from 'lodash';
 
 declare const noUiSlider: any
 @Component({
@@ -181,6 +182,50 @@ export class ProductListComponent implements OnInit {
     this.isRequestFilter = true;
     this.loadMore();
   }
+  onSortChange($event:any){
+    // let sort = $event.target.value;
+    // if(sort == 'default'){
+    //   let a = _.sortBy(this.adsListArray, [(o)=> { return o.featuredOn; }]);
+    //   console.log(a)
+    // }
+    // if(sort == 'a-z'){
+    //   this.adsListArray.sort(this.compare);
+    // }
+    // if(sort == 'z-a'){
+    //   this.adsListArray.sort(this.des);
+    // }
+  }
+  // sortData() {
+  //   return this.data.sort((a, b) => {
+  //     return <any>new Date(b.CREATE_TS) - <any>new Date(a.CREATE_TS);
+  //   });
+  // }
+   compare(a, b) {
+    const bandA = a.title.toUpperCase();
+    const bandB = b.title.toUpperCase();
+  
+    let comparison = 0;
+    if (bandA > bandB) {
+      comparison = 1;
+    } else if (bandA < bandB) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
+  des(a, b) {
+    const bandA = a.title.toUpperCase();
+    const bandB = b.title.toUpperCase();
+  
+    let comparison = 0;
+    if (bandA < bandB) {
+      comparison = 1;
+    } else if (bandA > bandB) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
   getAdsList(): void{
     this.productService.getAdsList(this.filterPayload)
     .subscribe((res)=>{

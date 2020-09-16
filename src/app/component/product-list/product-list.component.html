@@ -232,9 +232,10 @@
                                 <!-- <div class="view-options__legend">Showing {{adsListArray.length}} of 98 products</div> -->
                                 <div class="view-options__divider"></div>
                                 <div class="view-options__control"><label for="">Sort By</label>
-                                    <div><select class="form-control form-control-sm" name="" id="">
-                                            <option value="">Default</option>
-                                            <option value="">Name (A-Z)</option>
+                                    <div><select class="form-control form-control-sm" (change)="onSortChange($event)">
+                                            <option value="default">Default</option>
+                                            <option value="a-z">Title (A-Z)</option>
+                                            <option value="z-a">Title (Z-A)</option>
                                         </select></div>
                                 </div>
                                 <!-- <div class="view-options__control"><label for="">Show</label>
