@@ -152,13 +152,14 @@
                                 <br>
                                 <label>Tags</label>
                                 <div class="form-group col-md-12 editor-tag"
-                                    [ngClass]="{ 'tag-error': submittedProduct && tags.length == 0 }"
+                                    [ngClass]="{ 'tag-error': submittedProduct && tags.length == 0, 'tag-disabled': isRequestProduct  }"
                                     (click)="focusTagInput()">
                                     <span class="tag-item" *ngFor="let tag of tags">
                                         {{tag}}
                                         <span class="remove-tag" (click)="removeTag(tag)">×</span>
                                     </span>
                                     <input #tagInput type="text" class="input-tag"
+                                    [ngClass]="{ 'tag-disabled': isRequestProduct }"
                                     formControlName="tags"
                                         (keydown.enter)="$event.preventDefault()" (keydown)="onKeyUp($event)"
                                     >
@@ -194,11 +195,16 @@
                                                 </div>
 
                                             </div>
-                                            <label class="btn btn-primary upload-btn"> Upload
-                                                <input type="file" class="uploadFile img"
-                                                    (change)="fileChangeEvent($event, i)" value="Upload Photo"
-                                                    style="width: 0px;height: 0px;overflow: hidden;">
-                                            </label>
+                                            <ng-container *ngIf="isRequestProduct">
+                                                <label class="btn btn-primary upload-btn disabled"> Upload </label>
+                                            </ng-container>
+                                            <ng-container *ngIf="!isRequestProduct">
+                                                <label class="btn btn-primary upload-btn"> Upload
+                                                    <input type="file" class="uploadFile img"
+                                                        (change)="fileChangeEvent($event, i)" value="Upload Photo"
+                                                        style="width: 0px;height: 0px;overflow: hidden;">
+                                                </label>
+                                            </ng-container>
                                         </fieldset>
                                     </div>
 

@@ -9,6 +9,7 @@ import { UserService } from 'src/app/shared/services/user/user.service';
 import { ICountryData, IStateData, ICityData } from 'src/app/interface/user';
 import { IProduct, IProductImage, IProductData } from 'src/app/interface/product';
 import { ActivatedRoute } from '@angular/router';
+import { title } from 'process';
 
 @Component({
   selector: 'app-create-product',
@@ -154,6 +155,9 @@ export class CreateProductComponent implements OnInit {
     });
   }
   onSubmitProduct(): void {
+    if(this.isRequestProduct){
+      return;
+    }
     this.submittedProduct = true;
     if (this.productForm.invalid) {
         return;
@@ -185,6 +189,7 @@ export class CreateProductComponent implements OnInit {
       pic.image = pic.image.split(',')[1];
     })
     this.isRequestProduct = true;
+    this.disabledField();
     if(this.adsId){
       return;
     }
@@ -192,14 +197,48 @@ export class CreateProductComponent implements OnInit {
       this.isRequestProduct = false;
       this.submittedProduct = false;
       this.resetForm();
+      this.disabledField();
       this.commonService.success('Ad Posted Successfully');
     }, (error) => {
       this.isRequestProduct = false;
+      this.disabledField(true);
       // this.commonService.error(error);
       console.log(error);
     })
   }
- 
+  disabledField(isParams:boolean = false){
+    if(isParams){
+      this.productForm.get('stateId').enable();
+      this.productForm.get('cityId').enable();
+    }
+    if(this.isRequestProduct){
+      this.productForm.get('category').disable();
+      this.productForm.get('countryId').disable();
+      this.productForm.get('stateId').disable();
+      this.productForm.get('cityId').disable();
+      this.productForm.get('subCategoryId').disable();
+      this.productForm.get('type').disable();
+      this.productForm.get('addressLine2').disable();
+      this.productForm.get('addressLine1').disable();
+      this.productForm.get('addressLine3').disable();
+      this.productForm.get('description').disable();
+      this.productForm.get('title').disable();
+      this.productForm.get('price').disable();
+      this.editorConfig.editable = false;
+    } else {
+      this.productForm.get('category').enable();
+      this.productForm.get('countryId').enable();
+      this.productForm.get('type').enable();
+      this.productForm.get('addressLine2').enable();
+      this.productForm.get('addressLine1').enable();
+      this.productForm.get('addressLine3').enable();
+      this.productForm.get('description').enable();
+      this.productForm.get('title').enable();
+      this.productForm.get('price').enable();
+      this.editorConfig.editable = true;
+    }
+     
+  }
   resetForm(): void{
      this.productForm.get('category').setValue(null);
      this.productForm.get('countryId').setValue(null);
@@ -318,6 +357,9 @@ export class CreateProductComponent implements OnInit {
 }
 
 removeImage(index:number) {
+  if(this.isRequestProduct){
+    return;
+  }
   if(this.uploadImageArray[index].coverImage){
     this.uploadImageArray[0].coverImage = true;
   }
@@ -329,6 +371,9 @@ removeImage(index:number) {
 }
 
 selectCoverImage(index:number){
+  if(this.isRequestProduct) {
+    return
+  }
   this.uploadImageArray.map(res=>res.coverImage = false);
   this.uploadImageArray[index].coverImage = true;
 }
@@ -337,10 +382,16 @@ selectCoverImage(index:number){
 
 // Tag Code start
 focusTagInput(): void {
+  if(this.isRequestProduct){
+    return;
+  }
   this.tagInputRef.nativeElement.focus();
 }
 
 onKeyUp(event: KeyboardEvent) {
+  if(this.isRequestProduct){
+    return;
+  }
   const inputValue: string = this.productForm.controls.tags.value;
   if (event.code === 'Backspace' && !inputValue) {
     this.removeTag();
@@ -366,6 +417,9 @@ addTag(tag: string): void {
 }
 
 removeTag(tag?: string): void {
+  if(this.isRequestProduct){
+    return;
+  }
   if (!!tag) {
     _.pull(this.tags, tag);
   } else {
