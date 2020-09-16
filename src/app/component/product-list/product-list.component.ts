@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChildren, OnDestroy } from '@angular/core';
 import { ICategory } from 'src/app/interface/category';
 import { ProductService } from 'src/app/shared/services/product/product.service';
 import { IProductList, IProductListData } from 'src/app/interface/product';
@@ -14,7 +14,7 @@ declare const noUiSlider: any
   styleUrls: ['./product-list.component.scss']
 })
 // https://stackblitz.com/edit/angular-pagination-bkfqss?file=app%2Fpagination%2Fpagination.component.html
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
   @ViewChildren('selectedRadio') selectedRadio:any;
   isRequestFilter = false;
   isRequestReset = false;
@@ -36,6 +36,7 @@ export class ProductListComponent implements OnInit {
   ];
   categoryArray: Array<ICategory> = [];
   filterPayload:IProductList = {
+    title:'',
     pageNumber:1,
     categoryId:0,
     subCategoryId:0,
@@ -58,7 +59,15 @@ export class ProductListComponent implements OnInit {
   ngOnInit() {
     // this.silderInit();
     this.initFilter();
-    this.getAdsList();
+    this.productService.isSearcheHit$.subscribe((res)=>{
+      if(res){
+        this.isRequestFilter = true;
+        this.filterPayload.title = this.productService.isSearch;
+        this.loadMore();
+      } else{
+        this.getAdsList();
+      }
+    })
   }
 
   initFilter(): void {
@@ -275,8 +284,15 @@ export class ProductListComponent implements OnInit {
     this.selectedRadio._results[index].nativeElement.querySelector('.input-radio__input').checked = false;
   })
   delete this.filterPayload.type;
+  this.filterPayload.title = '';
+  this.productService.isSearch = '';
   this.stateArray = [];
   this.cityArray = [];
   this.getAdsList();
  }
+ 
+ ngOnDestroy(){
+  this.productService.isSearch = '';
+  this.productService.isSearcheHit$.next(false);
+}
 }

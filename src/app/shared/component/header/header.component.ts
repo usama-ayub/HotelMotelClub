@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     public authService: AuthService,
-    private productService: ProductService,
+    public productService: ProductService,
     private commonService: CommonService
   ) { 
     this.userId = this.commonService.getUserId();
@@ -105,15 +105,17 @@ export class HeaderComponent implements OnInit {
   }
 
   onClickSearch() :void{
-    this.productService.getAdsList({pageNumber:1,title:this.searchAdsTitle})
-    .subscribe((res)=>{
-      console.log(res);
-      this.adsListArray = res;
-      if(this.adsListArray.length !== 0){
-        this.isWishListDropdown = false;
-        this.isSearchDropdown = !this.isSearchDropdown;
-      }
-    })
+    this.productService.isSearcheHit$.next(true);
+    this.routeTo('/home');
+    // this.productService.getAdsList({pageNumber:1,title:this.searchAdsTitle})
+    // .subscribe((res)=>{
+    //   console.log(res);
+    //   this.adsListArray = res;
+    //   if(this.adsListArray.length !== 0){
+    //     this.isWishListDropdown = false;
+    //     this.isSearchDropdown = !this.isSearchDropdown;
+    //   }
+    // })
     
   }
 

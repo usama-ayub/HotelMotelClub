@@ -9,6 +9,8 @@ import { IFavouriteProduct, IProduct, IProductResponse, IFavouriteProductRespons
 })
 export class ProductService {
   isFavouriteHit$ = new BehaviorSubject<boolean>(false); 
+  isSearch:string = ''; 
+  isSearcheHit$ = new BehaviorSubject<boolean>(false); 
   constructor(private http: HttpClient) { }
 
   getCategory() : Observable<Array<ICategory>>{
