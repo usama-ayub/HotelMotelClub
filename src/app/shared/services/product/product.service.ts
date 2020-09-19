@@ -36,7 +36,7 @@ export class ProductService {
     }))
   }
   getMyAds(paylaod: IFavouriteProduct) : Observable<Array<IFavouriteProductData>>{
-    let url: string  = 'Ad/myads';
+    let url: string  = 'product/myproducts';
     return this.http.post<IFavouriteProductResponse>(url, paylaod).pipe(switchMap(res => {
       if(!res.success){
         return throwError(res.message)
@@ -68,7 +68,7 @@ export class ProductService {
   }
   
   createProduct(paylaod: IProduct) : Observable<number>{
-    let url: string  = 'Ad/new';
+    let url: string  = 'product/new';
     return this.http.post<{success:boolean,message:string,data:number}>(url, paylaod).pipe(switchMap(res => {
       if(!res.success){
         return throwError(res.message)
@@ -78,7 +78,7 @@ export class ProductService {
   }
 
   adsDetail(paylaod: IFavouriteProduct): Observable<IProductData>{
-    let url: string  = 'Ad/addetails';
+    let url: string  = 'product/productdetails';
     return this.http.post<IProductResponse>(url, paylaod).pipe(switchMap(res => {
       if(!res.success){
         return throwError(res.message)
@@ -87,7 +87,7 @@ export class ProductService {
     }))
   }
   getAdsList(payload:IProductList): Observable<Array<IProductListData>>{
-    let url: string  = 'Ad/all';
+    let url: string  = 'product/all';
     return this.http.post<IProductListResponse>(url, payload).pipe(switchMap(res => {
       if(!res.success){
         return throwError(res.message)
@@ -96,7 +96,7 @@ export class ProductService {
     }))
   }
   removeProduct(id:number): Observable<number>{
-    let url: string  = `Ad/delete?AdId=${id}`;
+    let url: string  = `product/delete?AdId=${id}`;
     return this.http.post<{success:boolean,message:string,data:number}>(url, {}).pipe(switchMap(res => {
       if(!res.success){
         return throwError(res.message)

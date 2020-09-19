@@ -94,7 +94,7 @@ export class ProductDetailComponent implements OnInit,OnDestroy {
   }
   getAdsDetail(): void{
     this.isDetailAdRequest = true
-    this.productService.adsDetail({adId:this.adId})
+    this.productService.adsDetail({productId:this.adId})
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((res)=>{
        console.log(res);

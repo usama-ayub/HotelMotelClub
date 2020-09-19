@@ -53,12 +53,14 @@ export interface IProduct {
     userId?: number,
     pageNumber?: number,
     pageSize?: number,
-    adId?: number
+    adId?: number,
+    productId?: number
   }
 
   export interface IFavouriteProductData {
     adId: number,
     coverImage?: any,
+    productViews?: number,
     price: number,
     title: string,
     total:number

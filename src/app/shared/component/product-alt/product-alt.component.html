@@ -3,9 +3,9 @@
         <tr class="wishlist__row">
             <th class="wishlist__column wishlist__column--image">Image</th>
             <th class="wishlist__column wishlist__column--product">Ad</th>
+            <th class="wishlist__column wishlist__column--stock" *ngIf="listType == 'ads'">Views</th>
             <th class="wishlist__column wishlist__column--price">Category</th>
             <th class="wishlist__column wishlist__column--price">Price</th>
-            <!-- <th class="wishlist__column wishlist__column--tocart" *ngIf="listType == 'ads'"></th> -->
             <th class="wishlist__column wishlist__column--remove"></th>
         </tr>
     </thead>
@@ -16,6 +16,10 @@
                 </td>
                 <td class="wishlist__column wishlist__column--product pointer" (click)="routeTo('product',item.adId)">
                     <a class="wishlist__product-name">{{item.title}}</a>
+                </td>
+                <td class="wishlist__column wishlist__column--stock" *ngIf="listType == 'ads'">
+                    {{item.productViews}}
+                    <!-- <div class="badge badge-success">{{product.productViews}}</div> -->
                 </td>
                 <td class="wishlist__column wishlist__column--price">Job</td>
                 <td class="wishlist__column wishlist__column--price">${{item.price}}.00</td>

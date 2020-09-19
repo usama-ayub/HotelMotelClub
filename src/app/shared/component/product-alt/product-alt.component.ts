@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { IFavouriteProductData } from 'src/app/interface/product';
 
 @Component({
   selector: 'app-product-alt',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 export class ProductAltComponent implements OnInit {
 
   @Input() listType: string = 'ads';
-  @Input() product: Array<any> = [];
+  @Input() product: Array<IFavouriteProductData> = [];
   @Output() removeFavProductChange = new EventEmitter();
   @Output() removeProductChange = new EventEmitter();
 
