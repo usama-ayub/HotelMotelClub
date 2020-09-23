@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-
+import { HttpClient } from '@angular/common/http';
+import { switchMap } from 'rxjs/operators';
+import { Observable, of, throwError } from "rxjs/index";
+import { IFAQData, IFAQResponse, IPolicyData, IPolicyResponse } from 'src/app/interface/common';
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +25,27 @@ export class CommonService {
     warning: false
   }
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  getFAQ() : Observable<Array<IFAQData>>{
+      let url: string  = 'FAQ/all/0';
+      return this.http.post<IFAQResponse>(url,{}).pipe(switchMap(res => {
+        if(!res.success){
+          return throwError(res.message)
+        }
+        return of(res.data)
+      }))
+  }
+
+  getPolicy() : Observable<Array<IPolicyData>>{
+      let url: string  = 'Policy/GetPolicy/0';
+      return this.http.post<IPolicyResponse>(url,{}).pipe(switchMap(res => {
+        if(!res.success){
+          return throwError(res.message)
+        }
+        return of(res.data)
+      }))
+  }
 
   getUserId(): number{
     let userID = localStorage.getItem('userid');

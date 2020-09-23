@@ -1,5 +1,5 @@
 <div class="site__body">
-    <app-breadcrumb [pageTitle]="'Terms And Conditions'" [numberOfPath]="1"></app-breadcrumb>
+    <app-breadcrumb [pageTitle]="'Privacy Policy'" [numberOfPath]="1"></app-breadcrumb>
     <!-- <div class="page-header">
         <div class="page-header__container container">
             <div class="page-header__breadcrumb">
@@ -23,11 +23,11 @@
         <div class="container">
             <div class="document">
                 <div class="document__header">
-                    <h1 class="document__title">Terms And Conditions</h1>
+                    <h1 class="document__title">Privacy Policy</h1>
                     <div class="document__subtitle">This Agreement was last modified on 27 May 2018.</div>
                 </div>
-                <div class="document__content typography">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis neque ut purus
+                <div class="document__content typography" [innerHtml]="policy.policy">
+                    <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis neque ut purus
                         fermentum, ac pretium nibh facilisis. Vivamus venenatis viverra iaculis. Suspendisse tempor orci
                         non sapien ullamcorper dapibus. Suspendisse at velit diam. Donec pharetra nec enim blandit
                         vulputate. Suspendisse potenti. Pellentesque et molestie ante. In feugiat ante vitae ultricies
@@ -53,7 +53,7 @@
                         vulputate. Suspendisse potenti. Pellentesque et molestie ante. In feugiat ante vitae ultricies
                         malesuada.</p>
                     <p>For information about how to contact us, please visit our <a href="javascript:void(0)" (click)="routeTo('/contact')">contact
-                            page</a>.</p>
+                            page</a>.</p> -->
                 </div>
             </div>
         </div>
