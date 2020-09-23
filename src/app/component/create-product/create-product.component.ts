@@ -9,7 +9,6 @@ import { UserService } from 'src/app/shared/services/user/user.service';
 import { ICountryData, IStateData, ICityData } from 'src/app/interface/user';
 import { IProduct, IProductImage, IProductData } from 'src/app/interface/product';
 import { ActivatedRoute } from '@angular/router';
-import { title } from 'process';
 
 @Component({
   selector: 'app-create-product',
@@ -67,11 +66,11 @@ export class CreateProductComponent implements OnInit {
     {image:'',isImageSaved:false, coverImage:true},
     {image:'',isImageSaved:false, coverImage:false},
     {image:'',isImageSaved:false,coverImage:false},
-    {image:'',isImageSaved:false,coverImage:false},
-    {image:'',isImageSaved:false,coverImage:false},
-    {image:'',isImageSaved:false,coverImage:false},
+    {image:'',isImageSaved:false,coverImage:false}
   ]
   pageTitle:string = 'Create Ad';
+  isSingleImageUpload:boolean = false;
+  isSelectedCategoryJob:boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -133,6 +132,16 @@ export class CreateProductComponent implements OnInit {
           return res.categoryId.toString() === value.toString();
         });
         if (this.categoryArray[index].subcategory.length !==0) {
+          if(this.categoryArray[index].categoryName == 'Jobs'){
+            this.productForm.get('price').setValidators(null);
+            this.productForm.get('type').setValue(null);
+            this.TypeArray = ['Permanent','Contractual'];
+            this.isSelectedCategoryJob = true;
+          } else {
+            this.productForm.get('price').setValidators([Validators.required]);
+            this.productForm.get('type').setValue(null);
+            this.isSelectedCategoryJob = false;
+          }
           this.subCategoryArray = this.categoryArray[index].subcategory;
           if(this.adsId){
              this.productForm.get('subCategoryId').setValue(this.adsDetail.subCategoryId);
@@ -147,6 +156,7 @@ export class CreateProductComponent implements OnInit {
           this.productForm.get('subCategoryId').disable();
         }
         this.productForm.get('subCategoryId').updateValueAndValidity();
+        this.productForm.get('price').updateValueAndValidity();
       } else {
         this.productForm.get('subCategoryId').setValue(null);
         this.productForm.get('subCategoryId').setValidators(null);
@@ -159,19 +169,21 @@ export class CreateProductComponent implements OnInit {
       return;
     }
     this.submittedProduct = true;
+    let isEmptyImg = this.uploadImageArray.some((pic)=>{
+      return pic.image
+    });
+    this.isSingleImageUpload = isEmptyImg;
+    if(!isEmptyImg){
+      return;
+    }
     if (this.productForm.invalid) {
         return;
     }
     if(this.tags.length == 0){
       return;
     }
-    let isEmptyImg = this.uploadImageArray.some((pic)=>{
-      return !pic.image
-    });
+   
     if(this.tags.length == 0){
-      return;
-    }
-    if(isEmptyImg){
       return;
     }
     let productPlayload :IProduct;
@@ -179,15 +191,23 @@ export class CreateProductComponent implements OnInit {
     productPlayload.userId = this.userId;
     productPlayload.tags = this.tags;
     productPlayload.cityId = Number(productPlayload.cityId);
-    productPlayload.price = Number(productPlayload.price);
+    productPlayload.price = productPlayload.price ? Number(productPlayload.price) : 0;
     productPlayload.stateId = Number(productPlayload.stateId);
     productPlayload.countryId = Number(productPlayload.countryId);
     productPlayload.subCategoryId = Number(productPlayload.subCategoryId);
     productPlayload.pictures =  JSON.parse(JSON.stringify(this.uploadImageArray));
+    let selectedImageArray:Array<IProductImage> = [];
     productPlayload.pictures.map((pic)=>{
-      delete pic.isImageSaved;
-      pic.image = pic.image.split(',')[1];
-    })
+      if(pic.image){
+        selectedImageArray.push(pic);
+        pic.image = pic.image.split(',')[1];
+      }
+    });
+    let isCoverImage = selectedImageArray.some((isCoverImg)=>{ return isCoverImg.coverImage});
+    if(!isCoverImage){
+      selectedImageArray[0].coverImage = true;
+    }
+    productPlayload.pictures = selectedImageArray;
     this.isRequestProduct = true;
     this.disabledField();
     if(this.adsId){
@@ -303,7 +323,6 @@ export class CreateProductComponent implements OnInit {
 
   onStateChange($event){
     this.userService.getCity(Number($event.target.value)).subscribe((res)=>{
-      console.log(res)
       this.cityArray = res;
       this.productForm.get('cityId').enable();
     })
@@ -340,7 +359,6 @@ export class CreateProductComponent implements OnInit {
             image.onload = rs => {
                 const img_height = rs.currentTarget['height'];
                 const img_width = rs.currentTarget['width'];
-                console.log(img_height, img_width);
                 if (img_height > max_height && img_width > max_width) {
                     this.commonService.error(`Maximum dimentions allowed ${max_height}*${max_width}px`);
                     return false;

@@ -111,7 +111,7 @@ export class ProductDetailComponent implements OnInit,OnDestroy {
    let tags = '';
    this.adsDetails.tags.map((t)=>{
      if(tags){
-       tags = `${tags},${t}`;
+       tags = `${tags}, ${t}`;
      } else {
       tags = `${t}`;
      }

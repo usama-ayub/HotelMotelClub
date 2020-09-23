@@ -28,13 +28,14 @@
                                                                 [ngClass]="{'widget-categories__item--open': category.isCollapse}">
                                                                 <div class="widget-categories__row">
                                                                     <a (click)="onCategoryChange(category.categoryId,'category')" [ngClass]="{'collapse-select': category.categoryId == filterPayload.categoryId}">
-                                                                        <svg *ngIf="category.subcategory.length !== 0"
+                                                                        <!-- <svg *ngIf="category.subcategory.length !== 0"
                                                                             class="widget-categories__arrow" width="6px"
                                                                             height="9px">
                                                                             <use
                                                                                 xlink:href="assets/images/sprite.svg#arrow-rounded-right-6x9">
                                                                             </use>
-                                                                        </svg> {{category.categoryName}} </a>
+                                                                        </svg> -->
+                                                                        {{category.categoryName}} </a> 
                                                                     <ng-container
                                                                         *ngIf="category.subcategory.length !== 0">
                                                                         <button class="widget-categories__expander"

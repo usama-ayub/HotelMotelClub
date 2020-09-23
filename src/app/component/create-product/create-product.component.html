@@ -10,7 +10,7 @@
                             <form [formGroup]="productForm">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label for="checkout-company-name">Title</label>
+                                        <label for="checkout-company-name">* Title</label>
                                         <input type="text" formControlName="title" class="form-control"
                                             placeholder="Title"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.title.errors }">
@@ -19,7 +19,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>Country</label>
+                                        <label>* Country</label>
                                         <select class="form-control" formControlName="countryId"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.countryId.errors }"
                                             (change)="onCountyChange($event)">
@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label>State</label>
+                                        <label>* State</label>
                                         <select class="form-control" formControlName="stateId"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.stateId.errors }"
                                             (change)="onStateChange($event)">
@@ -50,7 +50,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>City</label>
+                                        <label>* City</label>
                                         <select class="form-control" formControlName="cityId"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.cityId.errors }">
                                             <option [value]="null" disabled>Select a city</option>
@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label>Category</label>
+                                        <label>* Category</label>
                                         <select class="form-control" formControlName="category"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.category.errors }">
                                             <option [value]="null" disabled>Select a category</option>
@@ -76,7 +76,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>Sub Category</label>
+                                        <label>* Sub Category</label>
                                         <select class="form-control" formControlName="subCategoryId"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.subCategoryId.errors }">
                                             <option [value]="null" disabled>Select a sub category</option>
@@ -91,7 +91,7 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label>Set A Price</label>
+                                        <label><ng-container *ngIf="!isSelectedCategoryJob">*</ng-container> Set A Price</label>
                                         <input type="text" formControlName="price" digitOnly class="form-control"
                                             placeholder="Price"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.price.errors }"
@@ -105,7 +105,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>Address Line 1</label>
+                                        <label>* Address Line 1</label>
                                         <input type="text" formControlName="addressLine1" class="form-control"
                                             placeholder="First Address"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.addressLine1.errors }">
@@ -117,7 +117,7 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label>Address Line 2</label>
+                                        <label>* Address Line 2</label>
                                         <input type="text" formControlName="addressLine2" class="form-control"
                                             placeholder="Second Address"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.addressLine2.errors }">
@@ -127,7 +127,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>Address Line 3</label>
+                                        <label>* Address Line 3</label>
                                         <input type="text" formControlName="addressLine3" class="form-control"
                                             placeholder="Third Address"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.addressLine3.errors }">
@@ -139,7 +139,7 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <label>Type</label>
+                                    <label>* Type</label>
                                     <select class="form-control" formControlName="type"
                                         [ngClass]="{ 'is-invalid': submittedProduct && f.type.errors }">
                                         <option [value]="null" disabled>Select a type</option>
@@ -150,7 +150,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                <label>Tags</label>
+                                <label>* Tags <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="write words and press enter for create tag, tags help you for global search"></i></label>
                                 <div class="form-group col-md-12 editor-tag"
                                     [ngClass]="{ 'tag-error': submittedProduct && tags.length == 0, 'tag-disabled': isRequestProduct  }"
                                     (click)="focusTagInput()">
@@ -165,7 +165,7 @@
                                     >
                                 </div>
                                 <div class="form-group">
-                                    <label>Description </label>
+                                    <label>* Description </label>
                                     <angular-editor formControlName="description" id="description"
                                         [config]="editorConfig" (input)="onChange($event)"></angular-editor>
                                     <div *ngIf="submittedProduct && f.description.errors" class="invaild-editor">
@@ -179,8 +179,9 @@
                                         *ngFor="let img of uploadImageArray; let i = index">
                                         <fieldset class="form-group">
                                             <div class="custom-file fileInputProfileWrap">
+                                                <!-- {{submittedProduct && !img.image && !isSingleImageUpload}} -->
                                                 <div class="img-space"
-                                                    [ngClass]="{ 'tag-error': submittedProduct && !img.image }">
+                                                    [ngClass]="{ 'tag-error': submittedProduct && !img.image && !isSingleImageUpload }">
                                                     <ng-container *ngIf="img.isImageSaved; else elseTemplate">
                                                         <img [src]="img.image" />
                                                     </ng-container>
