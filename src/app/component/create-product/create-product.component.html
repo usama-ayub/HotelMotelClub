@@ -20,14 +20,24 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>* Country</label>
-                                        <select class="form-control" formControlName="countryId"
+                                        <!-- <select class="form-control" formControlName="countryId"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.countryId.errors }"
                                             (change)="onCountyChange($event)">
                                             <option [value]="null" disabled>Select a country</option>
                                             <option *ngFor="let country of countryArray" [value]="country.countryId">
                                                 {{country.countryName}}</option>
-                                        </select>
-                                        <div *ngIf="submittedProduct && f.countryId.errors" class="invalid-feedback">
+                                        </select> -->
+                                        <p-dropdown
+                                        name="countryId"
+                                        formControlName="countryId"
+                                        [style]="{ width: '100%' }"
+                                        [filter]="true"
+                                        [options]="countryArray"
+                                        placeholder="Select Country"
+                                        optionLabel="countryName"
+                                        (onChange)="onCountyChange($event)"
+                                      ></p-dropdown>
+                                        <div *ngIf="submittedProduct && f.countryId.errors" class="invaild-editor">
                                             <div *ngIf="f.countryId.errors.required">Country is required</div>
                                         </div>
                                     </div>
@@ -35,7 +45,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>* State</label>
-                                        <select class="form-control" formControlName="stateId"
+                                        <!-- <select class="form-control" formControlName="stateId"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.stateId.errors }"
                                             (change)="onStateChange($event)">
                                             <option [value]="null" disabled>Select State <svg width="16px"
@@ -44,20 +54,39 @@
                                                 </svg></option>
                                             <option *ngFor="let state of stateArray" [value]="state.stateId">
                                                 {{state.stateName}}</option>
-                                        </select>
-                                        <div *ngIf="submittedProduct && f.stateId.errors" class="invalid-feedback">
+                                        </select> -->
+                                        <p-dropdown
+                                        name="stateId"
+                                        formControlName="stateId"
+                                        [style]="{ width: '100%' }"
+                                        [filter]="true"
+                                        [options]="stateArray"
+                                        placeholder="Select State"
+                                        optionLabel="stateName"
+                                        (onChange)="onStateChange($event)"
+                                      ></p-dropdown>
+                                        <div *ngIf="submittedProduct && f.stateId.errors" class="invaild-editor">
                                             <div *ngIf="f.stateId.errors.required">State is required</div>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>* City</label>
-                                        <select class="form-control" formControlName="cityId"
+                                        <!-- <select class="form-control" formControlName="cityId"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.cityId.errors }">
                                             <option [value]="null" disabled>Select a city</option>
                                             <option *ngFor="let city of cityArray" [value]="city.cityId">
                                                 {{city.cityName}}</option>
-                                        </select>
-                                        <div *ngIf="submittedProduct && f.cityId.errors" class="invalid-feedback">
+                                        </select> -->
+                                        <p-dropdown
+                                        name="cityId"
+                                        formControlName="cityId"
+                                        [style]="{ width: '100%' }"
+                                        [filter]="true"
+                                        [options]="cityArray"
+                                        placeholder="Select City"
+                                        optionLabel="cityName"
+                                      ></p-dropdown>
+                                        <div *ngIf="submittedProduct && f.cityId.errors" class="invalid-editor">
                                             <div *ngIf="f.cityId.errors.required">City is required</div>
                                         </div>
                                     </div>
@@ -65,24 +94,42 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>* Category</label>
-                                        <select class="form-control" formControlName="category"
+                                        <!-- <select class="form-control" formControlName="category"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.category.errors }">
                                             <option [value]="null" disabled>Select a category</option>
                                             <option *ngFor="let category of categoryArray"
                                                 [value]="category.categoryId">{{category.categoryName}}</option>
-                                        </select>
-                                        <div *ngIf="submittedProduct && f.category.errors" class="invalid-feedback">
+                                        </select> -->
+                                        <p-dropdown
+                                        name="category"
+                                        formControlName="category"
+                                        [style]="{ width: '100%' }"
+                                        [filter]="true"
+                                        [options]="categoryArray"
+                                        placeholder="Select Category"
+                                        optionLabel="categoryName"
+                                      ></p-dropdown>
+                                        <div *ngIf="submittedProduct && f.category.errors" class="invalid-editor">
                                             <div *ngIf="f.category.errors.required">Category is required</div>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>* Sub Category</label>
-                                        <select class="form-control" formControlName="subCategoryId"
+                                        <!-- <select class="form-control" formControlName="subCategoryId"
                                             [ngClass]="{ 'is-invalid': submittedProduct && f.subCategoryId.errors }">
                                             <option [value]="null" disabled>Select a sub category</option>
                                             <option *ngFor="let sub of subCategoryArray" [value]="sub.subCategoryId">
                                                 {{sub.subCategoryName}}</option>
-                                        </select>
+                                        </select> -->
+                                        <p-dropdown
+                                        name="subCategoryId"
+                                        formControlName="subCategoryId"
+                                        [style]="{ width: '100%' }"
+                                        [filter]="true"
+                                        [options]="subCategoryArray"
+                                        placeholder="Select Sub Category"
+                                        optionLabel="subCategoryName"
+                                      ></p-dropdown>
                                         <div *ngIf="submittedProduct && f.subCategoryId.errors"
                                             class="invalid-feedback">
                                             <div *ngIf="f.subCategoryId.errors.required">Sub Category is required</div>

@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { AngularEditorModule } from '@kolkov/angular-editor';
@@ -6,6 +7,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
+import {DropdownModule} from 'primeng/dropdown';
 
 import { AppComponent } from './app.component';
 import { ProductDetailComponent } from './component/product-detail/product-detail.component';
@@ -48,6 +50,8 @@ import { FavouriteComponent } from './component/favourite/favourite.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    DropdownModule,
     AppRoutingModule,
     ReactiveFormsModule,
     AngularEditorModule,

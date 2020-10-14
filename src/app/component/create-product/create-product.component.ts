@@ -129,7 +129,7 @@ export class CreateProductComponent implements OnInit {
     this.productForm.get('category').valueChanges.subscribe(value => {
       if(value !== null){
         let index = this.categoryArray.findIndex((res)=> {
-          return res.categoryId.toString() === value.toString();
+          return res.categoryId.toString() === value.categoryId.toString();
         });
         if (this.categoryArray[index].subcategory.length !==0) {
           if(this.categoryArray[index].categoryName == 'Jobs'){
@@ -186,15 +186,15 @@ export class CreateProductComponent implements OnInit {
     if(this.tags.length == 0){
       return;
     }
-    let productPlayload :IProduct;
+    let productPlayload :any;
     productPlayload = this.productForm.value;
     productPlayload.userId = this.userId;
     productPlayload.tags = this.tags;
-    productPlayload.cityId = Number(productPlayload.cityId);
+    productPlayload.cityId = Number(productPlayload.cityId.cityId);
     productPlayload.price = productPlayload.price ? Number(productPlayload.price) : 0;
-    productPlayload.stateId = Number(productPlayload.stateId);
-    productPlayload.countryId = Number(productPlayload.countryId);
-    productPlayload.subCategoryId = Number(productPlayload.subCategoryId);
+    productPlayload.stateId = Number(productPlayload.stateId.stateId);
+    productPlayload.countryId = Number(productPlayload.countryId.countryId);
+    productPlayload.subCategoryId = Number(productPlayload.subCategoryId.subCategoryId);
     productPlayload.pictures =  JSON.parse(JSON.stringify(this.uploadImageArray));
     let selectedImageArray:Array<IProductImage> = [];
     productPlayload.pictures.map((pic)=>{
@@ -304,7 +304,7 @@ export class CreateProductComponent implements OnInit {
   onCountyChange($event, type:string = 'html'){
     let countryId = 0;
     if(type == 'html'){
-      countryId = Number($event.target.value)
+      countryId = Number($event.value.countryId)
     } else {
       countryId = $event;
     }
@@ -322,7 +322,7 @@ export class CreateProductComponent implements OnInit {
   }
 
   onStateChange($event){
-    this.userService.getCity(Number($event.target.value)).subscribe((res)=>{
+    this.userService.getCity(Number($event.value.stateId)).subscribe((res)=>{
       this.cityArray = res;
       this.productForm.get('cityId').enable();
     })
