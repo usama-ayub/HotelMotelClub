@@ -137,6 +137,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
   onCountyChange($event){
     this.filterPayload.countryId = Number($event.target.value);
+     // this.filterPayload.countryId = Number($event.value.countryId);
     this.getState();
     this.filterPayload.stateId = 0;
     this.isRequestFilter = true;

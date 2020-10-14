@@ -158,6 +158,15 @@
                                                             <option *ngFor="let country of countryArray"
                                                                 [value]="country.countryId">{{country.countryName}}</option>
                                                         </select>
+                                                        <!-- <p-dropdown
+                                                        [(ngModel)]="filterPayload.countryId"
+                                        [style]="{ width: '100%' }"
+                                        [filter]="true"
+                                        [options]="countryArray"
+                                        placeholder="Select Country"
+                                        optionLabel="countryName"
+                                        (onChange)="onCountyChange($event)"
+                                      ></p-dropdown> -->
                                                 </div>
                                             </div>
                                         </div>
