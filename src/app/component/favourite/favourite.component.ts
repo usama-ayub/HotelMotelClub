@@ -19,12 +19,14 @@ export class FavouriteComponent implements OnInit, OnDestroy {
     totalPages:1
   }
   isRemoveFavorite:boolean = false;
+  userVerify:boolean = false;
   public favProduct:Array<IFavouriteProductData> = [];
   constructor(
     private productService: ProductService,
     private commonService: CommonService,
   ) { 
     this.userId = this.commonService.getUserId();
+    this.userVerify = this.commonService.getUserVerify();
   }
 
   ngOnInit(): void{
@@ -50,6 +52,10 @@ export class FavouriteComponent implements OnInit, OnDestroy {
     })
   }
   removeFavouriteProduct($event:{id:number,index:number}): void{
+    if(!this.userVerify){
+      this.commonService.warning('Please Verify Your Account');
+      return;
+    }
     if(this.isRemoveFavorite) return;
     let payload:IFavouriteProduct = {userId:this.userId,adId:$event.id};
     this.isRemoveFavorite = true;

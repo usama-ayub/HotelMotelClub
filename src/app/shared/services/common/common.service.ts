@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
 import { Observable, of, throwError } from "rxjs/index";
+import {MessageService} from 'primeng/api';
 import { IFAQData, IFAQResponse, IPolicyData, IPolicyResponse } from 'src/app/interface/common';
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class CommonService {
     warning: false
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private messageService: MessageService) { }
 
   getFAQ() : Observable<Array<IFAQData>>{
       let url: string  = 'FAQ/all/0';
@@ -51,6 +52,16 @@ export class CommonService {
     let userID = localStorage.getItem('userid');
     return Number(userID)
   }
+  getUserVerify(): boolean{
+    let verified = localStorage.getItem('verified');
+    if(verified == 'false'){
+      return false
+    }
+    if(verified == 'true'){
+      return true
+    }
+    return false;
+  }
   error(message:string) :void {
     this.errorObj.error = true;
     this.errorObj.message = message;
@@ -60,6 +71,8 @@ export class CommonService {
   }
 
   warning(message:string) :void {
+    // this.messageService.clear();
+    // this.messageService.add({severity:'Info', summary: 'Info Message', detail:message});
     this.warningObj.warning = true;
     this.warningObj.message = message;
     setTimeout(()=>{

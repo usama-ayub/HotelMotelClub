@@ -70,17 +70,19 @@ export class RegisterComponent implements OnInit {
       console.log(this.registerForm.value)
       this.authService.register(this.registerForm.value)
       .subscribe((res)=>{
-        this.authService.login(this.registerForm.value).subscribe((data)=>{
-          localStorage.setItem('token', data.token);
-          localStorage.setItem('userid',data.userid.toString());
-          this.isRequestRegister = false;
-          this.commonService.success('Logged In successfully');
-          this.router.navigate(['/home']);
-          this.authService.isAuth$.next(true);
-        }, (error) => {
-          this.isRequestRegister = false;
-          this.commonService.error(error);
-        })
+        // this.authService.login(this.registerForm.value).subscribe((data)=>{
+        //   localStorage.setItem('token', data.token);
+        //   localStorage.setItem('userid',data.userid.toString());
+        //   this.isRequestRegister = false;
+        //   this.commonService.success('Logged In successfully');
+        //   this.router.navigate(['/home']);
+        //   this.authService.isAuth$.next(true);
+        // }, (error) => {
+        //   this.isRequestRegister = false;
+        //   this.commonService.error(error);
+        // })
+        this.isRequestRegister = false;
+        this.commonService.warning('Email has been sent please verify your account.');
       }, (error) => {
         this.isRequestRegister = false;
         this.commonService.error(error);

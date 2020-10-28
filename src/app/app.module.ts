@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import {DropdownModule} from 'primeng/dropdown';
+import {ToastModule} from 'primeng/toast';
 
 import { AppComponent } from './app.component';
 import { ProductDetailComponent } from './component/product-detail/product-detail.component';
@@ -57,7 +58,8 @@ import { FavouriteComponent } from './component/favourite/favourite.component';
     AngularEditorModule,
     FormsModule,
     CoreModule,
-    SharedModule
+    SharedModule,
+    ToastModule
   ],
   providers: [],
   bootstrap: [AppComponent]

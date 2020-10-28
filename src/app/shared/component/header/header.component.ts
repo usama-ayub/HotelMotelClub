@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit {
   navMenu :Array<{name:string, path:string, child:Array<any>, isCollapse:boolean}> =[];
   authGarudPath = ['/create-product', '/ads', '/favourite', '/setting'];
   userId:number;
+  userVerify:boolean = false;
   favProduct:Array<IFavouriteProductData> = [];
   totalFavProduct :number = 0;
   searchAdsTitle:string = '';
@@ -31,6 +32,7 @@ export class HeaderComponent implements OnInit {
     private commonService: CommonService
   ) { 
     this.userId = this.commonService.getUserId();
+    this.userVerify = this.commonService.getUserVerify();
   }
 
   ngOnInit() {
@@ -49,6 +51,9 @@ export class HeaderComponent implements OnInit {
         this.navMenu[1].child.push({name:'My Ads', path:'/ads'});
         this.navMenu[1].child.push({name:'Favourite', path:'/favourite'});
         this.navMenu[1].child.push({name:'Setting', path:'/setting'});
+        if(!this.userVerify){
+          this.navMenu[1].child.push({name:'User Verify', path:'/verify'});
+        }
         this.navMenu[1].child.push({name:'logout', path:'/logout'});
       }
     })
@@ -124,7 +129,12 @@ export class HeaderComponent implements OnInit {
     if(path){
       if(path == '/logout'){
         this.logout();
-      } else {
+      } else if(path == '/verify'){
+        this.authService.getUserVerify(this.userId).subscribe((res)=>{
+          console.log(res);
+          this.logout();
+        })
+      }else {
         if(params){
           this.router.navigate([path,params]);
         } else {

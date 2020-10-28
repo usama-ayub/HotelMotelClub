@@ -18,6 +18,7 @@ import { ActivatedRoute } from '@angular/router';
 export class CreateProductComponent implements OnInit {
   @ViewChild('tagInput',{static:false}) tagInputRef: ElementRef;
   private userId: number;
+  private userVerify: boolean = false;
   tags: string[] = [];
   TypeArray: string[] = ['Cash','Lease'];
   adsId:number = 0;
@@ -79,6 +80,7 @@ export class CreateProductComponent implements OnInit {
     private commonService: CommonService
     ) { 
       this.userId = this.commonService.getUserId();
+      this.userVerify = this.commonService.getUserVerify();
       this.adsId = Number(this.route.snapshot.params.id);
       if(this.adsId){
         this.getAdsDetail();
@@ -165,6 +167,10 @@ export class CreateProductComponent implements OnInit {
     });
   }
   onSubmitProduct(): void {
+    if(!this.userVerify){
+      this.commonService.warning('Please Verify Your Account');
+      return;
+    }
     if(this.isRequestProduct){
       return;
     }
@@ -222,7 +228,7 @@ export class CreateProductComponent implements OnInit {
     }, (error) => {
       this.isRequestProduct = false;
       this.disabledField(true);
-      // this.commonService.error(error);
+      this.commonService.error(error);
       console.log(error);
     })
   }

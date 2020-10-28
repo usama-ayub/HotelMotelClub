@@ -14,6 +14,7 @@ export class ProductComponent implements OnInit {
   @Input() index: number;
   @Input() item: IProductListData;
   userId: number = 0;
+  userVerify: boolean = false;
   isAuth:boolean = false;
   constructor(
     private router: Router,
@@ -27,12 +28,17 @@ export class ProductComponent implements OnInit {
       this.isAuth = res;
      });
      this.userId = this.commonService.getUserId();
+     this.userVerify = this.commonService.getUserVerify();
   }
 
   addFavouriteAds(adId:number){
     if(!this.isAuth){
        this.routeTo('/login');
        return;
+    }
+    if(!this.userVerify){
+      this.commonService.warning('Please Verify Your Account');
+      return;
     }
     this.productService.addFavouriteProduct({userId:this.userId,adId:adId})
     .subscribe((res)=>{

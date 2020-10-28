@@ -32,6 +32,7 @@ export class ProductDetailComponent implements OnInit,OnDestroy {
     ]
   adId: number = 0;
   userId: number = 0;
+  userVerify: boolean = false;
   isAuth:boolean = false;
   adsDetails:IProductData = {
     title:'',
@@ -60,6 +61,7 @@ export class ProductDetailComponent implements OnInit,OnDestroy {
   ) { 
     this.adId = Number(this.route.snapshot.params.id);
     this.userId = this.commonService.getUserId();
+    this.userVerify = this.commonService.getUserVerify();
   }
 
   ngOnInit() {
@@ -122,6 +124,10 @@ export class ProductDetailComponent implements OnInit,OnDestroy {
     if(!this.isAuth){
        this.routeTo('/login');
        return;
+    }
+    if(!this.userVerify){
+      this.commonService.warning('Please Verify Your Account');
+      return;
     }
     this.productService.addFavouriteProduct({userId:this.userId,adId:this.adsDetails.adId})
     .pipe(takeUntil(this.unsubscribe$))

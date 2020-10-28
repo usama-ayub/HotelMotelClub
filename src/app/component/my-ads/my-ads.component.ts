@@ -10,6 +10,7 @@ import { IFavouriteProductData } from 'src/app/interface/product';
 })
 export class MyAdsComponent implements OnInit {
   private userId;
+  userVerify:boolean = false;
   public myAds:Array<IFavouriteProductData> = [];
   pagination = {
     page:1,
@@ -21,6 +22,7 @@ export class MyAdsComponent implements OnInit {
     private commonService:CommonService,
   ) { 
     this.userId = this.commonService.getUserId();
+    this.userVerify = this.commonService.getUserVerify();
   }
 
   ngOnInit() {
@@ -40,6 +42,10 @@ export class MyAdsComponent implements OnInit {
     })
   }
   removeProduct($event:number){
+    if(!this.userVerify){
+      this.commonService.warning('Please Verify Your Account');
+      return;
+    }
       this.productService.removeProduct($event).subscribe((res)=>{
         console.log(res);
         this.commonService.success('Ad Deleted Successfully"');

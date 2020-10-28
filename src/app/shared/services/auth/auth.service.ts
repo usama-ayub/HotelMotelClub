@@ -51,4 +51,15 @@ export class AuthService {
    }
   return of(true)
   }
+
+  getUserVerify(id:number): Observable<any>{
+    let url: string  = `Auth/verification?Id=${id}`;
+    return this.http.get<any>(url,{})
+    .pipe(switchMap(res => {
+      if(!res.success){
+        return throwError(res.message)
+      }
+      return of(res.data)
+    }))
+  }
 }

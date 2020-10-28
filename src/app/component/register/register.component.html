@@ -90,34 +90,34 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>First Address</label>
+                                    <label>Address Line 1</label>
                                     <input type="text" formControlName="addressLine1" class="form-control"
-                                        placeholder="Enter First Address"
+                                        placeholder="Enter Address Line 1"
                                         [ngClass]="{ 'is-invalid': submittedRegister && f.addressLine1.errors }">
                                     <div *ngIf="submittedRegister && f.addressLine1.errors" class="invalid-feedback">
-                                        <div *ngIf="f.addressLine1.errors.required">First Address is required</div>
+                                        <div *ngIf="f.addressLine1.errors.required">Address Line 1 is required</div>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label>Second Address</label>
+                                        <label>Address Line 2</label>
                                         <input type="text" formControlName="addressLine2" class="form-control"
-                                            placeholder="Enter Second Address"
+                                            placeholder="Enter Address Line 2"
                                             [ngClass]="{ 'is-invalid': submittedRegister && f.addressLine2.errors }">
                                         <div *ngIf="submittedRegister && f.addressLine2.errors"
                                             class="invalid-feedback">
-                                            <div *ngIf="f.addressLine2.errors.required">Second Address is required</div>
+                                            <div *ngIf="f.addressLine2.errors.required">Address Line 2 is required</div>
                                         </div>
                                     </div>
 
                                     <div class="form-group col-md-6">
-                                        <label>Third Address</label>
+                                        <label>Address Line 3</label>
                                         <input type="text" formControlName="addressLine3" class="form-control"
-                                            placeholder="Enter Third Address"
+                                            placeholder="Enter Address Line 3"
                                             [ngClass]="{ 'is-invalid': submittedRegister && f.addressLine3.errors }">
                                         <div *ngIf="submittedRegister && f.addressLine3.errors"
                                             class="invalid-feedback">
-                                            <div *ngIf="f.addressLine3.errors.required">Third Address is required</div>
+                                            <div *ngIf="f.addressLine3.errors.required">Address Line 3 is required</div>
                                         </div>
                                     </div>
                                 </div>

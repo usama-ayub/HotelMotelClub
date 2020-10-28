@@ -28,6 +28,7 @@ export interface ILoginData {
     middleName:string;
     lastName:string;
     roleId: number;
+    verified:boolean
 }
 
 export interface IRegisterData {

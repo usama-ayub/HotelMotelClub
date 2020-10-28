@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import {ToastModule} from 'primeng/toast';
 //Component
 import { FooterComponent } from './component/footer/footer.component';
 import { HeaderComponent } from './component/header/header.component';
@@ -16,6 +17,8 @@ import { FilterPipe } from './pipes/filterBy.pipe';
 import { DigitOnlyDirective } from './directive/digit-only.directive';
 import { ClickOutSideDirective } from './directive/click-outside.directive';
 
+// Service
+import {MessageService} from 'primeng/api';
 
 
 
@@ -45,7 +48,11 @@ import { ClickOutSideDirective } from './directive/click-outside.directive';
   ],
   imports: [
     FormsModule,
-    CommonModule
+    CommonModule,
+    ToastModule
+  ],
+  providers:[
+    MessageService
   ]
 })
 export class SharedModule { }
