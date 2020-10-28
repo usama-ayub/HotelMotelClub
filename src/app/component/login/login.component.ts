@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
         this.isRequestLogin = false;
         this.router.navigate(['/home']);
         this.authService.isAuth$.next(true);
+        this.authService.isVerify$.next(data.verified);
       }, (error) => {
         this.isRequestLogin = false;
         this.commonService.error(error);

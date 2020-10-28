@@ -54,10 +54,26 @@ export class HeaderComponent implements OnInit {
         this.navMenu[1].child.push({name:'My Ads', path:'/ads'});
         this.navMenu[1].child.push({name:'Favourite', path:'/favourite'});
         this.navMenu[1].child.push({name:'Setting', path:'/setting'});
-        if(!this.userVerify){
-          this.navMenu[1].child.push({name:'User Verify', path:'/verify'});
-        }
         this.navMenu[1].child.push({name:'logout', path:'/logout'});
+        this.authService.isVerify$.subscribe((verify:boolean)=>{
+          if(!verify){
+            let index = this.navMenu[1].child.findIndex((value)=>{
+              return value.path == '/verify'
+            });
+            if(index == -1){
+              this.navMenu[1].child.push({name:'Verify', path:'/verify'});
+              console.log(this.navMenu[1].child)
+            }
+          } else {
+            let index = this.navMenu[1].child.findIndex((value)=>{
+              return value.path == '/verify'
+            });
+            console.log(index);
+            if(index !== -1){
+              this.navMenu[1].child.splice(index,1)
+            }
+          }
+        })
       }
     })
     this.productService.isFavouriteHit$.subscribe((res)=>{

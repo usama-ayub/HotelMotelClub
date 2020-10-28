@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   
   isAuth$ = new BehaviorSubject<boolean>(false); 
+  isVerify$ = new BehaviorSubject<boolean>(false); 
   authGarudPath = ['/create-product', '/ads', '/favourite', '/setting'];
   constructor(
     private http: HttpClient,
@@ -18,6 +19,13 @@ export class AuthService {
     let token = localStorage.getItem('token');
     if(token) {
       this.isAuth$.next(true);
+    }
+    let verified = localStorage.getItem('verified');
+    if(verified == 'false'){
+      this.isVerify$.next(false);
+    }
+    if(verified == 'true'){
+      this.isVerify$.next(true);
     }
     console.log(this.router)
    }
