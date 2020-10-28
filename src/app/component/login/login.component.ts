@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', data.token);
         localStorage.setItem('userid',data.userid.toString());
         localStorage.setItem('verified',data.verified.toString());
+        localStorage.setItem('email',data.email);
         this.commonService.success('Logged In successfully');
         this.isRequestLogin = false;
         this.router.navigate(['/home']);

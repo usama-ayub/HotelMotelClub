@@ -45,6 +45,8 @@ export class AuthService {
   logout(): Observable<boolean> {
     localStorage.removeItem('userid');
     localStorage.removeItem('token');
+    localStorage.removeItem('verified');
+    localStorage.removeItem('email');
     this.isAuth$.next(false);
     if(this.authGarudPath.includes(this.router.url)){
       this.router.navigate(['/login']);
@@ -52,8 +54,8 @@ export class AuthService {
   return of(true)
   }
 
-  getUserVerify(id:number): Observable<any>{
-    let url: string  = `Auth/verification?Id=${id}`;
+  getUserVerify(email:string): Observable<any>{
+    let url: string  = `Auth/verify?Email=${email}`;
     return this.http.get<any>(url,{})
     .pipe(switchMap(res => {
       if(!res.success){

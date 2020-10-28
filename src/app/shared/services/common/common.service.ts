@@ -52,6 +52,10 @@ export class CommonService {
     let userID = localStorage.getItem('userid');
     return Number(userID)
   }
+  getUserEmail(): string{
+    let email = localStorage.getItem('email');
+    return email;
+  }
   getUserVerify(): boolean{
     let verified = localStorage.getItem('verified');
     if(verified == 'false'){

@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit {
   authGarudPath = ['/create-product', '/ads', '/favourite', '/setting'];
   userId:number;
   userVerify:boolean = false;
+  userEmail:string = '';
   favProduct:Array<IFavouriteProductData> = [];
   totalFavProduct :number = 0;
   searchAdsTitle:string = '';
@@ -33,6 +34,8 @@ export class HeaderComponent implements OnInit {
   ) { 
     this.userId = this.commonService.getUserId();
     this.userVerify = this.commonService.getUserVerify();
+    this.userEmail = this.commonService.getUserEmail();
+    console.log( this.userEmail)
   }
 
   ngOnInit() {
@@ -130,9 +133,11 @@ export class HeaderComponent implements OnInit {
       if(path == '/logout'){
         this.logout();
       } else if(path == '/verify'){
-        this.authService.getUserVerify(this.userId).subscribe((res)=>{
+        this.authService.getUserVerify(this.userEmail).subscribe((res)=>{
           console.log(res);
           this.logout();
+        }, (error) => {
+          this.commonService.error(error);
         })
       }else {
         if(params){
