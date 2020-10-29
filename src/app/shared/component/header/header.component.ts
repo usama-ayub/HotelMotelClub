@@ -84,6 +84,7 @@ export class HeaderComponent implements OnInit {
   }
  
   getFavouriteProduct(){
+    this.userId = this.commonService.getUserId();
     this.productService.getFavouriteProduct({userId:this.userId,pageNumber:1,pageSize:3})
         .subscribe((res)=>{
            this.favProduct = res;
@@ -149,6 +150,7 @@ export class HeaderComponent implements OnInit {
       if(path == '/logout'){
         this.logout();
       } else if(path == '/verify'){
+        this.userEmail = this.commonService.getUserEmail();
         this.authService.getUserVerify(this.userEmail).subscribe((res)=>{
           console.log(res);
           this.logout();
