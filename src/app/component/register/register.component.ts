@@ -62,12 +62,13 @@ export class RegisterComponent implements OnInit {
           return;
       }
       this.isRequestRegister = true;
+      console.log(this.registerForm.value)
+      this.filedDisable(this.isRequestRegister);
       if(this.registerForm.value.preferredContact == '1'){
         this.registerForm.value.preferredContact = this.registerForm.value.primaryContact;
       } else {
         this.registerForm.value.preferredContact = this.registerForm.value.secondaryContact;
       }
-      console.log(this.registerForm.value)
       this.authService.register(this.registerForm.value)
       .subscribe((res)=>{
         // this.authService.login(this.registerForm.value).subscribe((data)=>{
@@ -75,7 +76,6 @@ export class RegisterComponent implements OnInit {
         //   localStorage.setItem('userid',data.userid.toString());
         //   this.isRequestRegister = false;
         //   this.commonService.success('Logged In successfully');
-        //   this.router.navigate(['/home']);
         //   this.authService.isAuth$.next(true);
         // }, (error) => {
         //   this.isRequestRegister = false;
@@ -83,11 +83,43 @@ export class RegisterComponent implements OnInit {
         // })
         this.isRequestRegister = false;
         this.commonService.warning('Email has been sent please verify your account.');
+        this.filedDisable(this.isRequestRegister);
+        this.router.navigate(['/login']);
       }, (error) => {
         this.isRequestRegister = false;
+        this.filedDisable(this.isRequestRegister);
         this.commonService.error(error);
       })
     }
     get f() { return this.registerForm.controls; }
-
+   filedDisable(isRequestRegister:boolean =false){
+    if(isRequestRegister){
+      this.registerForm.get('email').disable();
+      this.registerForm.get('password').disable();
+      this.registerForm.get('firstName').disable();
+      this.registerForm.get('middleName').disable();
+      this.registerForm.get('lastName').disable();
+      this.registerForm.get('primaryContact').disable();
+      this.registerForm.get('secondaryContact').disable();
+      this.registerForm.get('addressLine1').disable();
+      this.registerForm.get('addressLine2').disable();
+      this.registerForm.get('addressLine3').disable();
+      this.registerForm.get('preferredContact').disable();
+      this.registerForm.get('confirmPassword').disable();
+    }
+    if(!isRequestRegister){
+      this.registerForm.get('email').enable();
+      this.registerForm.get('password').enable();
+      this.registerForm.get('firstName').enable();
+      this.registerForm.get('middleName').enable();
+      this.registerForm.get('lastName').enable();
+      this.registerForm.get('primaryContact').enable();
+      this.registerForm.get('secondaryContact').enable();
+      this.registerForm.get('addressLine1').enable();
+      this.registerForm.get('addressLine2').enable();
+      this.registerForm.get('addressLine3').enable();
+      this.registerForm.get('preferredContact').enable();
+      this.registerForm.get('confirmPassword').enable();
+    }
+   }
 }

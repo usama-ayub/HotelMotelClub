@@ -69,7 +69,7 @@ export class CreateProductComponent implements OnInit {
     {image:'',isImageSaved:false,coverImage:false},
     {image:'',isImageSaved:false,coverImage:false}
   ]
-  pageTitle:string = 'Create Ad';
+  pageTitle:string = 'Post An Ad';
   isSingleImageUpload:boolean = false;
   isSelectedCategoryJob:boolean = false;
   constructor(

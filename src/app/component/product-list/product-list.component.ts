@@ -49,6 +49,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     minPrice:0,
   }
   adsListArray:Array<IProductListData> = [];
+  message:string = '';
 
   constructor(
     private productService:ProductService,
@@ -245,6 +246,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
       this.adsListArray = this.adsListArray.concat(res);
       this.isRequestLoadMore = false;
       this.isRequestFilter = false;
+      if(this.adsListArray.length == 0){
+        this.message = 'No Ads Found'
+      } else {
+        this.message = '';
+      }
     },(error)=>{
       this.isRequestLoadMore = false;
       this.isRequestFilter = false;

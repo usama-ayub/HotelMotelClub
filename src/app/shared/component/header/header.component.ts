@@ -50,9 +50,9 @@ export class HeaderComponent implements OnInit {
       } else {
         this.getFavouriteProduct();
         this.navMenu[1].child = [];
-        this.navMenu[1].child.push({name:'Create Ad', path:'/create-product'});
+        this.navMenu[1].child.push({name:'Post An Ad', path:'/create-product'});
         this.navMenu[1].child.push({name:'My Ads', path:'/ads'});
-        this.navMenu[1].child.push({name:'Favourite', path:'/favourite'});
+        this.navMenu[1].child.push({name:'Favourite(s)', path:'/favourite'});
         this.navMenu[1].child.push({name:'Setting', path:'/setting'});
         this.navMenu[1].child.push({name:'logout', path:'/logout'});
         this.authService.isVerify$.subscribe((verify:boolean)=>{

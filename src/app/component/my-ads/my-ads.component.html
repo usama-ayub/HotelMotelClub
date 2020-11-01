@@ -2,7 +2,7 @@
     <app-breadcrumb [pageTitle]="'My Ads'" [numberOfPath]="1"></app-breadcrumb>
     <div class="block">
         <div class="container">
-            <app-product-alt [listType]="'ads'" [product]="myAds" (removeProductChange)='removeProduct($event)'></app-product-alt>
+            <app-product-alt [listType]="'ads'" [product]="myAds" (removeProductChange)='removeProduct($event)' [message]="message"></app-product-alt>
         </div> 
         <div class="products-view__pagination">
             <app-pagination [page]="pagination.page" [totalPages]="pagination.totalPages"

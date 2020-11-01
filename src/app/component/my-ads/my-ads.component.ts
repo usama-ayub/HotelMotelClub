@@ -17,6 +17,7 @@ export class MyAdsComponent implements OnInit {
     pageSize:3,
     totalPages:1
   }
+  message:string = '';
   constructor(
     private productService:ProductService,
     private commonService:CommonService,
@@ -39,6 +40,10 @@ export class MyAdsComponent implements OnInit {
     this.productService.getMyAds(payload).subscribe((res)=>{
       this.myAds = res;
       this.pagination.totalPages = Math.round(((this.myAds[0].total+1)/this.pagination.pageSize));
+    },(error)=>{
+      if(this.myAds.length == 0){
+        this.message = "You haven't posted any ad yet"
+      }
     })
   }
   removeProduct($event:number){

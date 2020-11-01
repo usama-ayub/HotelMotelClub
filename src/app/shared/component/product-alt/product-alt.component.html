@@ -10,6 +10,19 @@
         </tr>
     </thead>
     <tbody class="wishlist__body">
+        <tr class="wishlist__row" *ngIf="message">
+            <td class="wishlist__column wishlist__column--image pointer">
+        
+            </td>
+            <td class="wishlist__column wishlist__column--product pointer">
+                {{message}}
+            </td>
+            <td class="wishlist__column wishlist__column--stock"></td>
+            <td class="wishlist__column wishlist__column--price"></td>
+            <td class="wishlist__column wishlist__column--price"></td>
+            <td class="wishlist__column wishlist__column--remove"></td>
+        </tr>
+        <ng-container *ngIf="!message">
             <tr class="wishlist__row" *ngFor="let item of product; let i = index">
                 <td class="wishlist__column wishlist__column--image pointer" (click)="routeTo('product',item.adId)">
                     <a><img [src]="item.coverImage" alt=""></a>
@@ -29,5 +42,7 @@
                             <use xlink:href="assets/images/sprite.svg#cross-12"></use>
                         </svg></button></td>
             </tr>
+        </ng-container>
+          
     </tbody>
 </table>

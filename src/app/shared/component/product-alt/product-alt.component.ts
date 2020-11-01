@@ -11,6 +11,7 @@ export class ProductAltComponent implements OnInit {
 
   @Input() listType: string = 'ads';
   @Input() product: Array<IFavouriteProductData> = [];
+  @Input() message: string ='';
   @Output() removeFavProductChange = new EventEmitter();
   @Output() removeProductChange = new EventEmitter();
 
@@ -19,6 +20,7 @@ export class ProductAltComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.message)
   }
 
   routeTo(path:string, params:any){
